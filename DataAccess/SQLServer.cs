@@ -72,29 +72,5 @@ namespace DataAccess
 			File.WriteAllText(path, data.ToString()); //Ghi đè nếu không tồn tại!
 		}
 
-		/// <summary>
-		/// Kiểm tra kết nối đến một server
-		/// Sử dụng Windows Authentication
-		/// </summary>
-		/// <param name="server">Tên server</param>
-		/// <returns>Kết nối thành công</returns>
-		public bool TestConnection(string server)
-		{
-			return true;
-		}
-
-		/// <summary>
-		/// Kiểm tra kết nối đến một server
-		/// Sử dụng User Authentication
-		/// </summary>
-		/// <param name="server">Tên server</param>
-		/// <param name="username">Tên đăng nhập, mặc định là: sa</param>
-		/// <param name="password">Mật khẩu</param>
-		/// <returns>Kết nối thành công</returns>
-		public bool TestConnection(string server, string username, string password)
-		{
-			return true;
-		}
-
 	}
 }

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLConnectionString.cs" />
     <Compile Include="SQLServer.cs" />
     <Compile Include="SQLSP.cs" />
     <Compile Include="SQLTable.cs" />
