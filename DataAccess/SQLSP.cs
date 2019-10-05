@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 namespace DataAccess
 {
@@ -12,5 +8,16 @@ namespace DataAccess
 	/// </summary>
 	public class SQLSP
 	{
+		private SqlConnection connection;
+
+		public SQLSP()
+		{
+
+		}
+
+		public SQLSP(string connectionString)
+		{
+			this.connection = new SqlConnection(connectionString);
+		}
 	}
 }

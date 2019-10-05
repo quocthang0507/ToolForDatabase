@@ -72,5 +72,14 @@ namespace DataAccess
 			File.WriteAllText(path, data.ToString()); //Ghi đè nếu không tồn tại!
 		}
 
+		public override string ToString()
+		{
+			StringBuilder result = new StringBuilder();
+			foreach (var item in MyServers)
+			{
+				result.AppendLine(item);
+			}
+			return result.ToString();
+		}
 	}
 }

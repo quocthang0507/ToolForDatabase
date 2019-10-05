@@ -9,11 +9,17 @@ namespace Testing
 		{
 			SQLServer server = new SQLServer();
 			server.FindServers();
+			Console.WriteLine("Server name: " + server.ToString());
 
-			SQLConnectionString connectionString = new SQLConnectionString(server.MyServers[0]);
-			Console.WriteLine(connectionString.TestConnection().ToString());
+			SQLConnectionString connectionString = new SQLConnectionString(server.MyServers[0], "QLNV");
+			Console.WriteLine("Connection: " + connectionString.TestConnection().ToString());
 
-			Console.WriteLine("Press any key to exit...");
+			SQLTable tables = new SQLTable(connectionString.ConnectionString);
+			tables.FindTables();
+			Console.WriteLine("\nExisting Tables:");
+			Console.WriteLine(tables.ToString());
+
+			Console.Write("Press any key to exit...");
 			Console.ReadKey();
 		}
 	}
