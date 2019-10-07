@@ -7,32 +7,40 @@ namespace DataAccess
 {
 	/// <summary>
 	/// Lớp SQL Table
-	/// cung cấp các phương thức liên quan đến thủ tục trong hệ quản trị cơ sở dữ liệu SQL Server 
+	/// cung cấp các phương thức liên quan đến bảng trong hệ quản trị cơ sở dữ liệu SQL Server
 	/// </summary>
 	public class SQLTable
 	{
 		private SqlConnection connection;
 		public List<string> MyTables { get; set; }
 
-		public SQLTable()
+		public SQLTable(SQLConnectionString SQLConnect)
 		{
+			this.connection = new SqlConnection(SQLConnect.ConnectionString);
 			this.MyTables = new List<string>();
 		}
 
-		public SQLTable(string connectionString)
+		/// <summary>
+		/// Thêm một bảng
+		/// </summary>
+		/// <param name="table">Bảng cần thêm</param>
+		public void AddTable(string table)
 		{
-			this.connection = new SqlConnection(connectionString);
-			this.MyTables = new List<string>();
+			if (!MyTables.Contains(table))
+				MyTables.Add(table);
 		}
 
-		public void FindTables()
+		/// <summary>
+		/// Lấy tất cả các bảng có trong cơ sở dữ liệu
+		/// </summary>
+		public void GetTables()
 		{
 			connection.Open();
-			DataTable table = connection.GetSchema("Tables");
+			DataTable tables = connection.GetSchema("Tables");
 			connection.Close();
-			foreach (DataRow item in table.Rows)
+			foreach (DataRow item in tables.Rows)
 			{
-				MyTables.Add(item[2].ToString());
+				AddTable(item[2].ToString());
 			}
 		}
 

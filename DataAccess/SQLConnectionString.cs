@@ -1,9 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 
 namespace DataAccess
 {
 	/// <summary>
-	/// Lớp cung cấp các chuỗi kết nối tới cơ sở dữ liệu
+	/// Chuỗi kết nối tới cơ sở dữ liệu
 	/// </summary>
 	public class SQLConnectionString
 	{

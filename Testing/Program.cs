@@ -8,18 +8,30 @@ namespace Testing
 		static void Main()
 		{
 			SQLServer server = new SQLServer();
-			server.FindServers();
+			server.GetServers();
 			Console.WriteLine("Server name: " + server.ToString());
 
-			SQLConnectionString connectionString = new SQLConnectionString(server.MyServers[0], "QLNV");
-			Console.WriteLine("Connection: " + connectionString.TestConnection().ToString());
+			SQLConnectionString SQLConnect = new SQLConnectionString(@"(localdb)\MSSQLLocalDB", "BalloonShop");
+			if (SQLConnect.TestConnection())
+			{
+				Console.WriteLine("Connection: OK");
 
-			SQLTable tables = new SQLTable(connectionString.ConnectionString);
-			tables.FindTables();
-			Console.WriteLine("\nExisting Tables:");
-			Console.WriteLine(tables.ToString());
+				//SQLDatabase database = new SQLDatabase(SQLConnect);
+				//database.GetDatabases();
+				//Console.WriteLine("\nDatabases: \n" + database.ToString());
 
-			Console.Write("Press any key to exit...");
+				SQLTable table = new SQLTable(SQLConnect);
+				table.GetTables();
+				Console.WriteLine("\nTables in BalloonShop: \n" + table.ToString());
+
+				SQLColumn column = new SQLColumn(SQLConnect, "Category");
+				column.GetColumns();
+				Console.WriteLine("\nColumns in Category: \n" + column.ToString());
+			}
+			else
+			{
+				Console.WriteLine("Connection: Error");
+			}
 			Console.ReadKey();
 		}
 	}

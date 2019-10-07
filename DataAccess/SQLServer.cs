@@ -16,24 +16,34 @@ namespace DataAccess
 
 		public SQLServer()
 		{
-			this.MyServers = new List<string>();
+			MyServers = new List<string>();
 		}
 
 		/// <summary>
-		/// Tìm các SQL Server trên máy (không đầy đủ)
+		/// Thêm một server
 		/// </summary>
-		public void FindServers()
+		/// <param name="server">Server cần thêm</param>
+		public void AddServer(string server)
 		{
-			string ServerName = Environment.MachineName;
+			if (!MyServers.Contains(server))
+				MyServers.Add(server);
+		}
+
+		/// <summary>
+		/// Lấy các SQL Server trên máy (không đầy đủ)
+		/// </summary>
+		public void GetServers()
+		{
+			string ComputerName = Environment.MachineName;
 			RegistryView registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
 			using (RegistryKey hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
 			{
-				RegistryKey instanceKey = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL", false);
-				if (instanceKey != null)
+				RegistryKey InstanceName = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL", false);
+				if (InstanceName != null)
 				{
-					foreach (var instanceName in instanceKey.GetValueNames())
+					foreach (var instanceName in InstanceName.GetValueNames())
 					{
-						this.MyServers.Add(ServerName + "\\" + instanceName);
+						AddServer(ComputerName + "\\" + instanceName);
 					}
 				}
 			}
@@ -50,10 +60,7 @@ namespace DataAccess
 				while (!reader.EndOfStream)
 				{
 					string name = reader.ReadLine();
-					if (!this.MyServers.Contains(name.Trim()))
-					{
-						this.MyServers.Add(name.Trim());
-					}
+					AddServer(name);
 				}
 			}
 		}
