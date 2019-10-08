@@ -11,7 +11,7 @@ namespace Testing
 			server.GetServers();
 			Console.WriteLine("Server name: " + server.ToString());
 
-			SQLConnectionString SQLConnect = new SQLConnectionString(@"(localdb)\MSSQLLocalDB", "BalloonShop");
+			SQLConnectionString SQLConnect = new SQLConnectionString(@"DESKTOP-G3SCN6I\SQLEXPRESS", "QLNV");
 			if (SQLConnect.TestConnection())
 			{
 				Console.WriteLine("Connection: OK");
@@ -24,7 +24,7 @@ namespace Testing
 				table.GetTables();
 				Console.WriteLine("\nTables in BalloonShop: \n" + table.ToString());
 
-				SQLColumn column = new SQLColumn(SQLConnect, "Category");
+				SQLColumn column = new SQLColumn(SQLConnect, "NhanVien");
 				column.GetColumns();
 				Console.WriteLine("\nColumns in Category: \n" + column.ToString());
 			}

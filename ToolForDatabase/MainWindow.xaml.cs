@@ -22,6 +22,8 @@ namespace ToolForDatabase
 	{
 		public MainWindow()
 		{
+			Login LoginForm = new Login();
+			bool? exit = LoginForm.ShowDialog();
 			InitializeComponent();
 		}
 	}
