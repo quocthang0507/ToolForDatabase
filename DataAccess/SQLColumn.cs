@@ -18,9 +18,9 @@ namespace DataAccess
 		private string table { get; set; }
 		public List<KeyValuePair<string, string>> MyColumns { get; set; }
 
-		public SQLColumn(SQLConnectionString SQLConnect, string table)
+		public SQLColumn(string connection, string table)
 		{
-			this.connection = new SqlConnection(SQLConnect.ConnectionString);
+			this.connection = new SqlConnection(connection);
 			this.table = table;
 			MyColumns = new List<KeyValuePair<string, string>>();
 		}

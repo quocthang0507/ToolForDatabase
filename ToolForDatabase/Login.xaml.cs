@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ namespace ToolForDatabase
 	{
 		private LoginFunction Function = new LoginFunction();
 		private bool WindowsRendered = false;
+		private string ConnectionString;
 
 		public Login()
 		{
@@ -31,7 +33,7 @@ namespace ToolForDatabase
 
 		public void LoadServersToCombobox()
 		{
-			cbx_ServerName.ItemsSource = Function.LoadServer();
+			cbx_ServerName.ItemsSource = Function.GetServers();
 			cbx_ServerName.SelectedIndex = 0;
 		}
 
@@ -56,24 +58,32 @@ namespace ToolForDatabase
 
 		private void btn_Test_Click(object sender, RoutedEventArgs e)
 		{
-			string server = cbx_ServerName.Text;
-			if (cbx_Authentication.SelectedIndex == 0)
+			var thread = new Thread(() =>
 			{
-				if (Function.TestConnection(server))
+				string server = cbx_ServerName.Dispatcher.Invoke(() => cbx_ServerName.Text);
+				bool connectable;
+				if (cbx_Authentication.Dispatcher.Invoke(() => cbx_Authentication.SelectedIndex == 0))
+				{
+					connectable = Function.TestConnection(server);
+				}
+				else
+				{
+					string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text);
+					string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password);
+					connectable = Function.TestConnection(server, username, password);
+					RememberPassword(username, password);
+				}
+				if (connectable)
+				{
 					MessageBox.Show("Connection is OK", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+					LoadDatabasesToCombobox();
+				}
 				else
 					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-			else
-			{
-				string username = tbx_Login.Text;
-				string password = tbx_Password.Password;
-				if (Function.TestConnection(server, username, password))
-					MessageBox.Show("Connection is OK", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-				else
-					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-
-			}
+				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
+			});
+			thread.Start();
+			progressBar.Visibility = Visibility.Visible;
 		}
 
 		private void cbx_ServerName_LostFocus(object sender, RoutedEventArgs e)
@@ -91,6 +101,37 @@ namespace ToolForDatabase
 		private void btn_Login_Click(object sender, RoutedEventArgs e)
 		{
 			Function.SaveServer(cbx_ServerName.Items.OfType<string>().ToList());
+		}
+
+		private void LoadDatabasesToCombobox()
+		{
+			cbx_Database.Dispatcher.Invoke(() => cbx_Database.ItemsSource = Function.GetDatabases());
+			cbx_Database.Dispatcher.Invoke(() => cbx_Database.SelectedIndex = 0);
+			panel_Database.Dispatcher.Invoke(() => panel_Database.IsEnabled = true);
+		}
+
+		private void RememberPassword(string username, string password)
+		{
+			if ((bool)chk_Remember.Dispatcher.Invoke(() => chk_Remember.IsChecked))
+			{
+				Properties.Settings.Default.Username = username;
+				Properties.Settings.Default.Password = password;
+				Properties.Settings.Default.Save();
+			}
+		}
+
+		private void LoadLoginInfo()
+		{
+			if (Properties.Settings.Default.Username != string.Empty)
+			{
+				tbx_Login.Text = Properties.Settings.Default.Username;
+				tbx_Password.Password = Properties.Settings.Default.Password;
+			}
+		}
+
+		private void cbx_ServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			panel_Database.IsEnabled = false;
 		}
 	}
 }

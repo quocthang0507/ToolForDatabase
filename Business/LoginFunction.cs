@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Business
 {
@@ -14,6 +15,7 @@ namespace Business
 	public class LoginFunction
 	{
 		private SQLServer server = new SQLServer();
+		private SQLConnectionString SQLConnect;
 
 		public LoginFunction()
 		{
@@ -24,7 +26,7 @@ namespace Business
 		/// Load các server từ hệ thống và từ file (nếu có)
 		/// </summary>
 		/// <returns>Danh sách các server</returns>
-		public List<string> LoadServer()
+		public List<string> GetServers()
 		{
 			server.GetServers();
 			LoadServerFromFile();
@@ -38,8 +40,8 @@ namespace Business
 		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server)
 		{
-			SQLConnectionString connection = new SQLConnectionString(server);
-			return connection.TestConnection();
+			SQLConnect = new SQLConnectionString(server);
+			return SQLConnect.TestConnection();
 		}
 
 		/// <summary>
@@ -51,8 +53,8 @@ namespace Business
 		/// <returns></returns>
 		public bool TestConnection(string server, string username, string password)
 		{
-			SQLConnectionString connection = new SQLConnectionString(server, "master", username, password);
-			return connection.TestConnection();
+			SQLConnect = new SQLConnectionString(server, "master", username, password);
+			return SQLConnect.TestConnection();
 		}
 
 		/// <summary>
@@ -72,5 +74,13 @@ namespace Business
 			if (File.Exists("data.txt"))
 				server.ReadFromFile("data.txt");
 		}
+
+		public List<string> GetDatabases()
+		{
+			SQLDatabase database = new SQLDatabase(SQLConnect.ConnectionString);
+			database.GetDatabases();
+			return database.MyDatabases;
+		}
+
 	}
 }

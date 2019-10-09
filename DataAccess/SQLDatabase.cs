@@ -17,9 +17,9 @@ namespace DataAccess
 		private SqlConnection connection;
 		public List<string> MyDatabases { get; set; }
 
-		public SQLDatabase(SQLConnectionString SQLConnect)
+		public SQLDatabase(string connection)
 		{
-			this.connection = new SqlConnection(SQLConnect.ConnectionString);
+			this.connection = new SqlConnection(connection);
 			MyDatabases = new List<string>();
 		}
 

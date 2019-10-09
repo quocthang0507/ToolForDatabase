@@ -20,11 +20,11 @@ namespace Testing
 				//database.GetDatabases();
 				//Console.WriteLine("\nDatabases: \n" + database.ToString());
 
-				SQLTable table = new SQLTable(SQLConnect);
+				SQLTable table = new SQLTable(SQLConnect.ConnectionString);
 				table.GetTables();
 				Console.WriteLine("\nTables in BalloonShop: \n" + table.ToString());
 
-				SQLColumn column = new SQLColumn(SQLConnect, "NhanVien");
+				SQLColumn column = new SQLColumn(SQLConnect.ConnectionString, "NhanVien");
 				column.GetColumns();
 				Console.WriteLine("\nColumns in Category: \n" + column.ToString());
 			}
