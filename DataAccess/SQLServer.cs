@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace DataAccess
@@ -25,7 +26,7 @@ namespace DataAccess
 		/// <param name="server">Server cần thêm</param>
 		public void AddServer(string server)
 		{
-			if (!MyServers.Contains(server))
+			if (MyServers.FindAll(x => x.Trim().ToLower() == server.Trim().ToLower()).Count == 0)
 				MyServers.Add(server);
 		}
 
@@ -66,11 +67,14 @@ namespace DataAccess
 		}
 
 		/// <summary>
-		/// Ghi tên SQL Server ra file
+		/// Ghi tên các server ra file để lưu trữ
 		/// </summary>
-		/// <param name="path">Đường dẫn đến file</param>
-		public void WriteToFile(string path)
+		/// <param name="path">Đường dẫn file data.txt</param>
+		/// <param name="others">Danh sách các server khác</param>
+		public void WriteToFile(string path, List<string> others)
 		{
+			MyServers.AddRange(others); //Thêm các server khác mà người dùng đã nhập vào
+			MyServers = MyServers.Distinct().ToList();  //Loại bỏ những tên bị trùng 
 			StringBuilder data = new StringBuilder();
 			foreach (var item in this.MyServers)
 			{

@@ -78,8 +78,19 @@ namespace ToolForDatabase
 
 		private void cbx_ServerName_LostFocus(object sender, RoutedEventArgs e)
 		{
-			string ServerUserInput = cbx_ServerName.Text.Trim();
-			var contained = cbx_ServerName.Items.OfType<string>().ToList().Where(x => x.ToLower() == ServerUserInput.ToLower()).Count() > 0;
+			string serverUserInput = cbx_ServerName.Text.Trim();
+			var current = cbx_ServerName.Items.OfType<string>().ToList();
+			var contained = current.Where(x => x.ToLower() == serverUserInput.ToLower()).Count() > 0;
+			if (!contained)
+			{
+				current.Add(serverUserInput);
+				cbx_ServerName.ItemsSource = current;
+			}
+		}
+
+		private void btn_Login_Click(object sender, RoutedEventArgs e)
+		{
+			Function.SaveServer(cbx_ServerName.Items.OfType<string>().ToList());
 		}
 	}
 }
