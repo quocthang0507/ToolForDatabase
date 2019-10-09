@@ -42,7 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataType.cs" />
+    <Compile Include="LoginFunction.cs" />
+    <Compile Include="MainFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{2bc03cfb-d940-4dff-bb5e-307a8f8b4f93}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
