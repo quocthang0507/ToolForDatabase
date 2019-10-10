@@ -14,6 +14,10 @@ namespace DataAccess
 		private SqlConnection connection;
 		public List<string> MyTables { get; set; }
 
+		/// <summary>
+		/// Khởi tạo lớp với chuỗi kết nối
+		/// </summary>
+		/// <param name="connection"></param>
 		public SQLTable(string connection)
 		{
 			this.connection = new SqlConnection(connection);

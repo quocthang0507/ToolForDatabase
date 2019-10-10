@@ -1,6 +1,8 @@
 ﻿using Business;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +25,6 @@ namespace ToolForDatabase
 	{
 		private LoginFunction Function = new LoginFunction();
 		private bool WindowsRendered = false;
-		private string ConnectionString;
 
 		public Login()
 		{
@@ -31,20 +32,7 @@ namespace ToolForDatabase
 			LoadServersToCombobox();
 		}
 
-		public void LoadServersToCombobox()
-		{
-			cbx_ServerName.ItemsSource = Function.GetServers();
-			cbx_ServerName.SelectedIndex = 0;
-		}
-
-		private void cbx_Authentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (WindowsRendered)
-				if (cbx_Authentication.SelectedIndex == 0)
-					panelUA.IsEnabled = false;
-				else
-					panelUA.IsEnabled = true;
-		}
+		#region Events
 
 		/// <summary>
 		/// Bởi vì sự kiện của control này xảy ra nhưng không truy cập được control khác do chưa rendered đầy đủ
@@ -54,36 +42,7 @@ namespace ToolForDatabase
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			WindowsRendered = true;
-		}
-
-		private void btn_Test_Click(object sender, RoutedEventArgs e)
-		{
-			var thread = new Thread(() =>
-			{
-				string server = cbx_ServerName.Dispatcher.Invoke(() => cbx_ServerName.Text);
-				bool connectable;
-				if (cbx_Authentication.Dispatcher.Invoke(() => cbx_Authentication.SelectedIndex == 0))
-				{
-					connectable = Function.TestConnection(server);
-				}
-				else
-				{
-					string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text);
-					string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password);
-					connectable = Function.TestConnection(server, username, password);
-					RememberPassword(username, password);
-				}
-				if (connectable)
-				{
-					MessageBox.Show("Connection is OK", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-					LoadDatabasesToCombobox();
-				}
-				else
-					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
-			});
-			thread.Start();
-			progressBar.Visibility = Visibility.Visible;
+			LoadLoginInfo();
 		}
 
 		private void cbx_ServerName_LostFocus(object sender, RoutedEventArgs e)
@@ -98,11 +57,72 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void btn_Login_Click(object sender, RoutedEventArgs e)
+		private void cbx_ServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			Function.SaveServer(cbx_ServerName.Items.OfType<string>().ToList());
+			panel_Database.IsEnabled = false;
 		}
 
+		private void cbx_Authentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (WindowsRendered)
+				if (cbx_Authentication.SelectedIndex == 0)
+					panelUA.IsEnabled = false;
+				else
+					panelUA.IsEnabled = true;
+		}
+
+		private void btn_Test_Click(object sender, RoutedEventArgs e)
+		{
+			progressBar.Visibility = Visibility.Visible;
+			var thread = new Thread(() =>
+			{
+				bool connectable = TestConnection();
+				if (connectable)
+				{
+					MessageBox.Show("Connection is OK", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+					LoadDatabasesToCombobox();
+				}
+				else
+					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
+			});
+			thread.Start();
+		}
+
+		private void btn_Login_Click(object sender, RoutedEventArgs e)
+		{
+			if (TestConnection())
+			{
+				Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
+				SaveLoginInfo();
+				SaveConnectionString(Function.GetSQLConnectionString());
+			}
+			else
+				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
+			System.Windows.Application.Current.Shutdown();
+		}
+		
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Lấy danh sách tên server từ máy và từ file hiển thị ra combobox
+		/// </summary>
+		public void LoadServersToCombobox()
+		{
+			cbx_ServerName.ItemsSource = Function.GetServers();
+			cbx_ServerName.SelectedIndex = 0;
+		}
+
+		/// <summary>
+		/// Lấy danh sách tên cơ sở dữ liệu hiển thị ra combobox
+		/// </summary>
 		private void LoadDatabasesToCombobox()
 		{
 			cbx_Database.Dispatcher.Invoke(() => cbx_Database.ItemsSource = Function.GetDatabases());
@@ -110,28 +130,64 @@ namespace ToolForDatabase
 			panel_Database.Dispatcher.Invoke(() => panel_Database.IsEnabled = true);
 		}
 
-		private void RememberPassword(string username, string password)
-		{
-			if ((bool)chk_Remember.Dispatcher.Invoke(() => chk_Remember.IsChecked))
-			{
-				Properties.Settings.Default.Username = username;
-				Properties.Settings.Default.Password = password;
-				Properties.Settings.Default.Save();
-			}
-		}
-
+		/// <summary>
+		/// Lấy thông tin đăng nhập đã lưu trữ
+		/// </summary>
 		private void LoadLoginInfo()
 		{
-			if (Properties.Settings.Default.Username != string.Empty)
+			string data = Function.GetLoginInfo();
+			if (data != string.Empty)
 			{
-				tbx_Login.Text = Properties.Settings.Default.Username;
-				tbx_Password.Password = Properties.Settings.Default.Password;
+				string[] info = Function.GetLoginInfo().Split(' ');
+				tbx_Login.Text = info[0];
+				tbx_Password.Password = info[1];
 			}
 		}
 
-		private void cbx_ServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		/// <summary>
+		/// Kiểm tra kết nối
+		/// </summary>
+		/// <returns>Kết nối thành công</returns>
+		private bool TestConnection()
 		{
-			panel_Database.IsEnabled = false;
+			string server = cbx_ServerName.Dispatcher.Invoke(() => cbx_ServerName.Text.Trim());
+			if (cbx_Authentication.Dispatcher.Invoke(() => cbx_Authentication.SelectedIndex == 0))
+			{
+				return Function.TestConnection(server);
+			}
+			else
+			{
+				string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text.Trim());
+				string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password.Trim());
+				return Function.TestConnection(server, username, password);
+			}
 		}
+
+		/// <summary>
+		/// Lưu trữ thông tin đăng nhập ra file
+		/// </summary>
+		private void SaveLoginInfo()
+		{
+			if (cbx_Authentication.SelectedIndex == 1)
+			{
+				string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text.Trim());
+				string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password.Trim());
+				Function.SaveLoginInfo(username, password);
+			}
+		}
+
+		/// <summary>
+		/// Lưu trữ chuỗi kết nối vào chương trình
+		/// </summary>
+		/// <param name="connectionString"></param>
+		private void SaveConnectionString(string connectionString)
+		{
+			Properties.Settings.Default.ConnectionString = connectionString;
+			Properties.Settings.Default.Save();
+			Properties.Settings.Default.Upgrade();
+		}
+
+		#endregion
+
 	}
 }

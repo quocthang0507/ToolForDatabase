@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ToolForDatabase")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tool For Database")]
+[assembly: AssemblyDescription("Công cụ sinh mã tự động")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ToolForDatabase")]
+[assembly: AssemblyCompany("Dalat University, IT Department")]
+[assembly: AssemblyProduct("Tool For Database")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Thắng La Quốc")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

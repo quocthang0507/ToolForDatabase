@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Business
 {
+	/// <summary>
+	/// Lớp cung cấp các thao tác cho form Main 
+	/// </summary>
 	public class MainFunction
 	{
 	}
