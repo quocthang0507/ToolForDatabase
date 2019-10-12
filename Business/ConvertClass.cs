@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Business
 		private string Table;
 		private List<KeyValuePair<string, string>> Columns;
 		private string Field = "\t\tpublic {0} {1} {{ get; set; }}";
-		private string Constructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}";
+		private string Constructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}\n";
 		private string Parameter = "{0} {1}";
 		private string Statement = "\t\t\tthis.{0} = {0};";
 
@@ -41,7 +42,7 @@ namespace Business
 			StringBuilder builder = new StringBuilder();
 			foreach (var attribute in Columns)
 			{
-				builder.AppendLine(string.Format(Field, attribute.Key, attribute.Value));
+				builder.AppendLine(string.Format(Field, attribute.Key, DataType.Mapping(attribute.Value)));
 			}
 			return builder.ToString();
 		}
@@ -51,7 +52,7 @@ namespace Business
 			string param = "";
 			for (int i = 0; i < length; i++)
 			{
-				param += string.Format(Parameter, Columns[i].Value, Columns[i].Key);
+				param += string.Format(Parameter, DataType.Mapping(Columns[i].Value), Columns[i].Key);
 				if (i < length - 1)
 					param += ", ";
 			}
