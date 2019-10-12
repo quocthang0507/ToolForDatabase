@@ -14,14 +14,14 @@ namespace DataAccess
 	/// </summary>
 	public class SQLColumn
 	{
-		private SqlConnection connection;
-		private string table { get; set; }
+		private SqlConnection Connection;
+		private string Table { get; set; }
 		public List<KeyValuePair<string, string>> MyColumns { get; set; }
 
 		public SQLColumn(string connection, string table)
 		{
-			this.connection = new SqlConnection(connection);
-			this.table = table;
+			this.Connection = new SqlConnection(connection);
+			this.Table = table;
 			MyColumns = new List<KeyValuePair<string, string>>();
 		}
 
@@ -40,11 +40,11 @@ namespace DataAccess
 		/// </summary>
 		public void GetColumns()
 		{
-			connection.Open();
+			Connection.Open();
 			string[] restrictions = new string[4];
-			restrictions[2] = table;
-			DataTable columns = connection.GetSchema("Columns", restrictions);
-			connection.Close();
+			restrictions[2] = Table;
+			DataTable columns = Connection.GetSchema("Columns", restrictions);
+			Connection.Close();
 			foreach (DataRow item in columns.Rows)
 			{
 				AddColumn(new KeyValuePair<string, string>(item[3].ToString(), item[7].ToString()));

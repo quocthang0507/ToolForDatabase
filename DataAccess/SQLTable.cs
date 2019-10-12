@@ -11,7 +11,7 @@ namespace DataAccess
 	/// </summary>
 	public class SQLTable
 	{
-		private SqlConnection connection;
+		private SqlConnection Connection;
 		public List<string> MyTables { get; set; }
 
 		/// <summary>
@@ -20,7 +20,7 @@ namespace DataAccess
 		/// <param name="connection"></param>
 		public SQLTable(string connection)
 		{
-			this.connection = new SqlConnection(connection);
+			this.Connection = new SqlConnection(connection);
 			this.MyTables = new List<string>();
 		}
 
@@ -39,9 +39,9 @@ namespace DataAccess
 		/// </summary>
 		public void GetTables()
 		{
-			connection.Open();
-			DataTable tables = connection.GetSchema("Tables");
-			connection.Close();
+			Connection.Open();
+			DataTable tables = Connection.GetSchema("Tables");
+			Connection.Close();
 			foreach (DataRow item in tables.Rows)
 			{
 				AddTable(item[2].ToString());

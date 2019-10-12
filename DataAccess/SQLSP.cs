@@ -8,7 +8,7 @@ namespace DataAccess
 	/// </summary>
 	public class SQLSP
 	{
-		private SqlConnection connection;
+		private SqlConnection Connection;
 
 		public SQLSP()
 		{
@@ -17,7 +17,7 @@ namespace DataAccess
 
 		public SQLSP(string connectionString)
 		{
-			this.connection = new SqlConnection(connectionString);
+			this.Connection = new SqlConnection(connectionString);
 		}
 	}
 }

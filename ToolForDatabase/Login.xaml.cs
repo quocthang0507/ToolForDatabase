@@ -96,6 +96,9 @@ namespace ToolForDatabase
 				Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
 				SaveLoginInfo();
 				SaveConnectionString(Function.GetSQLConnectionString());
+				this.Hide();
+				MainWindow main = new MainWindow();
+				main.Show();
 			}
 			else
 				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -106,7 +109,7 @@ namespace ToolForDatabase
 			Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
 			System.Windows.Application.Current.Shutdown();
 		}
-		
+
 		#endregion
 
 		#region Methods
@@ -151,14 +154,19 @@ namespace ToolForDatabase
 		private bool TestConnection()
 		{
 			string server = cbx_ServerName.Dispatcher.Invoke(() => cbx_ServerName.Text.Trim());
+			string database = cbx_Database.Dispatcher.Invoke(() => cbx_Database.Text.Trim());
 			if (cbx_Authentication.Dispatcher.Invoke(() => cbx_Authentication.SelectedIndex == 0))
 			{
+				if (database != null)
+					return Function.TestConnection(server, database);
 				return Function.TestConnection(server);
 			}
 			else
 			{
 				string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text.Trim());
 				string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password.Trim());
+				if (database != null)
+					return Function.TestConnection(server, database, username, password);
 				return Function.TestConnection(server, username, password);
 			}
 		}

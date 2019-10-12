@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,17 @@ namespace ToolForDatabase
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		MainFunction Function;
+
 		public MainWindow()
 		{
-			Login LoginForm = new Login();
-			LoginForm.Show();
 			InitializeComponent();
-			this.Hide();
+			GetConnectionString();
+		}
+
+		private void GetConnectionString()
+		{
+			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
 		}
 	}
 }

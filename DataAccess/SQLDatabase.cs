@@ -14,7 +14,7 @@ namespace DataAccess
 	/// </summary>
 	public class SQLDatabase
 	{
-		private SqlConnection connection;
+		private SqlConnection Connection;
 		public List<string> MyDatabases { get; set; }
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace DataAccess
 		/// <param name="connection"></param>
 		public SQLDatabase(string connection)
 		{
-			this.connection = new SqlConnection(connection);
+			this.Connection = new SqlConnection(connection);
 			MyDatabases = new List<string>();
 		}
 
@@ -42,9 +42,9 @@ namespace DataAccess
 		/// </summary>
 		public void GetDatabases()
 		{
-			connection.Open();
-			DataTable databases = connection.GetSchema("Databases");
-			connection.Close();
+			Connection.Open();
+			DataTable databases = Connection.GetSchema("Databases");
+			Connection.Close();
 			foreach (DataRow item in databases.Rows)
 			{
 				AddDatabase(item.Field<string>("database_name"));

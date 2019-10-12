@@ -15,7 +15,7 @@ namespace Business
 	/// </summary>
 	public class LoginFunction
 	{
-		private SQLServer server = new SQLServer();
+		private SQLServer Server = new SQLServer();
 		private SQLConnectionString SQLConnect;
 		private readonly string pass = "lqt";
 		private readonly string serverFile = "server.dat";
@@ -32,10 +32,10 @@ namespace Business
 		/// <returns>Danh sách các server</returns>
 		public List<string> GetServers()
 		{
-			server.GetServers();
+			Server.GetServers();
 			if (File.Exists(serverFile))
-				server.ReadFromFile(serverFile);
-			return server.MyServers;
+				Server.ReadFromFile(serverFile);
+			return Server.MyServers;
 		}
 
 		/// <summary>
@@ -53,6 +53,18 @@ namespace Business
 		/// Kiểm tra kết nối
 		/// </summary>
 		/// <param name="server">Tên server</param>
+		/// <param name="database">Tên cơ sở dữ liệu</param>
+		/// <returns>Kết nối thành công</returns>
+		public bool TestConnection(string server, string database)
+		{
+			SQLConnect = new SQLConnectionString(server, database);
+			return SQLConnect.TestConnection();
+		}
+
+		/// <summary>
+		/// Kiểm tra kết nối
+		/// </summary>
+		/// <param name="server">Tên server</param>
 		/// <param name="username">Tên đăng nhập</param>
 		/// <param name="password">Mật khẩu</param>
 		/// <returns></returns>
@@ -63,12 +75,27 @@ namespace Business
 		}
 
 		/// <summary>
+		/// Kiểm tra kết nối
+		/// </summary>
+		/// <param name="server">Tên server</param>
+		/// <param name="database">Tên cơ sở dữ liệu</param>
+		/// <param name="username">Tên đăng nhập</param>
+		/// <param name="password">Mật khẩu</param>
+		/// <returns></returns>
+		public bool TestConnection(string server, string database, string username, string password)
+		{
+			SQLConnect = new SQLConnectionString(server, database, username, password);
+			return SQLConnect.TestConnection();
+		}
+
+
+		/// <summary>
 		/// Lưu trữ tên server để sau này dùng lại
 		/// </summary>
 		/// <param name="others">Danh sách server khác</param>
 		public void SaveServers(List<string> others)
 		{
-			server.WriteToFile(serverFile, others);
+			Server.WriteToFile(serverFile, others);
 		}
 
 		/// <summary>
