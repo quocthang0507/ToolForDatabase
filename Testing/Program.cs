@@ -10,27 +10,21 @@ namespace Testing
 		{
 			SQLServer server = new SQLServer();
 			server.GetServers();
-			Console.WriteLine("Server name: " + server.ToString());
 
 			SQLConnectionString SQLConnect = new SQLConnectionString(@"DESKTOP-G3SCN6I\SQLEXPRESS", "QLNV");
 			if (SQLConnect.TestConnection())
 			{
-				Console.WriteLine("Connection: OK");
-
-				//SQLDatabase database = new SQLDatabase(SQLConnect);
-				//database.GetDatabases();
-				//Console.WriteLine("\nDatabases: \n" + database.ToString());
-
 				SQLTable table = new SQLTable(SQLConnect.ConnectionString);
 				table.GetTables();
-				Console.WriteLine("\nTables in BalloonShop: \n" + table.ToString());
 
 				SQLColumn column = new SQLColumn(SQLConnect.ConnectionString, "NhanVien");
 				column.GetColumns();
-				Console.WriteLine("\nColumns in Category: \n" + column.ToString());
 
-				ConvertClass convert = new ConvertClass("NhanVien", column.MyColumns);
-				Console.WriteLine(convert.GenerateConstructors());
+				Console.Write("Nhap ten namespace: ");
+				string @namespace = Console.ReadLine();
+
+				ConvertClass convert = new ConvertClass(@namespace, "NhanVien", column.MyColumns);
+				Console.WriteLine(convert.ToString());
 			}
 			else
 			{
