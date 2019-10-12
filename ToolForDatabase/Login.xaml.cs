@@ -83,7 +83,7 @@ namespace ToolForDatabase
 					LoadDatabasesToCombobox();
 				}
 				else
-					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
 				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
 			});
 			thread.Start();
@@ -101,7 +101,7 @@ namespace ToolForDatabase
 				main.Show();
 			}
 			else
-				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -33,5 +33,48 @@ namespace ToolForDatabase
 		{
 			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
 		}
+
+		private void LoadDatabases()
+		{
+
+		}
+
+		private void btnCopy_Click(object sender, RoutedEventArgs e)
+		{
+			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
+			string data = textRange.Text;
+			if (data != "\r\n")
+			{
+				Clipboard.SetText(data);
+				MessageBox.Show("Successfully copied", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+			}
+			else
+			{
+				MessageBox.Show("Can't copy with a null value", "Copy", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+		private void btnGenerate_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Window_ContentRendered(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnExport_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			MessageBoxResult exit = MessageBox.Show("Do you want to exit this application?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (exit == MessageBoxResult.Yes)
+				System.Windows.Application.Current.Shutdown();
+			else e.Cancel = true;
+		}
 	}
 }
