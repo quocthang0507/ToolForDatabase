@@ -40,7 +40,7 @@ namespace ToolForDatabase
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			LoadTables();
-			tbxContent.Document.Blocks.Clear();
+			tbxContent.Clear();
 		}
 
 		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -49,10 +49,11 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			treeTable.MaxHeight = height - 200;
-			dock.MaxHeight = height * 90 / 100;
-			dock.MaxWidth = width * 90 / 100;
-			dock.Height = height * 75 / 100;
-			dock.Width = width * 55 / 100;
+			treeTable.MaxWidth = width * 20 / 100;
+			dock.MaxHeight = height * 80 / 100;
+			dock.MaxWidth = width * 75 / 100;
+			dock.Height = height * 80 / 100;
+			dock.Width = width * 75 / 100;
 		}
 
 		private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -65,15 +66,14 @@ namespace ToolForDatabase
 		{
 			string selected = treeTable.SelectedItem.ToString();
 			if (!selected.Contains("Header"))   //Bỏ qua tên server
-				tbx_Table.Text = selected;
+				tbxTable.Text = selected;
 			else
-				tbx_Table.Text = null;
+				tbxTable.Text = null;
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
 		{
-			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
-			string data = textRange.Text;
+			string data = tbxContent.Text;
 			if (data != "")
 			{
 				Clipboard.SetText(data);
@@ -87,25 +87,24 @@ namespace ToolForDatabase
 
 		private void btnGenerate_Click(object sender, RoutedEventArgs e)
 		{
-			string @namespace = tbx_Namespace.Text;
-			string table = tbx_Table.Text;
+			string @namespace = tbxNamespace.Text;
+			string table = tbxTable.Text;
 			if (@namespace == "" || table == "")
 			{
 				MessageBox.Show("Can't generate class because one or more textbox are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
-			tbxContent.Document.Blocks.Clear();
-			tbxContent.Document.Blocks.Add(new Paragraph(new Run(Function.GenerateClass(@namespace, table))));
+			tbxContent.Clear();
+			tbxContent.Text = Function.GenerateClass(@namespace, table);
 		}
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
 		{
-			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
-			string data = textRange.Text;
+			string data = tbxContent.Text;
 			if (data != "")
 			{
 				string path = GetSelectedPath();
-				string filename = tbx_Table.Text + ".cs";
+				string filename = tbxTable.Text + ".cs";
 				Function.SaveToFile(path + "\\" + Database, filename, data);
 				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
 			}
@@ -163,5 +162,6 @@ namespace ToolForDatabase
 		}
 
 		#endregion
+
 	}
 }
