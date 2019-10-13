@@ -21,15 +21,26 @@ namespace ToolForDatabase
 	/// <summary>
 	/// Interaction logic for Login.xaml
 	/// </summary>
-	public partial class Login : Window
+	public partial class LoginForm : Window
 	{
 		private LoginFunction Function = new LoginFunction();
 		private bool WindowsRendered = false;
+		private static LoginForm instance;
 
-		public Login()
+		public LoginForm()
 		{
 			InitializeComponent();
 			LoadServersToCombobox();
+		}
+
+		public static LoginForm Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = new LoginForm();
+				return instance;
+			}
 		}
 
 		#region Events
@@ -97,8 +108,7 @@ namespace ToolForDatabase
 				SaveLoginInfo();
 				SaveConnectionString(Function.GetSQLConnectionString());
 				this.Hide();
-				MainWindow main = new MainWindow();
-				main.Show();
+				MainForm.Instance.Show();
 			}
 			else
 				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -191,6 +201,7 @@ namespace ToolForDatabase
 		private void SaveConnectionString(string connectionString)
 		{
 			Properties.Settings.Default.ConnectionString = connectionString;
+			Properties.Settings.Default.Database = cbx_Database.Text;
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Upgrade();
 		}

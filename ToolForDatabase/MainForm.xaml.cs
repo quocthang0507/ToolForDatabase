@@ -1,42 +1,49 @@
 ﻿using Business;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ToolForDatabase
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainForm : Window
 	{
-		MainFunction Function;
+		private MainFunction Function;
+		private string Database;
+		private static MainForm instance;
+		private bool Rendered = false;
 
-		public MainWindow()
+		public MainForm()
 		{
 			InitializeComponent();
 			GetConnectionString();
 		}
 
+		public static MainForm Instance
+		{
+			get
+			{
+				//if (instance == null)
+				instance = new MainForm();
+				return instance;
+			}
+		}
+
 		private void GetConnectionString()
 		{
 			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
+			Database = Properties.Settings.Default.Database;
 		}
 
 		private void LoadDatabases()
 		{
-
+			TreeViewItem root = new TreeViewItem();
+			root.Header = Database;
+			root.ItemsSource = Function.GetTables();
+			treeTable.Items.Add(root);
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
@@ -56,12 +63,13 @@ namespace ToolForDatabase
 
 		private void btnGenerate_Click(object sender, RoutedEventArgs e)
 		{
-
+			tbxContent.Document.Blocks.Add(new Paragraph(new Run(Function.GenerateClass(tbx_Namespace.Text, tbx_Table.Text))));
 		}
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-
+			LoadDatabases();
+			Rendered = true;
 		}
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
@@ -75,6 +83,29 @@ namespace ToolForDatabase
 			if (exit == MessageBoxResult.Yes)
 				System.Windows.Application.Current.Shutdown();
 			else e.Cancel = true;
+		}
+
+		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		{
+			tbx_Table.Text = treeTable.SelectedItem.ToString();
+		}
+
+		private void btnBack_Click(object sender, RoutedEventArgs e)
+		{
+			this.Hide();
+			LoginForm.Instance.Show();
+		}
+
+		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			Size newSize = e.NewSize;
+			double height = newSize.Height;
+			double width = newSize.Width;
+			treeTable.MaxHeight = height - 200;
+			dock.MaxHeight = height * 80 / 100;
+			dock.Height = height * 80 / 100;
+			dock.MaxWidth = width * 80 / 100;
+			dock.Width = width * 80 / 100;
 		}
 	}
 }

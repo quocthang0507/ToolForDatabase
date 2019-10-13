@@ -14,6 +14,7 @@ namespace Business
 	public class MainFunction
 	{
 		private SqlConnection connection;
+		private string Table;
 
 		public MainFunction(string connection)
 		{
@@ -32,6 +33,12 @@ namespace Business
 			SQLColumn column = new SQLColumn(connection.ConnectionString, table);
 			column.GetColumns();
 			return column.MyColumns;
+		}
+
+		public string GenerateClass(string @namespace, string @class)
+		{
+			ConvertClass convert = new ConvertClass(@namespace, @class, GetColumns(@class));
+			return convert.ToString();
 		}
 	}
 }
