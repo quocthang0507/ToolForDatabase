@@ -16,8 +16,17 @@ namespace DataAccess
 	{
 		private SqlConnection Connection;
 		private string Table { get; set; }
+
+		/// <summary>
+		/// Danh sách các cột / thuộc tính của bảng
+		/// </summary>
 		public List<KeyValuePair<string, string>> MyColumns { get; set; }
 
+		/// <summary>
+		/// Khởi tạo với chuỗi kết nối và tên bảng
+		/// </summary>
+		/// <param name="connection">Chuỗi kết nối</param>
+		/// <param name="table">Tên bảng</param>
 		public SQLColumn(string connection, string table)
 		{
 			this.Connection = new SqlConnection(connection);
@@ -26,10 +35,10 @@ namespace DataAccess
 		}
 
 		/// <summary>
-		/// Thêm một cột
+		/// Thêm một cột vào danh sách cột nếu chưa tồn tại
 		/// </summary>
 		/// <param name="column">Cột cần thêm</param>
-		public void AddColumn(KeyValuePair<string, string> column)
+		private void AddColumn(KeyValuePair<string, string> column)
 		{
 			if (!MyColumns.Contains(column))
 				MyColumns.Add(column);

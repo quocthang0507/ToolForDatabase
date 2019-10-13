@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess
 {
@@ -15,12 +12,16 @@ namespace DataAccess
 	public class SQLDatabase
 	{
 		private SqlConnection Connection;
+
+		/// <summary>
+		/// Danh sách các cơ sở dữ liệu có trong server
+		/// </summary>
 		public List<string> MyDatabases { get; set; }
 
 		/// <summary>
 		/// Khởi tạo lớp với chuỗi kết nối
 		/// </summary>
-		/// <param name="connection"></param>
+		/// <param name="connection">Chuỗi kết nối</param>
 		public SQLDatabase(string connection)
 		{
 			this.Connection = new SqlConnection(connection);
@@ -28,10 +29,10 @@ namespace DataAccess
 		}
 
 		/// <summary>
-		/// Thêm một cơ sở dữ liệu
+		/// Thêm một cơ sở dữ liệu vào danh sách nếu chưa tồn tại
 		/// </summary>
 		/// <param name="database">Cơ sở dữ liệu cần thêm</param>
-		public void AddDatabase(string database)
+		private void AddDatabase(string database)
 		{
 			if (!MyDatabases.Contains(database))
 				MyDatabases.Add(database);

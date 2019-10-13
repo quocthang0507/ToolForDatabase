@@ -1,12 +1,6 @@
 ﻿using DataAccess;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.IO.IsolatedStorage;
 
 namespace Business
 {
@@ -27,7 +21,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Load các server từ hệ thống và từ file (nếu có)
+		/// Lấy tên các server từ hệ thống và từ file (nếu có)
 		/// </summary>
 		/// <returns>Danh sách các server</returns>
 		public List<string> GetServers()
@@ -39,7 +33,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Kiểm tra kết nối
+		/// Kiểm tra kết nối đến SQL Server
 		/// </summary>
 		/// <param name="server">Tên server</param>
 		/// <returns>Kết nối thành công</returns>
@@ -50,7 +44,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Kiểm tra kết nối
+		/// Kiểm tra kết nối đến SQL Server
 		/// </summary>
 		/// <param name="server">Tên server</param>
 		/// <param name="database">Tên cơ sở dữ liệu</param>
@@ -62,12 +56,12 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Kiểm tra kết nối
+		/// Kiểm tra kết nối đến SQL Server
 		/// </summary>
 		/// <param name="server">Tên server</param>
 		/// <param name="username">Tên đăng nhập</param>
 		/// <param name="password">Mật khẩu</param>
-		/// <returns></returns>
+		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server, string username, string password)
 		{
 			SQLConnect = new SQLConnectionString(server, username, password);
@@ -75,19 +69,18 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Kiểm tra kết nối
+		/// Kiểm tra kết nối đến SQL Server
 		/// </summary>
 		/// <param name="server">Tên server</param>
 		/// <param name="database">Tên cơ sở dữ liệu</param>
 		/// <param name="username">Tên đăng nhập</param>
 		/// <param name="password">Mật khẩu</param>
-		/// <returns></returns>
+		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server, string database, string username, string password)
 		{
 			SQLConnect = new SQLConnectionString(server, database, username, password);
 			return SQLConnect.TestConnection();
 		}
-
 
 		/// <summary>
 		/// Lưu trữ tên server để sau này dùng lại

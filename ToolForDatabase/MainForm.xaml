@@ -23,7 +23,7 @@
 					</TreeView.ItemContainerStyle>
 				</TreeView>
 			</StackPanel>
-			<DockPanel x:Name="dock" Margin="30,5,10,0" Width="500">
+			<DockPanel x:Name="dock" Margin="30,5,10,0">
 				<StackPanel MaxWidth="400" DockPanel.Dock="Top">
 					<Grid>
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">

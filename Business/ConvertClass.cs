@@ -1,12 +1,12 @@
 ﻿using DataAccess;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Business
 {
+	/// <summary>
+	/// Lớp cung cấp các phương thức tạo dựng lớp C#
+	/// </summary>
 	public class ConvertClass
 	{
 		private string Full = "{0}\nnamespace {1}\n{{\n\tpublic class {2}\n\t{{\n{3}\n{4}{5}\n\t}}\n}}";
@@ -19,12 +19,23 @@ namespace Business
 		private string Statement = "\t\t\tthis.{0} = {0};";
 		private string ToStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0}.ToString();\n\t\t}}";
 
+		/// <summary>
+		/// Khởi tạo lớp
+		/// </summary>
+		/// <param name="table">Tên bảng</param>
+		/// <param name="columns">Tên thuộc tính</param>
 		public ConvertClass(string table, List<KeyValuePair<string, string>> columns)
 		{
 			Table = table;
 			Columns = columns;
 		}
 
+		/// <summary>
+		/// Khởi tạo lớp
+		/// </summary>
+		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
+		/// <param name="table">Tên bảng</param>
+		/// <param name="columns">Tên thuộc tính</param>
 		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> columns)
 		{
 			Namespace = @namespace;
@@ -32,6 +43,9 @@ namespace Business
 			Columns = columns;
 		}
 
+		/// <summary>
+		/// Tạo các chỉ thị Using
+		/// </summary>
 		public string GenerateUsings
 		{
 			get
@@ -42,6 +56,9 @@ namespace Business
 			}
 		}
 
+		/// <summary>
+		/// Tạo các trường (thuộc tính) của lớp
+		/// </summary>
 		public string GenerateProperties
 		{
 			get
@@ -55,6 +72,11 @@ namespace Business
 			}
 		}
 
+		/// <summary>
+		/// Tạo ra các một loạt các tham số cho phương thức tạo lập tùy theo số lượng cần
+		/// </summary>
+		/// <param name="length">Số lượng tham số</param>
+		/// <returns></returns>
 		private string GenerateParameters(int length)
 		{
 			string param = "";
@@ -67,6 +89,11 @@ namespace Business
 			return param;
 		}
 
+		/// <summary>
+		/// Tạo ra một loạt các lệnh khởi tạo thuộc tính của lớp tùy theo số lượng cần
+		/// </summary>
+		/// <param name="length">Số lượng câu lệnh</param>
+		/// <returns></returns>
 		private string GenerateStatements(int length)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -77,6 +104,9 @@ namespace Business
 			return builder.ToString();
 		}
 
+		/// <summary>
+		/// Tạo ra một loạt các phương thức khởi tạo của lớp
+		/// </summary>
 		public string GenerateConstructors
 		{
 			get
@@ -93,6 +123,9 @@ namespace Business
 			}
 		}
 
+		/// <summary>
+		/// Tạo ra phương thức ToString
+		/// </summary>
 		public string GenerateToString
 		{
 			get
@@ -101,6 +134,10 @@ namespace Business
 			}
 		}
 
+		/// <summary>
+		/// Xuất toàn bộ nội dung lớp ra chuỗi
+		/// </summary>
+		/// <returns>Nội dung lớp</returns>
 		public override string ToString()
 		{
 			return string.Format(Full, GenerateUsings, Namespace, Table, GenerateProperties, GenerateConstructors, GenerateToString);

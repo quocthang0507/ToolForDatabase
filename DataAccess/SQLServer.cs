@@ -13,6 +13,9 @@ namespace DataAccess
 	/// </summary>
 	public class SQLServer
 	{
+		/// <summary>
+		/// Danh sách các SQL Server có trong máy
+		/// </summary>
 		public List<string> MyServers { get; set; }
 
 		public SQLServer()
@@ -21,10 +24,10 @@ namespace DataAccess
 		}
 
 		/// <summary>
-		/// Thêm một server
+		/// Thêm một server vào danh sách nếu chưa tồn tại
 		/// </summary>
 		/// <param name="server">Server cần thêm</param>
-		public void AddServer(string server)
+		private void AddServer(string server)
 		{
 			if (MyServers.FindAll(x => x.Trim().ToLower() == server.Trim().ToLower()).Count == 0)
 				MyServers.Add(server);
@@ -51,7 +54,7 @@ namespace DataAccess
 		}
 
 		/// <summary>
-		/// Đọc tên SQL Server từ file
+		/// Lấy tên SQL Server từ file và lưu vào danh sách
 		/// </summary>
 		/// <param name="path">Đường dẫn đến file</param>
 		public void ReadFromFile(string path)

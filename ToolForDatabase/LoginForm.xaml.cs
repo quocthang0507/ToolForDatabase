@@ -1,20 +1,9 @@
 ﻿using Business;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ToolForDatabase
 {
@@ -33,6 +22,9 @@ namespace ToolForDatabase
 			LoadServersToCombobox();
 		}
 
+		/// <summary>
+		/// Sử dụng Singleton để không cần tạo lại lớp nhằm mục đích ẩn/ hiện form
+		/// </summary>
 		public static LoginForm Instance
 		{
 			get
@@ -56,6 +48,11 @@ namespace ToolForDatabase
 			LoadLoginInfo();
 		}
 
+		/// <summary>
+		/// Lưu lại tên server mà người dùng nhập vào combobox
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cbx_ServerName_LostFocus(object sender, RoutedEventArgs e)
 		{
 			string serverUserInput = cbx_ServerName.Text.Trim();
@@ -85,16 +82,20 @@ namespace ToolForDatabase
 		private void btn_Test_Click(object sender, RoutedEventArgs e)
 		{
 			progressBar.Visibility = Visibility.Visible;
+			imgOK.Visibility = Visibility.Collapsed;
 			var thread = new Thread(() =>
 			{
 				bool connectable = TestConnection();
 				if (connectable)
 				{
-					MessageBox.Show("Connection is OK", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+					imgOK.Dispatcher.Invoke(() => imgOK.Visibility = Visibility.Visible);
 					LoadDatabasesToCombobox();
 				}
 				else
+				{
 					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+					imgOK.Dispatcher.Invoke(() => imgOK.Visibility = Visibility.Collapsed);
+				}
 				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
 			});
 			thread.Start();
@@ -107,11 +108,14 @@ namespace ToolForDatabase
 				Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
 				SaveLoginInfo();
 				SaveConnectionString(Function.GetSQLConnectionString());
-				this.Hide();
-				MainForm.Instance.Show();
+				this.Visibility = Visibility.Hidden;
+				MainForm.Instance.Visibility = Visibility.Visible;
 			}
 			else
+			{
 				MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+				imgOK.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -127,7 +131,7 @@ namespace ToolForDatabase
 		/// <summary>
 		/// Lấy danh sách tên server từ máy và từ file hiển thị ra combobox
 		/// </summary>
-		public void LoadServersToCombobox()
+		private void LoadServersToCombobox()
 		{
 			cbx_ServerName.ItemsSource = Function.GetServers();
 			cbx_ServerName.SelectedIndex = 0;

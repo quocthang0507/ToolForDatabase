@@ -12,12 +12,16 @@ namespace DataAccess
 	public class SQLTable
 	{
 		private SqlConnection Connection;
+
+		/// <summary>
+		/// Danh sách các bảng có trong cơ sở dữ liệu
+		/// </summary>
 		public List<string> MyTables { get; set; }
 
 		/// <summary>
 		/// Khởi tạo lớp với chuỗi kết nối
 		/// </summary>
-		/// <param name="connection"></param>
+		/// <param name="connection">Chuỗi kết nối</param>
 		public SQLTable(string connection)
 		{
 			this.Connection = new SqlConnection(connection);
@@ -28,7 +32,7 @@ namespace DataAccess
 		/// Thêm một bảng
 		/// </summary>
 		/// <param name="table">Bảng cần thêm</param>
-		public void AddTable(string table)
+		private void AddTable(string table)
 		{
 			if (!MyTables.Contains(table))
 				MyTables.Add(table);

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Business
 {
 	/// <summary>
 	/// Cryptography
 	/// </summary>
-	/// https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
+	/// Tham khảo tại: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
 	public static class Crypto
 	{
 		// This constant is used to determine the keysize of the encryption algorithm in bits.

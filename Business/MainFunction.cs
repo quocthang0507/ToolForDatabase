@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,16 @@ namespace Business
 	public class MainFunction
 	{
 		private SqlConnection connection;
-		private string Table;
 
 		public MainFunction(string connection)
 		{
 			this.connection = new SqlConnection(connection);
 		}
 
+		/// <summary>
+		/// Lấy tên các bảng có trong cơ sở dữ liệu
+		/// </summary>
+		/// <returns>Danh sách các bảng</returns>
 		public List<string> GetTables()
 		{
 			SQLTable table = new SQLTable(connection.ConnectionString);
@@ -28,6 +32,11 @@ namespace Business
 			return table.MyTables;
 		}
 
+		/// <summary>
+		/// Lấy tên và kiểu dữ liệu của các thuộc tính trong bảng
+		/// </summary>
+		/// <param name="table">Tên bảng</param>
+		/// <returns>Danh sách tên và kiểu dữ liệu</returns>
 		public List<KeyValuePair<string,string>> GetColumns(string table)
 		{
 			SQLColumn column = new SQLColumn(connection.ConnectionString, table);
@@ -35,10 +44,29 @@ namespace Business
 			return column.MyColumns;
 		}
 
-		public string GenerateClass(string @namespace, string @class)
+		/// <summary>
+		/// Tạo ra lớp tương ứng với bảng
+		/// </summary>
+		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
+		/// <param name="table">Tên bảng sẽ thành tên lớp</param>
+		/// <returns></returns>
+		public string GenerateClass(string @namespace, string table)
 		{
-			ConvertClass convert = new ConvertClass(@namespace, @class, GetColumns(@class));
+			ConvertClass convert = new ConvertClass(@namespace, table, GetColumns(table));
 			return convert.ToString();
+		}
+
+		/// <summary>
+		/// Lưu nội dung lớp ra file vào một thư mục có tên của cơ sở dữ liệu
+		/// </summary>
+		/// <param name="path">Đường dẫn thư mục</param>
+		/// <param name="filename">Tên bảng sẽ thành tên file</param>
+		/// <param name="content">Nội dung lớp</param>
+		public void SaveToFile(string path, string filename, string content)
+		{
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
+			File.WriteAllText(path + "\\" + filename, content);
 		}
 	}
 }

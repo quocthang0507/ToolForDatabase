@@ -14,7 +14,7 @@ namespace ToolForDatabase
 		private MainFunction Function;
 		private string Database;
 		private static MainForm instance;
-		private bool Rendered = false;
+		private string SelectedPath;
 
 		public MainForm()
 		{
@@ -22,6 +22,9 @@ namespace ToolForDatabase
 			GetConnectionString();
 		}
 
+		/// <summary>
+		/// Mỗi lần ẩn/ hiện form sẽ cho load lại các control
+		/// </summary>
 		public static MainForm Instance
 		{
 			get
@@ -32,68 +35,12 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void GetConnectionString()
-		{
-			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
-			Database = Properties.Settings.Default.Database;
-		}
-
-		private void LoadDatabases()
-		{
-			TreeViewItem root = new TreeViewItem();
-			root.Header = Database;
-			root.ItemsSource = Function.GetTables();
-			treeTable.Items.Add(root);
-		}
-
-		private void btnCopy_Click(object sender, RoutedEventArgs e)
-		{
-			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
-			string data = textRange.Text;
-			if (data != "\r\n")
-			{
-				Clipboard.SetText(data);
-				MessageBox.Show("Successfully copied", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-			else
-			{
-				MessageBox.Show("Can't copy with a null value", "Copy", MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
-
-		private void btnGenerate_Click(object sender, RoutedEventArgs e)
-		{
-			tbxContent.Document.Blocks.Add(new Paragraph(new Run(Function.GenerateClass(tbx_Namespace.Text, tbx_Table.Text))));
-		}
+		#region Events
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			LoadDatabases();
-			Rendered = true;
-		}
-
-		private void btnExport_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			MessageBoxResult exit = MessageBox.Show("Do you want to exit this application?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
-			if (exit == MessageBoxResult.Yes)
-				System.Windows.Application.Current.Shutdown();
-			else e.Cancel = true;
-		}
-
-		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-		{
-			tbx_Table.Text = treeTable.SelectedItem.ToString();
-		}
-
-		private void btnBack_Click(object sender, RoutedEventArgs e)
-		{
-			this.Hide();
-			LoginForm.Instance.Show();
+			LoadTables();
+			tbxContent.Document.Blocks.Clear();
 		}
 
 		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -102,10 +49,119 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			treeTable.MaxHeight = height - 200;
-			dock.MaxHeight = height * 80 / 100;
-			dock.Height = height * 80 / 100;
-			dock.MaxWidth = width * 80 / 100;
-			dock.Width = width * 80 / 100;
+			dock.MaxHeight = height * 90 / 100;
+			dock.MaxWidth = width * 90 / 100;
+			dock.Height = height * 75 / 100;
+			dock.Width = width * 55 / 100;
 		}
+
+		private void btnBack_Click(object sender, RoutedEventArgs e)
+		{
+			this.Visibility = Visibility.Hidden;
+			LoginForm.Instance.Visibility = Visibility.Visible;
+		}
+
+		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		{
+			string selected = treeTable.SelectedItem.ToString();
+			if (!selected.Contains("Header"))   //Bỏ qua tên server
+				tbx_Table.Text = selected;
+			else
+				tbx_Table.Text = null;
+		}
+
+		private void btnCopy_Click(object sender, RoutedEventArgs e)
+		{
+			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
+			string data = textRange.Text;
+			if (data != "")
+			{
+				Clipboard.SetText(data);
+				MessageBox.Show("Successfully copied", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
+			}
+			else
+			{
+				MessageBox.Show("Can't copy with a null value", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+		private void btnGenerate_Click(object sender, RoutedEventArgs e)
+		{
+			string @namespace = tbx_Namespace.Text;
+			string table = tbx_Table.Text;
+			if (@namespace == "" || table == "")
+			{
+				MessageBox.Show("Can't generate class because one or more textbox are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+			tbxContent.Document.Blocks.Clear();
+			tbxContent.Document.Blocks.Add(new Paragraph(new Run(Function.GenerateClass(@namespace, table))));
+		}
+
+		private void btnExport_Click(object sender, RoutedEventArgs e)
+		{
+			TextRange textRange = new TextRange(tbxContent.Document.ContentStart, tbxContent.Document.ContentEnd);
+			string data = textRange.Text;
+			if (data != "")
+			{
+				string path = GetSelectedPath();
+				string filename = tbx_Table.Text + ".cs";
+				Function.SaveToFile(path + "\\" + Database, filename, data);
+				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+			}
+			else
+				MessageBox.Show("Can't export with a null value", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			MessageBoxResult exit = System.Windows.MessageBox.Show("Do you want to exit this application?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (exit == MessageBoxResult.Yes)
+				System.Windows.Application.Current.Shutdown();
+			else e.Cancel = true;
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Lấy chuỗi kết nối từ form Login thông qua setting của ứng dụng
+		/// </summary>
+		private void GetConnectionString()
+		{
+			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
+			Database = Properties.Settings.Default.Database;
+		}
+
+		/// <summary>
+		/// Load các bảng có trong cơ sở dữ liệu ra TreeView
+		/// </summary>
+		private void LoadTables()
+		{
+			TreeViewItem root = new TreeViewItem();
+			root.Header = Database;
+			root.ItemsSource = Function.GetTables();
+			treeTable.Items.Add(root);
+		}
+
+		/// <summary>
+		/// Lấy đường dẫn thư mục từ hộp thoại
+		/// </summary>
+		/// <returns></returns>
+		private string GetSelectedPath()
+		{
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				dialog.Description = "Select the directory that you want to save";
+				if (SelectedPath != "")
+					dialog.SelectedPath = SelectedPath;
+				dialog.ShowDialog();
+				SelectedPath = dialog.SelectedPath;
+				return SelectedPath;
+			}
+		}
+
+		#endregion
 	}
 }

@@ -4,20 +4,14 @@ using System.Data.SqlClient;
 namespace DataAccess
 {
 	/// <summary>
-	/// Chuỗi kết nối tới cơ sở dữ liệu
+	/// Lớp chuỗi kết nối tới cơ sở dữ liệu
 	/// </summary>
 	public class SQLConnectionString
 	{
-		private string serverName;
-		private string database;
-		private string username;
-		private string password;
-
-		public string ServerName { get => serverName; set { serverName = value.Trim(); } }
-		public string Database { get => database; set { database = value.Trim(); } }
-		public string Username { get => username; set { username = value.Trim(); } }
-		public string Password { get => password; set { password = value.Trim(); } }
-
+		private string ServerName;
+		private string Database;
+		private string Username;
+		private string Password;
 		private readonly int IndexFunction;
 		private readonly string cnn1 = @"Data Source={0};Initial Catalog=;Integrated Security=SSPI;";
 		private readonly string cnn2 = @"Data Source={0};Initial Catalog={1};Trusted_Connection=True;";
