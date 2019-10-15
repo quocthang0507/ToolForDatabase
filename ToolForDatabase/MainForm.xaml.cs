@@ -1,5 +1,6 @@
 ﻿using Business;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -39,7 +40,8 @@ namespace ToolForDatabase
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			LoadTables();
+			var thread = new Thread(() => LoadTables());
+			thread.Start();
 			tbxContent.Clear();
 		}
 
@@ -138,10 +140,12 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadTables()
 		{
-			TreeViewItem root = new TreeViewItem();
-			root.Header = Database;
-			root.ItemsSource = Function.GetTables();
-			treeTable.Items.Add(root);
+			Application.Current.Dispatcher.Invoke((Action)delegate {
+				TreeViewItem root = new TreeViewItem();
+				root.Header = Database;
+				root.ItemsSource = Function.GetTables();
+				treeTable.Items.Add(root);
+			});
 		}
 
 		/// <summary>
