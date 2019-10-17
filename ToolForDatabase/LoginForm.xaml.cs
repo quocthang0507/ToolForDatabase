@@ -15,6 +15,7 @@ namespace ToolForDatabase
 		private LoginFunction Function = new LoginFunction();
 		private bool WindowsRendered = false;
 		private static LoginForm instance;
+		private Thread thread_test;
 
 		public LoginForm()
 		{
@@ -53,27 +54,27 @@ namespace ToolForDatabase
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cbx_ServerName_LostFocus(object sender, RoutedEventArgs e)
+		private void cbxServerName_LostFocus(object sender, RoutedEventArgs e)
 		{
-			string serverUserInput = cbx_ServerName.Text.Trim();
-			var current = cbx_ServerName.Items.OfType<string>().ToList();
+			string serverUserInput = cbxServerName.Text.Trim();
+			var current = cbxServerName.Items.OfType<string>().ToList();
 			var contained = current.Where(x => x.ToLower() == serverUserInput.ToLower()).Count() > 0;
 			if (!contained)
 			{
 				current.Add(serverUserInput);
-				cbx_ServerName.ItemsSource = current;
+				cbxServerName.ItemsSource = current;
 			}
 		}
 
-		private void cbx_ServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void cbxServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			panel_Database.IsEnabled = false;
 		}
 
-		private void cbx_Authentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void cbxAuthentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (WindowsRendered)
-				if (cbx_Authentication.SelectedIndex == 0)
+				if (cbxAuthentication.SelectedIndex == 0)
 					panelUA.IsEnabled = false;
 				else
 					panelUA.IsEnabled = true;
@@ -83,8 +84,9 @@ namespace ToolForDatabase
 		{
 			progressBar.Visibility = Visibility.Visible;
 			imgOK.Visibility = Visibility.Collapsed;
-			var thread = new Thread(() =>
+			thread_test = new Thread(() =>
 			{
+				btnCancel.Dispatcher.Invoke(() => btnCancel.Visibility = Visibility.Visible);
 				bool connectable = TestConnection();
 				if (connectable)
 				{
@@ -97,15 +99,21 @@ namespace ToolForDatabase
 					imgOK.Dispatcher.Invoke(() => imgOK.Visibility = Visibility.Collapsed);
 				}
 				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
+				btnCancel.Dispatcher.Invoke(() => btnCancel.Visibility = Visibility.Collapsed);
 			});
-			thread.Start();
+			thread_test.Start();
+		}
+
+		private void btnCancel_Click(object sender, RoutedEventArgs e)
+		{
+			thread_test.Abort();
 		}
 
 		private void btn_Login_Click(object sender, RoutedEventArgs e)
 		{
 			if (TestConnection())
 			{
-				Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
+				Function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 				SaveLoginInfo();
 				SaveConnectionString(Function.GetSQLConnectionString());
 				this.Visibility = Visibility.Hidden;
@@ -120,7 +128,7 @@ namespace ToolForDatabase
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Function.SaveServers(cbx_ServerName.Items.OfType<string>().ToList());
+			Function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 			System.Windows.Application.Current.Shutdown();
 		}
 
@@ -133,8 +141,8 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadServersToCombobox()
 		{
-			cbx_ServerName.ItemsSource = Function.GetServers();
-			cbx_ServerName.SelectedIndex = 0;
+			cbxServerName.ItemsSource = Function.GetServers();
+			cbxServerName.SelectedIndex = 0;
 		}
 
 		/// <summary>
@@ -142,8 +150,8 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadDatabasesToCombobox()
 		{
-			cbx_Database.Dispatcher.Invoke(() => cbx_Database.ItemsSource = Function.GetDatabases());
-			cbx_Database.Dispatcher.Invoke(() => cbx_Database.SelectedIndex = 0);
+			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.ItemsSource = Function.GetDatabases());
+			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.SelectedIndex = 0);
 			panel_Database.Dispatcher.Invoke(() => panel_Database.IsEnabled = true);
 		}
 
@@ -156,8 +164,8 @@ namespace ToolForDatabase
 			if (data != string.Empty)
 			{
 				string[] info = Function.GetLoginInfo().Split(' ');
-				tbx_Login.Text = info[0];
-				tbx_Password.Password = info[1];
+				tbxLogin.Text = info[0];
+				tbxPassword.Password = info[1];
 			}
 		}
 
@@ -167,9 +175,9 @@ namespace ToolForDatabase
 		/// <returns>Kết nối thành công</returns>
 		private bool TestConnection()
 		{
-			string server = cbx_ServerName.Dispatcher.Invoke(() => cbx_ServerName.Text.Trim());
-			string database = cbx_Database.Dispatcher.Invoke(() => cbx_Database.Text.Trim());
-			if (cbx_Authentication.Dispatcher.Invoke(() => cbx_Authentication.SelectedIndex == 0))
+			string server = cbxServerName.Dispatcher.Invoke(() => cbxServerName.Text.Trim());
+			string database = cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.Text.Trim());
+			if (cbxAuthentication.Dispatcher.Invoke(() => cbxAuthentication.SelectedIndex == 0))
 			{
 				if (database != null)
 					return Function.TestConnection(server, database);
@@ -177,8 +185,8 @@ namespace ToolForDatabase
 			}
 			else
 			{
-				string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text.Trim());
-				string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password.Trim());
+				string username = tbxLogin.Dispatcher.Invoke(() => tbxLogin.Text.Trim());
+				string password = tbxPassword.Dispatcher.Invoke(() => tbxPassword.Password.Trim());
 				if (database != null)
 					return Function.TestConnection(server, database, username, password);
 				return Function.TestConnection(server, username, password);
@@ -190,10 +198,10 @@ namespace ToolForDatabase
 		/// </summary>
 		private void SaveLoginInfo()
 		{
-			if (cbx_Authentication.SelectedIndex == 1)
+			if (cbxAuthentication.SelectedIndex == 1)
 			{
-				string username = tbx_Login.Dispatcher.Invoke(() => tbx_Login.Text.Trim());
-				string password = tbx_Password.Dispatcher.Invoke(() => tbx_Password.Password.Trim());
+				string username = tbxLogin.Dispatcher.Invoke(() => tbxLogin.Text.Trim());
+				string password = tbxPassword.Dispatcher.Invoke(() => tbxPassword.Password.Trim());
 				Function.SaveLoginInfo(username, password);
 			}
 		}
@@ -205,7 +213,7 @@ namespace ToolForDatabase
 		private void SaveConnectionString(string connectionString)
 		{
 			Properties.Settings.Default.ConnectionString = connectionString;
-			Properties.Settings.Default.Database = cbx_Database.Text;
+			Properties.Settings.Default.Database = cbxDatabase.Text;
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Upgrade();
 		}
