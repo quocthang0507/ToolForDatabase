@@ -59,5 +59,68 @@ namespace ToolForDatabase.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1610207@dlu.edu.vn.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Quốc Thắng.
+        /// </summary>
+        internal static string HoTen {
+            get {
+                return ResourceManager.GetString("HoTen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Công nghệ Thông tin.
+        /// </summary>
+        internal static string Khoa {
+            get {
+                return ResourceManager.GetString("Khoa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTK40.
+        /// </summary>
+        internal static string Lop {
+            get {
+                return ResourceManager.GetString("Lop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1610207.
+        /// </summary>
+        internal static string MSSV {
+            get {
+                return ResourceManager.GetString("MSSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0987610260.
+        /// </summary>
+        internal static string SDT {
+            get {
+                return ResourceManager.GetString("SDT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đại học Đà Lạt.
+        /// </summary>
+        internal static string Trường {
+            get {
+                return ResourceManager.GetString("Trường", resourceCulture);
+            }
+        }
     }
 }

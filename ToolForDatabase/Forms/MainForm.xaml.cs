@@ -122,6 +122,11 @@ namespace ToolForDatabase
 			else e.Cancel = true;
 		}
 
+		private void btnAbout_Click(object sender, RoutedEventArgs e)
+		{
+			AboutForm.Instance.Visibility = Visibility.Visible;
+		}
+
 		#endregion
 
 		#region Methods

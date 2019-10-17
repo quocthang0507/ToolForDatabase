@@ -109,7 +109,7 @@ namespace ToolForDatabase
 			thread_test.Abort();
 		}
 
-		private void btn_Login_Click(object sender, RoutedEventArgs e)
+		private void btnLogin_Click(object sender, RoutedEventArgs e)
 		{
 			if (TestConnection())
 			{
