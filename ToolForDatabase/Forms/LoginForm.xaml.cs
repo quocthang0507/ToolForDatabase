@@ -68,7 +68,7 @@ namespace ToolForDatabase
 
 		private void cbxServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			panel_Database.IsEnabled = false;
+			panelDatabase.IsEnabled = false;
 		}
 
 		private void cbxAuthentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -107,6 +107,9 @@ namespace ToolForDatabase
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
 			thread_test.Abort();
+			progressBar.Visibility = Visibility.Hidden;
+			btnCancel.Visibility = Visibility.Collapsed;
+			panelDatabase.IsEnabled = false;
 		}
 
 		private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -152,7 +155,7 @@ namespace ToolForDatabase
 		{
 			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.ItemsSource = Function.GetDatabases());
 			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.SelectedIndex = 0);
-			panel_Database.Dispatcher.Invoke(() => panel_Database.IsEnabled = true);
+			panelDatabase.Dispatcher.Invoke(() => panelDatabase.IsEnabled = true);
 		}
 
 		/// <summary>

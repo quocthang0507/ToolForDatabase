@@ -55,7 +55,7 @@
 			<Button x:Name="btnCancel" Visibility="Collapsed" Content="Cancel" Margin="10,10,0,10" FontSize="15" Padding="5" TabIndex="7" Click="btnCancel_Click" ToolTip="Hủy kiểm tra kết nối"/>
 			<Image x:Name="imgOK" Visibility="Collapsed" Source="/Images/ok.png" Margin="10,0,0,0" Width="35" ToolTip="Kết nối thành công"/>
 		</StackPanel>
-		<StackPanel x:Name="panel_Database" IsEnabled="False">
+		<StackPanel x:Name="panelDatabase" IsEnabled="False">
 			<Grid>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 					<Label Content="Database:" FontSize="15" Margin="20,0,10,0"/>

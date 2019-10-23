@@ -19,21 +19,9 @@ namespace ToolForDatabase
 	/// </summary>
 	public partial class AboutForm : Window
 	{
-		private static AboutForm instance;
-
 		public AboutForm()
 		{
 			InitializeComponent();
-		}
-
-		public static AboutForm Instance
-		{
-			get
-			{
-				if (instance == null)
-					instance = new AboutForm();
-				return instance;
-			}
 		}
 	}
 }

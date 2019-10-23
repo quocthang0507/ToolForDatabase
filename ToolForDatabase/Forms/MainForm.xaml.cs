@@ -124,7 +124,8 @@ namespace ToolForDatabase
 
 		private void btnAbout_Click(object sender, RoutedEventArgs e)
 		{
-			AboutForm.Instance.Visibility = Visibility.Visible;
+			AboutForm aboutForm = new AboutForm();
+			aboutForm.Show();
 		}
 
 		#endregion
