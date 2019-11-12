@@ -106,6 +106,11 @@ namespace ToolForDatabase
 			if (data != "")
 			{
 				string path = GetSelectedPath();
+				if (path == "")
+				{
+					MessageBox.Show("Can't export with a null path", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
+					return;
+				}
 				string filename = tbxTable.Text + ".cs";
 				Function.SaveToFile(path + "\\" + Database, filename, data);
 				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -146,7 +151,8 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadTables()
 		{
-			Application.Current.Dispatcher.Invoke((Action)delegate {
+			Application.Current.Dispatcher.Invoke((Action)delegate
+			{
 				TreeViewItem root = new TreeViewItem();
 				root.Header = Database;
 				root.ItemsSource = Function.GetTables();
