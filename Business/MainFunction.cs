@@ -1,11 +1,7 @@
 ﻿using DataAccess;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business
 {
@@ -37,7 +33,7 @@ namespace Business
 		/// </summary>
 		/// <param name="table">Tên bảng</param>
 		/// <returns>Danh sách tên và kiểu dữ liệu</returns>
-		public List<KeyValuePair<string,string>> GetColumns(string table)
+		public List<KeyValuePair<string, string>> GetColumns(string table)
 		{
 			SQLColumn column = new SQLColumn(connection.ConnectionString, table);
 			column.GetColumns();
