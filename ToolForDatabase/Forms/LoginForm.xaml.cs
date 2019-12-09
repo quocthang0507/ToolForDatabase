@@ -20,7 +20,6 @@ namespace ToolForDatabase
 		public LoginForm()
 		{
 			InitializeComponent();
-			ApplyLanguage("vi-VN");
 			LoadServersToCombobox();
 		}
 
@@ -38,12 +37,6 @@ namespace ToolForDatabase
 		}
 
 		#region Events
-
-		private void Language_Click(object sender, RoutedEventArgs e)
-		{
-			MenuItem menuItem = sender as MenuItem;
-			ApplyLanguage(menuItem.Tag.ToString());
-		}
 
 		/// <summary>
 		/// Bởi vì sự kiện của control này xảy ra nhưng không truy cập được control khác do chưa rendered đầy đủ
@@ -227,40 +220,6 @@ namespace ToolForDatabase
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Upgrade();
 		}
-
-		/// <summary>
-		/// Đổi ngôn ngữ giao diện
-		/// </summary>
-		/// <param name="cultureName"></param>
-		void ApplyLanguage(string cultureName = null)
-		{
-			if (cultureName != null)
-				Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
-			ResourceDictionary dict = new ResourceDictionary();
-			switch (Thread.CurrentThread.CurrentCulture.ToString())
-			{
-				case "vi-VN":
-					dict.Source = new Uri("..\\Languages\\Vietnamese.xaml", UriKind.Relative);
-					break;
-				case "en-UK":
-					dict.Source = new Uri("..\\Languages\\English.xaml", UriKind.Relative);
-					break;
-			}
-			this.Resources.MergedDictionaries.Add(dict);
-			SaveLanguage(cultureName);
-		}
-
-		/// <summary>
-		/// Lưu ngôn ngữ đã chọn
-		/// </summary>
-		/// <param name="cultureName"></param>
-		void SaveLanguage(string cultureName)
-		{
-			Properties.Settings.Default.Language = cultureName;
-			Properties.Settings.Default.Save();
-			Properties.Settings.Default.Upgrade();
-		}
-
 		#endregion
 
 	}

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ToolForDatabase"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
 		mc:Ignorable="d"
-        Title="{DynamicResource mainFrm}" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
+        Title="Công cụ sinh mã tự động" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
 	<StackPanel>
 		<ToolBar>
 			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" ToolTip="Quay về form Đăng nhập" TabIndex="1">
@@ -18,7 +18,7 @@
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<StackPanel Margin="5,5,10,0">
-				<Label Content="{DynamicResource SelectTable}" FontSize="15"/>
+				<Label Content="Select a table" FontSize="15"/>
 				<TreeView x:Name="treeTable" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Padding="10,10,10,10" SelectedItemChanged="treeTable_SelectedItemChanged">
 					<TreeView.ItemContainerStyle>
 						<Style TargetType="{x:Type TreeViewItem}">

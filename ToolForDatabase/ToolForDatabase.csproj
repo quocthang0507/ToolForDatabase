@@ -123,14 +123,6 @@
       <DependentUpon>MainForm.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Languages\English.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Languages\Vietnamese.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -173,9 +165,6 @@
     <Resource Include="Images\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ok.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -194,14 +183,10 @@
     <Resource Include="Images\author.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\english.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\vietnamese.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\english.ico" />
     <Resource Include="Images\vietnamese.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
