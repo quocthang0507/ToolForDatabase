@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sys="clr-namespace:System;assembly=mscorlib"	
+					xmlns:local="clr-namespace:ToolForDatabase.Languages">
+	<sys:String x:Key="mainFrm">Auto-generated code tool</sys:String>
+	<sys:String x:Key="loginFrm">Login into SQL Server</sys:String>
+	<sys:String x:Key="aboutFrm">Introduce about author</sys:String>
+	<sys:String x:Key="vi">Vietnamese</sys:String>
+	<sys:String x:Key="en">English</sys:String>
+	<sys:String x:Key="SvName">Server name:</sys:String>
+	<sys:String x:Key="SvNameTooltip">Choose the server name from the list</sys:String>
+	<sys:String x:Key="Authen">Authentication:</sys:String>
+	<sys:String x:Key="AuthenTooltip">Choose the authentication mode</sys:String>
+	<sys:String x:Key="Login">Login:</sys:String>
+	<sys:String x:Key="LoginTooltip">Your login username</sys:String>
+	<sys:String x:Key="Pass">Password:</sys:String>
+	<sys:String x:Key="PassTooltip">Your password</sys:String>
+	<sys:String x:Key="Rmb">Remember password</sys:String>
+	<sys:String x:Key="RmbTooltip">Remember password for the next login</sys:String>
+	<sys:String x:Key="Test">Test Connection</sys:String>
+	<sys:String x:Key="TestTooltip">Test Connection to SQL Server</sys:String>
+	<sys:String x:Key="Cancel">Cancel</sys:String>
+	<sys:String x:Key="CancelTooltip">Cancel Test Connection</sys:String>
+	<sys:String x:Key="Dtb">Database:</sys:String>
+	<sys:String x:Key="DtbTooltip">Choose database name from the list</sys:String>
+	<sys:String x:Key="LoginBtn">Login</sys:String>
+	<sys:String x:Key="LoginTooltipBtn">Login to Database</sys:String>
+	<sys:String x:Key="SelectTable">Select a table:</sys:String>
+	<sys:String x:Key="Table">Class/ Table name:</sys:String>
+	<sys:String x:Key="Generate">Generate</sys:String>
+	<sys:String x:Key="GenerateTooltip">Generate code from this table</sys:String>
+	<sys:String x:Key="Copy">Copy to clipboard</sys:String>
+	<sys:String x:Key="CopyTooltip">Copy to clipboard</sys:String>
+	<sys:String x:Key="Export">Export to file</sys:String>
+	<sys:String x:Key="ExportTooltip">Export to file .cs</sys:String>
+</ResourceDictionary>

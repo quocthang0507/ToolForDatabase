@@ -123,6 +123,14 @@
       <DependentUpon>MainForm.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Languages\English.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Languages\Vietnamese.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -184,6 +192,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\author.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\english.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vietnamese.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\english.ico" />
+    <Resource Include="Images\vietnamese.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

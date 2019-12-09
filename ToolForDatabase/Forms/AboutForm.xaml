@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToolForDatabase"
         mc:Ignorable="d"
-        Title="Giới thiệu về tác giả" Height="300" Width="450" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="{DynamicResource aboutFrm}" Height="300" Width="470" ResizeMode="NoResize" ShowInTaskbar="False">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="160" />
@@ -20,58 +20,58 @@
 			<StackPanel VerticalAlignment="Center">
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Họ và tên: " FontSize="15"/>
+						<Label Content="Họ và tên: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="La Quốc Thắng" FontSize="15" Width="170"/>
+						<Label Content="La Quốc Thắng" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Mã số sinh viên: " FontSize="15"/>
+						<Label Content="Mã số sinh viên: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="1610207" FontSize="15" Width="170"/>
+						<Label Content="1610207" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Lớp: " FontSize="15"/>
+						<Label Content="Lớp: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="CTK40" FontSize="15" Width="170"/>
+						<Label Content="CTK40" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Khoa: " FontSize="15"/>
+						<Label Content="Khoa: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="Công nghệ Thông tin" FontSize="15" Width="170"/>
+						<Label Content="Công nghệ Thông tin" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Trường: " FontSize="15"/>
+						<Label Content="Trường: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="Đại học Đà Lạt" FontSize="15" Width="170"/>
+						<Label Content="Đại học Đà Lạt" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Email: " FontSize="15"/>
+						<Label Content="Email: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="1610207@dlu.edu.vn" FontSize="15" Width="170"/>
+						<Label Content="1610207@dlu.edu.vn" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 				<Grid>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-						<Label Content="Số điện thoại: " FontSize="15"/>
+						<Label Content="Số điện thoại: " FontSize="14"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Label Content="0987610260" FontSize="15" Width="170"/>
+						<Label Content="0987610260" FontSize="14" Width="170"/>
 					</StackPanel>
 				</Grid>
 

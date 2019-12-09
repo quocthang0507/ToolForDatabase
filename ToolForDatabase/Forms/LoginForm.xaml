@@ -1,29 +1,40 @@
 ﻿<Window x:Class="ToolForDatabase.LoginForm"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:resources="clr-namespace:ToolForDatabase.Properties"
-        mc:Ignorable="d"
-        Title="Đăng nhập vào SQL Server" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+		Title="{DynamicResource loginFrm}" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
 	<StackPanel>
-		<Label Content="SQL Server Tool" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="45" FontWeight="DemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
-		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="20" Padding="0,0,10,0" VerticalContentAlignment="Center" Foreground="Gray"/>
+		<Menu VerticalAlignment="Top" FontSize="14">
+			<MenuItem Header="{DynamicResource en}" Name="English" Click="Language_Click" Tag="en-UK">
+				<MenuItem.Icon>
+					<Image Source="/Images/english.ico"/>
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="{DynamicResource vi}" Name="Vietnamese" Click="Language_Click" Tag="vi-VN">
+				<MenuItem.Icon>
+					<Image Source="/Images/vietnamese.ico"/>
+				</MenuItem.Icon>
+			</MenuItem>
+		</Menu>
+		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="45" FontWeight="DemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
+		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="18" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
 		<ProgressBar Height="5" IsIndeterminate="True" x:Name="progressBar" Visibility="Hidden" BorderThickness="0" Foreground="#FFEA8129" Margin="0,5,0,5"/>
 		<Grid>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Label Content="Server name:" FontSize="15" Margin="20,0,10,0"/>
+				<Label Content="{DynamicResource SvName}" FontSize="15" Margin="30,0,10,0"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-				<ComboBox x:Name="cbxServerName" Width="250px" Margin="10,0,20,0" IsEditable="True" FontSize="15" TabIndex="1" LostFocus="cbxServerName_LostFocus" SelectionChanged="cbxServerName_SelectionChanged" ToolTip="Vui lòng chọn một server"/>
+				<ComboBox x:Name="cbxServerName" Width="230px" Margin="10,0,40,0" IsEditable="True" FontSize="15" TabIndex="1" LostFocus="cbxServerName_LostFocus" SelectionChanged="cbxServerName_SelectionChanged" ToolTip="{DynamicResource SvNameTooltip}"/>
 			</StackPanel>
 		</Grid>
 		<Grid Margin="0,10,0,0">
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Label Content="Authentication:" FontSize="15" Margin="10,0,10,0"/>
+				<Label Content="{DynamicResource Authen}" FontSize="15" Margin="30,0,10,0"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-				<ComboBox x:Name="cbxAuthentication" Width="250px" Margin="10,0,20,0" IsEditable="False" VerticalContentAlignment="Center" FontSize="15" TabIndex="2" SelectionChanged="cbxAuthentication_SelectionChanged" ToolTip="Vui lòng chọn chế độ chứng thực">
+				<ComboBox x:Name="cbxAuthentication" Width="230px" Margin="10,0,40,0" IsEditable="False" VerticalContentAlignment="Center" FontSize="15" TabIndex="2" SelectionChanged="cbxAuthentication_SelectionChanged" ToolTip="{DynamicResource AuthenTooltip}">
 					<ComboBoxItem IsSelected="True">Windows Authentication</ComboBoxItem>
 					<ComboBoxItem>SQL Server Authentication</ComboBoxItem>
 				</ComboBox>
@@ -32,40 +43,40 @@
 		<StackPanel x:Name="panelUA" IsEnabled="False">
 			<Grid Margin="0,10,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Login:" FontSize="15" Margin="50,0,10,0"/>
+					<Label Content="{DynamicResource Login}" FontSize="15" Margin="30,0,10,0"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<TextBox x:Name="tbxLogin" Width="250px" Margin="10,0,20,0" TabIndex="3" FontSize="15" VerticalContentAlignment="Center" ToolTip="Tên đăng nhập"/>
+					<TextBox x:Name="tbxLogin" Width="230px" Margin="10,0,40,0" TabIndex="3" FontSize="15" VerticalContentAlignment="Center" ToolTip="{DynamicResource LoginTooltip}"/>
 				</StackPanel>
 			</Grid>
 			<Grid Margin="0,10,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Password:" FontSize="15" Margin="50,0,10,0"/>
+					<Label Content="{DynamicResource Pass}" FontSize="15" Margin="30,0,10,0"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<PasswordBox x:Name="tbxPassword" Width="250px" Margin="10,0,20,0" TabIndex="4" FontSize="15" VerticalContentAlignment="Center" ToolTip="Mật khẩu"/>
+					<PasswordBox x:Name="tbxPassword" Width="230px" Margin="10,0,40,0" TabIndex="4" FontSize="15" VerticalContentAlignment="Center" ToolTip="{DynamicResource PassTooltip}"/>
 				</StackPanel>
 			</Grid>
 			<Grid>
-				<CheckBox x:Name="chkRemember" Content="Remember password" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0" TabIndex="5" ToolTip="Bạn có muốn lưu mật khẩu cho lần sau không?"/>
+				<CheckBox x:Name="chkRemember" Content="{DynamicResource Rmb}" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0" TabIndex="5" ToolTip="{DynamicResource RmbTooltip}"/>
 			</Grid>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-			<Button x:Name="btnTest" Content="Test Connection" Margin="0,10,0,10" FontSize="15" Padding="5" Click="btn_Test_Click" IsDefault="True" TabIndex="6" ToolTip="Kiểm tra kết nối"/>
-			<Button x:Name="btnCancel" Visibility="Collapsed" Content="Cancel" Margin="10,10,0,10" FontSize="15" Padding="5" TabIndex="7" Click="btnCancel_Click" ToolTip="Hủy kiểm tra kết nối"/>
+			<Button x:Name="btnTest" Content="{DynamicResource Test}" Margin="0,10,0,10" FontSize="15" Padding="5" Click="btn_Test_Click" IsDefault="True" TabIndex="6" ToolTip="{DynamicResource TestTooltip}"/>
+			<Button x:Name="btnCancel" Visibility="Collapsed" Content="{DynamicResource Cancel}" Margin="10,10,0,10" FontSize="15" Padding="5" TabIndex="7" Click="btnCancel_Click" ToolTip="{DynamicResource CancelTooltip}"/>
 			<Image x:Name="imgOK" Visibility="Collapsed" Source="/Images/ok.png" Margin="10,0,0,0" Width="35" ToolTip="Kết nối thành công"/>
 		</StackPanel>
 		<StackPanel x:Name="panelDatabase" IsEnabled="False">
 			<Grid>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Database:" FontSize="15" Margin="20,0,10,0"/>
+					<Label Content="{DynamicResource Dtb}" FontSize="15" Margin="35,0,10,0"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<ComboBox x:Name="cbxDatabase" Width="250px" Margin="10,0,20,0" TabIndex="9" FontSize="15" VerticalContentAlignment="Center" ToolTip="Vui lòng chọn một cơ sở dữ liệu"/>
+					<ComboBox x:Name="cbxDatabase" Width="230px" Margin="10,0,40,0" TabIndex="9" FontSize="15" VerticalContentAlignment="Center" ToolTip="{DynamicResource DtbTooltip}"/>
 				</StackPanel>
 			</Grid>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button x:Name="btnLogin" Content="Login" Margin="0,20,0,10" FontSize="15" Padding="5" Click="btnLogin_Click" ToolTip="Kết nối và vào form chính"/>
+				<Button x:Name="btnLogin" Content="{DynamicResource LoginBtn}" Margin="0,20,0,10" FontSize="15" Padding="5" Click="btnLogin_Click" ToolTip="{DynamicResource LoginTooltipBtn}"/>
 			</StackPanel>
 		</StackPanel>
 	</StackPanel>

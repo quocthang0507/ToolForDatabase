@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sys="clr-namespace:System;assembly=mscorlib"				
+					xmlns:local="clr-namespace:ToolForDatabase.Languages">
+	<sys:String x:Key="mainFrm">Công cụ sinh mã tự động</sys:String>
+	<sys:String x:Key="loginFrm">Đăng nhập vào SQL Server</sys:String>
+	<sys:String x:Key="aboutFrm">Giới thiệu về tác giả</sys:String>
+	<sys:String x:Key="vi">Tiếng Việt</sys:String>
+	<sys:String x:Key="en">Tiếng Anh</sys:String>
+	<sys:String x:Key="SvName">Tên máy chủ:</sys:String>
+	<sys:String x:Key="SvNameTooltip">Chọn tên máy chủ từ danh sách</sys:String>
+	<sys:String x:Key="Authen">Chứng thực:</sys:String>
+	<sys:String x:Key="AuthenTooltip">Chọn chế độ chứng thực</sys:String>
+	<sys:String x:Key="Login">Tên đăng nhập:</sys:String>
+	<sys:String x:Key="LoginTooltip">Tên đăng nhập vào SQL Server</sys:String>
+	<sys:String x:Key="Pass">Mật khẩu:</sys:String>
+	<sys:String x:Key="PassTooltip">Mật khẩu</sys:String>
+	<sys:String x:Key="Rmb">Nhớ mật khẩu</sys:String>
+	<sys:String x:Key="RmbTooltip">Nhớ mật khẩu cho lần sau đăng nhập</sys:String>
+	<sys:String x:Key="Test">Kiểm tra kết nối</sys:String>
+	<sys:String x:Key="TestTooltip">Kiểm tra kết nối đến SQL Server</sys:String>
+	<sys:String x:Key="Cancel">Hủy bỏ</sys:String>
+	<sys:String x:Key="CancelTooltip">Hủy bỏ kiểm tra kết nối đến SQL Server</sys:String>
+	<sys:String x:Key="Dtb">Cơ sở dữ liệu:</sys:String>
+	<sys:String x:Key="DtbTooltip">Chọn tên cơ sở dữ liệu từ danh sách</sys:String>
+	<sys:String x:Key="LoginBtn">Đăng nhập</sys:String>
+	<sys:String x:Key="LoginTooltipBtn">Đăng nhập vào cơ sở dữ liệu</sys:String>
+	<sys:String x:Key="SelectTable">Chọn một bảng:</sys:String>
+	<sys:String x:Key="Table">Tên lớp/ Bảng:</sys:String>
+	<sys:String x:Key="Generate">Tạo mã</sys:String>
+	<sys:String x:Key="GenerateTooltip">Tạo mã từ bảng</sys:String>
+	<sys:String x:Key="Copy">Sao chép</sys:String>
+	<sys:String x:Key="CopyTooltip">Sao chép vào bộ nhớ tạm</sys:String>
+	<sys:String x:Key="Export">Xuất thành tập tin</sys:String>
+	<sys:String x:Key="ExportTooltip">Xuất thành tập tin .cs</sys:String>
+</ResourceDictionary>

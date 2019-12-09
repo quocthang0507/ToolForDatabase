@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:ToolForDatabase"
              StartupUri="Forms/LoginForm.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+	</Application.Resources>
 </Application>

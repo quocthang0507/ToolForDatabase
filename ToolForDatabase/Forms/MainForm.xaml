@@ -6,19 +6,19 @@
         xmlns:local="clr-namespace:ToolForDatabase"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
 		mc:Ignorable="d"
-        Title="Công cụ sinh mã tự động" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
+        Title="{DynamicResource mainFrm}" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
 	<StackPanel>
 		<ToolBar>
 			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" ToolTip="Quay về form Đăng nhập" TabIndex="1">
 				<Image Source="/Images/back.png" Width="30"/>
 			</Button>
-			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" ToolTip="Giới thiệu về tác giả" TabIndex="2">
-				<Image Source="/Images/about.png" Width="35"/>
+			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" ToolTip="Giới thiệu về tác giả" TabIndex="2" Margin="10,0,0,0">
+				<Image Source="/Images/about.png" Width="30"/>
 			</Button>
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<StackPanel Margin="5,5,10,0">
-				<Label Content="Select a table:" FontSize="15"/>
+				<Label Content="{DynamicResource SelectTable}" FontSize="15"/>
 				<TreeView x:Name="treeTable" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Padding="10,10,10,10" SelectedItemChanged="treeTable_SelectedItemChanged">
 					<TreeView.ItemContainerStyle>
 						<Style TargetType="{x:Type TreeViewItem}">
@@ -34,7 +34,7 @@
 							<Label Content="Namespace: " FontSize="15"/>
 						</StackPanel>
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-							<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="3" ToolTip="Tên namspace mà bạn muốn"/>
+							<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="3"/>
 						</StackPanel>
 					</Grid>
 					<Grid Margin="0,10,0,0">
