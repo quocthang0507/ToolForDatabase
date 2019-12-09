@@ -1,12 +1,4 @@
-﻿using System;
-<<<<<<< HEAD
-<<<<<<< HEAD
-using System.Threading;
-using System.Windows;
-=======
-=======
->>>>>>> parent of 1092906... Update solution
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +10,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-<<<<<<< HEAD
->>>>>>> parent of 1092906... Update solution
-=======
->>>>>>> parent of 1092906... Update solution
 
 namespace ToolForDatabase
 {
