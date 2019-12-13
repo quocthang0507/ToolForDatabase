@@ -1,5 +1,6 @@
 # ToolForDatabase
- Công cụ sinh mã tự động cho ứng dụng sử dụng cơ sở dữ liệu SQL
+
+Công cụ tìm thông tin các quan hệ có trong hệ quản trị cơ sở dữ liệu SQL Server
 
 ## Cài đặt
 
@@ -8,6 +9,10 @@
 ## Hướng dẫn sử dụng
 
 ## Yêu cầu
+
+* Đã cài đặt HQT CSDL SQL Server
+* .NET Framwork phiên bản 4.7.2
+* Visual Studio 2019
 
 ## Các phiên bản
 

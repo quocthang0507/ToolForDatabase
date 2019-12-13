@@ -1,24 +1,23 @@
 ﻿<Window x:Class="ToolForDatabase.form_main"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ToolForDatabase"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
 		mc:Ignorable="d"
-        Title="Công cụ sinh mã tự động" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
+		Title="Generating Class Tool" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
 	<StackPanel>
 		<ToolBar>
-			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" TabIndex="1">
+			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" TabIndex="1" ToolTip="Back to Login form">
 				<Image Source="/Images/back.png" Width="30"/>
 			</Button>
-			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" TabIndex="2">
+			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" TabIndex="2" ToolTip="Introduct Author's information">
 				<Image Source="/Images/about.png" Width="30"/>
 			</Button>
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">
-			<StackPanel Margin="5,5,10,0">
-				<Label Content="Select a table" FontSize="15"/>
+			<StackPanel Margin="5,5,10,0" x:Name="leftstack">
+				<Label Content="Select a table:" FontSize="15"/>
 				<TreeView x:Name="treeTable" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Padding="10,10,10,10" SelectedItemChanged="treeTable_SelectedItemChanged">
 					<TreeView.ItemContainerStyle>
 						<Style TargetType="{x:Type TreeViewItem}">
@@ -27,35 +26,37 @@
 					</TreeView.ItemContainerStyle>
 				</TreeView>
 			</StackPanel>
-			<DockPanel x:Name="dock" Margin="30,5,10,0">
-				<StackPanel MaxWidth="400" DockPanel.Dock="Top">
-					<Grid>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-							<Label Content="Namespace: " FontSize="15"/>
-						</StackPanel>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-							<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="3"/>
-						</StackPanel>
-					</Grid>
-					<Grid Margin="0,10,0,0">
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-							<Label Content="Class name/ Table:" FontSize="15"/>
-						</StackPanel>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-							<TextBox x:Name="tbxTable" Width="200" Padding="5,0,0,0" IsReadOnly="True" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="Tên bảng tương ứng với tên lớp"/>
-						</StackPanel>
-					</Grid>
-				</StackPanel>
-				<StackPanel MaxWidth="400" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
-					<Button x:Name="btnGenerate" Content="Generate" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnGenerate_Click" TabIndex="5" IsDefault="True" ToolTip="Tạo nội dung lớp tương ứng với bảng"/>
-					<Button x:Name="btnCopy" Content="Copy to Clipboard" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="6" ToolTip="Sao chép vào bộ nhớ tạm"/>
-					<Button x:Name="btnExport" Content="Export to file" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="7" ToolTip="Xuất ra file .cs"/>
-				</StackPanel>
-				<DockPanel DockPanel.Dock="Top">
-					<Label Content="Content:" FontSize="15" DockPanel.Dock="Top"/>
-					<avalonEdit:TextEditor x:Name="tbxContent" DockPanel.Dock="Top" IsReadOnly="True" FontSize="15" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" SyntaxHighlighting="C#" BorderThickness="1" BorderBrush="Black"/>
+			<StackPanel x:Name="rightstack">
+				<DockPanel Margin="30,5,10,0">
+					<StackPanel MaxWidth="400" MaxHeight="70" DockPanel.Dock="Top">
+						<Grid>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+								<Label Content="Namespace: " FontSize="15"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+								<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="3" ToolTip="You can change custom Namespace"/>
+							</StackPanel>
+						</Grid>
+						<Grid Margin="0,10,0,0">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+								<Label Content="Class name/ Table:" FontSize="15"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+								<TextBox x:Name="tbxTable" Width="200" Padding="5,0,0,0" IsReadOnly="True" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="Table correspond to Class"/>
+							</StackPanel>
+						</Grid>
+					</StackPanel>
+					<StackPanel MaxWidth="400" MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+						<Button x:Name="btnViewCode" Content="View code" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="5" IsDefault="True" ToolTip="View C# code"/>
+						<Button x:Name="btnCopy" Content="Copy to Clipboard" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="6" ToolTip="Copy below C# code to Clipboard"/>
+						<Button x:Name="btnExport" Content="Export to file" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="7" ToolTip="Export to C# file"/>
+					</StackPanel>
+					<DockPanel DockPanel.Dock="Top">
+						<Label Content="Content:" FontSize="15" MaxHeight="30" DockPanel.Dock="Top"/>
+						<avalonEdit:TextEditor x:Name="tbxContent" DockPanel.Dock="Top" IsReadOnly="True" FontSize="15" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" SyntaxHighlighting="C#" BorderThickness="1" BorderBrush="Black"/>
+					</DockPanel>
 				</DockPanel>
-			</DockPanel>
+			</StackPanel>
 		</StackPanel>
 	</StackPanel>
 </Window>

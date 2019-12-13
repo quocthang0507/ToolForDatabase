@@ -12,8 +12,8 @@ namespace ToolForDatabase
 	/// </summary>
 	public partial class form_login : Window
 	{
-		private LoginFunction Function = new LoginFunction();
-		private bool WindowsRendered = false;
+		private LoginFunction function = new LoginFunction();
+		private bool rendered = false;
 		private Thread thread;
 		
 		public static form_login Instance;
@@ -34,7 +34,7 @@ namespace ToolForDatabase
 		/// <param name="e"></param>
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			WindowsRendered = true;
+			rendered = true;
 			LoadLoginInfo();
 		}
 
@@ -62,7 +62,7 @@ namespace ToolForDatabase
 
 		private void cbxAuthentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (WindowsRendered)
+			if (rendered)
 				if (cbxAuthentication.SelectedIndex == 0)
 					panelUA.IsEnabled = false;
 				else
@@ -105,9 +105,9 @@ namespace ToolForDatabase
 		{
 			if (TestConnection())
 			{
-				Function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
+				function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 				SaveLoginInfo();
-				SaveConnectionString(Function.GetSQLConnectionString());
+				SaveConnectionString(function.GetSQLConnectionString());
 				this.Visibility = Visibility.Hidden;
 				(new form_main()).Show();
 			}
@@ -120,7 +120,7 @@ namespace ToolForDatabase
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
+			function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
 			if (dialog == MessageBoxResult.Yes)
 				Application.Current.Shutdown();
@@ -137,7 +137,7 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadServersToCombobox()
 		{
-			cbxServerName.ItemsSource = Function.GetServers();
+			cbxServerName.ItemsSource = function.GetServers();
 			cbxServerName.SelectedIndex = 0;
 		}
 
@@ -146,7 +146,7 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadDatabasesToCombobox()
 		{
-			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.ItemsSource = Function.GetDatabases());
+			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.ItemsSource = function.GetDatabases());
 			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.SelectedIndex = 0);
 			panelDatabase.Dispatcher.Invoke(() => panelDatabase.IsEnabled = true);
 		}
@@ -156,10 +156,10 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadLoginInfo()
 		{
-			string data = Function.GetLoginInfo();
+			string data = function.GetLoginInfo();
 			if (data != string.Empty)
 			{
-				string[] info = Function.GetLoginInfo().Split(' ');
+				string[] info = function.GetLoginInfo().Split(' ');
 				tbxLogin.Text = info[0];
 				tbxPassword.Password = info[1];
 			}
@@ -176,16 +176,16 @@ namespace ToolForDatabase
 			if (cbxAuthentication.Dispatcher.Invoke(() => cbxAuthentication.SelectedIndex == 0))
 			{
 				if (database != null)
-					return Function.TestConnection(server, database);
-				return Function.TestConnection(server);
+					return function.TestConnection(server, database);
+				return function.TestConnection(server);
 			}
 			else
 			{
 				string username = tbxLogin.Dispatcher.Invoke(() => tbxLogin.Text.Trim());
 				string password = tbxPassword.Dispatcher.Invoke(() => tbxPassword.Password.Trim());
 				if (database != null)
-					return Function.TestConnection(server, database, username, password);
-				return Function.TestConnection(server, username, password);
+					return function.TestConnection(server, database, username, password);
+				return function.TestConnection(server, username, password);
 			}
 		}
 
@@ -198,7 +198,7 @@ namespace ToolForDatabase
 			{
 				string username = tbxLogin.Dispatcher.Invoke(() => tbxLogin.Text.Trim());
 				string password = tbxPassword.Dispatcher.Invoke(() => tbxPassword.Password.Trim());
-				Function.SaveLoginInfo(username, password);
+				function.SaveLoginInfo(username, password);
 			}
 		}
 

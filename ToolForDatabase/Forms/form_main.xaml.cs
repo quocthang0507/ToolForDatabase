@@ -12,9 +12,9 @@ namespace ToolForDatabase
 	/// </summary>
 	public partial class form_main : Window
 	{
-		private MainFunction Function;
-		private string Database;
-		private string SelectedPath;
+		private MainFunction function;
+		private string database;
+		private string selectedPath;
 
 		public form_main()
 		{
@@ -36,12 +36,12 @@ namespace ToolForDatabase
 			Size newSize = e.NewSize;
 			double height = newSize.Height;
 			double width = newSize.Width;
-			treeTable.MaxHeight = height - 200;
-			treeTable.MaxWidth = width * 20 / 100;
-			dock.MaxHeight = height * 80 / 100;
-			dock.MaxWidth = width * 75 / 100;
-			dock.Height = height * 80 / 100;
-			dock.Width = width * 75 / 100;
+			// Tree view
+			leftstack.Height = height * 80 / 100;
+			leftstack.Width = width * 20 / 100;
+			// Text box
+			tbxContent.Height = height - 250;
+			tbxContent.Width = width * 70 / 100;
 		}
 
 		private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void btnGenerate_Click(object sender, RoutedEventArgs e)
+		private void btnViewCode_Click(object sender, RoutedEventArgs e)
 		{
 			string @namespace = tbxNamespace.Text;
 			string table = tbxTable.Text;
@@ -83,17 +83,20 @@ namespace ToolForDatabase
 				return;
 			}
 			tbxContent.Clear();
-			tbxContent.Text = Function.GenerateClass(@namespace, table);
+			tbxContent.Text = function.GenerateClass(@namespace, table);
 		}
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
 		{
+			btnViewCode_Click(sender, e);
 			string data = tbxContent.Text;
 			if (data != "")
 			{
 				string path = GetSelectedPath();
+				if (path == "")
+					return;
 				string filename = tbxTable.Text + ".cs";
-				Function.SaveToFile(path + "\\" + Database, filename, data);
+				function.SaveToFile(path + "\\" + database, filename, data);
 				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
 			}
 			else
@@ -120,8 +123,8 @@ namespace ToolForDatabase
 		/// </summary>
 		private void GetConnectionString()
 		{
-			Function = new MainFunction(Properties.Settings.Default.ConnectionString);
-			Database = Properties.Settings.Default.Database;
+			function = new MainFunction(Properties.Settings.Default.ConnectionString);
+			database = Properties.Settings.Default.Database;
 		}
 
 		/// <summary>
@@ -132,8 +135,8 @@ namespace ToolForDatabase
 			Application.Current.Dispatcher.Invoke((Action)delegate
 			{
 				TreeViewItem root = new TreeViewItem();
-				root.Header = Database;
-				root.ItemsSource = Function.GetTables();
+				root.Header = database;
+				root.ItemsSource = function.GetTables();
 				treeTable.Items.Add(root);
 			});
 		}
@@ -146,12 +149,12 @@ namespace ToolForDatabase
 		{
 			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
 			{
-				dialog.Description = "Select the directory that you want to save";
-				if (SelectedPath != "")
-					dialog.SelectedPath = SelectedPath;
+				dialog.Description = "Select the specific directory that you want to save";
+				if (selectedPath != "")
+					dialog.SelectedPath = selectedPath;
 				dialog.ShowDialog();
-				SelectedPath = dialog.SelectedPath;
-				return SelectedPath;
+				selectedPath = dialog.SelectedPath;
+				return selectedPath;
 			}
 		}
 		#endregion
