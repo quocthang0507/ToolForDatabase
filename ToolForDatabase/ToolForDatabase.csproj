@@ -97,30 +97,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Forms\AboutForm.xaml">
+    <Page Include="Forms\form_about.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\LoginForm.xaml">
+    <Page Include="Forms\form_login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\MainForm.xaml">
+    <Page Include="Forms\form_main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Forms\AboutForm.xaml.cs">
-      <DependentUpon>AboutForm.xaml</DependentUpon>
+    <Compile Include="Forms\form_about.xaml.cs">
+      <DependentUpon>form_about.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\LoginForm.xaml.cs">
-      <DependentUpon>LoginForm.xaml</DependentUpon>
+    <Compile Include="Forms\form_login.xaml.cs">
+      <DependentUpon>form_login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm.xaml.cs">
-      <DependentUpon>MainForm.xaml</DependentUpon>
+    <Compile Include="Forms\form_main.xaml.cs">
+      <DependentUpon>form_main.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -181,9 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\author.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\vietnamese.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ok.png" />

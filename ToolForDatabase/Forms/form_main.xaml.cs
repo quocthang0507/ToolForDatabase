@@ -10,30 +10,16 @@ namespace ToolForDatabase
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainForm : Window
+	public partial class form_main : Window
 	{
 		private MainFunction Function;
 		private string Database;
-		private static MainForm instance;
 		private string SelectedPath;
 
-		public MainForm()
+		public form_main()
 		{
 			InitializeComponent();
 			GetConnectionString();
-		}
-
-		/// <summary>
-		/// Mỗi lần ẩn/ hiện form sẽ cho load lại các control
-		/// </summary>
-		public static MainForm Instance
-		{
-			get
-			{
-				//if (instance == null)
-				instance = new MainForm();
-				return instance;
-			}
 		}
 
 		#region Events
@@ -60,8 +46,8 @@ namespace ToolForDatabase
 
 		private void btnBack_Click(object sender, RoutedEventArgs e)
 		{
-			this.Visibility = Visibility.Hidden;
-			LoginForm.Instance.Visibility = Visibility.Visible;
+			form_login.Instance.Visibility = Visibility.Visible;
+			this.Close();
 		}
 
 		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -114,18 +100,15 @@ namespace ToolForDatabase
 				MessageBox.Show("Can't export with a null value", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			MessageBoxResult exit = System.Windows.MessageBox.Show("Do you want to exit this application?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
-			if (exit == MessageBoxResult.Yes)
-				System.Windows.Application.Current.Shutdown();
-			else e.Cancel = true;
-		}
-
 		private void btnAbout_Click(object sender, RoutedEventArgs e)
 		{
 			AboutForm aboutForm = new AboutForm();
 			aboutForm.Show();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			form_login.Instance.Visibility = Visibility.Visible;
 		}
 
 		#endregion
@@ -146,7 +129,8 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadTables()
 		{
-			Application.Current.Dispatcher.Invoke((Action)delegate {
+			Application.Current.Dispatcher.Invoke((Action)delegate
+			{
 				TreeViewItem root = new TreeViewItem();
 				root.Header = Database;
 				root.ItemsSource = Function.GetTables();
@@ -171,6 +155,5 @@ namespace ToolForDatabase
 			}
 		}
 		#endregion
-
 	}
 }

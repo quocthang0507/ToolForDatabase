@@ -10,30 +10,19 @@ namespace ToolForDatabase
 	/// <summary>
 	/// Interaction logic for Login.xaml
 	/// </summary>
-	public partial class LoginForm : Window
+	public partial class form_login : Window
 	{
 		private LoginFunction Function = new LoginFunction();
 		private bool WindowsRendered = false;
-		private static LoginForm instance;
-		private Thread thread_test;
+		private Thread thread;
+		
+		public static form_login Instance;
 
-		public LoginForm()
+		public form_login()
 		{
 			InitializeComponent();
 			LoadServersToCombobox();
-		}
-
-		/// <summary>
-		/// Sử dụng Singleton để không cần tạo lại lớp nhằm mục đích ẩn/ hiện form
-		/// </summary>
-		public static LoginForm Instance
-		{
-			get
-			{
-				if (instance == null)
-					instance = new LoginForm();
-				return instance;
-			}
+			Instance = this;
 		}
 
 		#region Events
@@ -84,7 +73,7 @@ namespace ToolForDatabase
 		{
 			progressBar.Visibility = Visibility.Visible;
 			imgOK.Visibility = Visibility.Collapsed;
-			thread_test = new Thread(() =>
+			thread = new Thread(() =>
 			{
 				btnCancel.Dispatcher.Invoke(() => btnCancel.Visibility = Visibility.Visible);
 				bool connectable = TestConnection();
@@ -101,12 +90,12 @@ namespace ToolForDatabase
 				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
 				btnCancel.Dispatcher.Invoke(() => btnCancel.Visibility = Visibility.Collapsed);
 			});
-			thread_test.Start();
+			thread.Start();
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
-			thread_test.Abort();
+			thread.Abort();
 			progressBar.Visibility = Visibility.Hidden;
 			btnCancel.Visibility = Visibility.Collapsed;
 			panelDatabase.IsEnabled = false;
@@ -120,7 +109,7 @@ namespace ToolForDatabase
 				SaveLoginInfo();
 				SaveConnectionString(Function.GetSQLConnectionString());
 				this.Visibility = Visibility.Hidden;
-				MainForm.Instance.Visibility = Visibility.Visible;
+				(new form_main()).Show();
 			}
 			else
 			{
@@ -132,7 +121,11 @@ namespace ToolForDatabase
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			Function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
-			System.Windows.Application.Current.Shutdown();
+			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (dialog == MessageBoxResult.Yes)
+				Application.Current.Shutdown();
+			else
+				e.Cancel = true;
 		}
 
 		#endregion
@@ -210,7 +203,7 @@ namespace ToolForDatabase
 		}
 
 		/// <summary>
-		/// Lưu trữ chuỗi kết nối vào chương trình
+		/// Lưu trữ chuỗi kết nối vào bộ nhớ chương trình
 		/// </summary>
 		/// <param name="connectionString"></param>
 		private void SaveConnectionString(string connectionString)
@@ -220,6 +213,7 @@ namespace ToolForDatabase
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Upgrade();
 		}
+
 		#endregion
 
 	}
