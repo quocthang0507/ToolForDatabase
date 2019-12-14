@@ -9,10 +9,10 @@
 	<StackPanel>
 		<ToolBar>
 			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" TabIndex="1" ToolTip="Back to Login form">
-				<Image Source="/Images/back.png" Width="30"/>
+				<Image Source="/Images/back.png" Width="25"/>
 			</Button>
 			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" TabIndex="2" ToolTip="Introduct Author's information">
-				<Image Source="/Images/about.png" Width="30"/>
+				<Image Source="/Images/about.png" Width="25"/>
 			</Button>
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">

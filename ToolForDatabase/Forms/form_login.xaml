@@ -7,7 +7,7 @@
 		Title="Generating Class Tool" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
 	<StackPanel>
 		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="45" FontWeight="DemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
-		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="18" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
+		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="18" FontStyle="Italic" FontWeight="Light" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
 		<ProgressBar Height="5" IsIndeterminate="True" x:Name="progressBar" Visibility="Hidden" BorderThickness="0" Foreground="#FFEA8129" Margin="0,5,0,5"/>
 		<Grid>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
