@@ -37,10 +37,11 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			// Tree view
-			leftstack.Height = height * 80 / 100;
-			leftstack.Width = width * 20 / 100;
+			treeTable.Height = height * 80 / 100;
+			treeTable.Width = width * 20 / 100;
 			// Text box
-			tbxContent.Height = height - 250;
+			if (height > 250)
+				tbxContent.Height = height - 250;
 			tbxContent.Width = width * 70 / 100;
 		}
 
@@ -48,6 +49,16 @@ namespace ToolForDatabase
 		{
 			form_login.Instance.Visibility = Visibility.Visible;
 			this.Close();
+		}
+
+		private void btnExit_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (dialog == MessageBoxResult.Yes)
+			{
+				this.Closing -= Window_Closing; //bypass FormClosing event
+				Environment.Exit(1);
+			}
 		}
 
 		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -79,7 +90,7 @@ namespace ToolForDatabase
 			string table = tbxTable.Text;
 			if (@namespace == "" || table == "")
 			{
-				MessageBox.Show("Can't generate class because one or more textbox are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Can't generate class because one or more TextBoxes are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 			tbxContent.Clear();

@@ -15,7 +15,7 @@ namespace ToolForDatabase
 		private LoginFunction function = new LoginFunction();
 		private bool rendered = false;
 		private Thread thread;
-		
+
 		public static form_login Instance;
 
 		public form_login()
@@ -120,10 +120,12 @@ namespace ToolForDatabase
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
 			if (dialog == MessageBoxResult.Yes)
+			{
+				function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
 				Application.Current.Shutdown();
+			}
 			else
 				e.Cancel = true;
 		}
@@ -162,6 +164,8 @@ namespace ToolForDatabase
 				string[] info = function.GetLoginInfo().Split(' ');
 				tbxLogin.Text = info[0];
 				tbxPassword.Password = info[1];
+				cbxAuthentication.SelectedIndex = 1;
+				chkRemember.IsChecked = true;
 			}
 		}
 

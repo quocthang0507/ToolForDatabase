@@ -4,7 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="Generating Class Tool" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
+		Title="Generating Class Tool" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Background="#f9f4f4  ">
 	<StackPanel>
 		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="45" FontWeight="DemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
 		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="18" FontStyle="Italic" FontWeight="Light" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>

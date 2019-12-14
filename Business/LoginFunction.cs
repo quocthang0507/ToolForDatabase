@@ -119,17 +119,23 @@ namespace Business
 		/// <returns>Chuỗi thông tin đăng nhập</returns>
 		public string GetLoginInfo()
 		{
-			string data = string.Empty;
 			if (File.Exists(loginFile))
 			{
 				using (StreamReader reader = new StreamReader(loginFile))
 				{
 					string value = reader.ReadToEnd();
-					return Crypto.Decrypt(value, pass);
+					try
+					{
+						return Crypto.Decrypt(value, pass);
+					}
+					catch (System.Exception)
+					{
+						return string.Empty;
+					}
 				}
 			}
 			else
-				return data;
+				return string.Empty;
 		}
 
 		/// <summary>
