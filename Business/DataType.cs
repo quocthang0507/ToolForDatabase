@@ -7,7 +7,7 @@
 	{
 		/// <summary>
 		/// Chuyển đổi kiểu dữ liệu SqlDbType sang .NET Type
-		/// <para>Tham khảo: https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings</para>
+		/// <para>Tham khảo: https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings </para>
 		/// </summary>
 		/// <param name="SqlDbType">SQL Server Database Engine type</param>
 		/// <returns>.NET Framework type</returns>
