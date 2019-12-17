@@ -68,5 +68,13 @@ namespace Business
 				Directory.CreateDirectory(path);
 			File.WriteAllText(path + "\\" + filename, content);
 		}
+
+		public List<string> GetDatabases()
+		{
+			SQLDatabase database = new SQLDatabase(connection.ConnectionString);
+			database.GetDatabases();
+			return database.MyDatabases;
+		}
+
 	}
 }

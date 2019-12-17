@@ -4,6 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+		xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
 		mc:Ignorable="d"
 		Title="Generating Class Tool" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner" Background="#f9f4f4">
 	<StackPanel>
@@ -20,11 +21,14 @@
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<StackPanel Margin="5,5,10,0" x:Name="leftstack">
+				<Label Content="Select a database:" FontSize="15"/>
+				<ComboBox x:Name="cbxDatabase" TabIndex="9" FontSize="15" VerticalContentAlignment="Center" ToolTip="Select the database from the list"/>
 				<Label Content="Select a table:" FontSize="15"/>
 				<TreeView x:Name="treeTable" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Padding="10,10,10,10" SelectedItemChanged="treeTable_SelectedItemChanged">
 					<TreeView.ItemContainerStyle>
 						<Style TargetType="{x:Type TreeViewItem}">
 							<Setter Property="IsExpanded" Value="True"/>
+							<Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
 						</Style>
 					</TreeView.ItemContainerStyle>
 				</TreeView>

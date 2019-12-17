@@ -20,6 +20,7 @@ namespace ToolForDatabase
 		{
 			InitializeComponent();
 			GetConnectionString();
+			LoadDatabases();
 		}
 
 		#region Events
@@ -37,7 +38,7 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			// Tree view
-			treeTable.Height = height * 80 / 100;
+			treeTable.Height = height * 70 / 100;
 			treeTable.Width = width * 20 / 100;
 			// Text box
 			if (height > 250)
@@ -149,6 +150,7 @@ namespace ToolForDatabase
 				root.Header = database;
 				root.ItemsSource = function.GetTables();
 				treeTable.Items.Add(root);
+				
 			});
 		}
 
@@ -167,6 +169,12 @@ namespace ToolForDatabase
 				selectedPath = dialog.SelectedPath;
 				return selectedPath;
 			}
+		}
+
+		private void LoadDatabases()
+		{
+			cbxDatabase.ItemsSource = function.GetDatabases();
+			cbxDatabase.SelectedIndex = 0;
 		}
 		#endregion
 	}
