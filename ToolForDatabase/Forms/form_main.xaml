@@ -4,21 +4,21 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-		xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
 		mc:Ignorable="d"
 		Title="Generating Class Tool" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner" Background="#f9f4f4">
 	<StackPanel>
-		<ToolBar Background="#f0e4e4">
-			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="14" TabIndex="1" ToolTip="Back to Login form">
-				<Image Source="/Images/back.png" Width="25"/>
-			</Button>
-			<Button x:Name="btnExit" Click="btnExit_Click" FontSize="14" TabIndex="2" ToolTip="Exit this application">
-				<Image Source="/Images/exit.png" Width="25"/>
-			</Button>
-			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="14" TabIndex="3" ToolTip="Introduct Author's information">
-				<Image Source="/Images/about.png" Width="25"/>
-			</Button>
-		</ToolBar>
+		<Grid Background="#f0e4e4">
+			<ToolBar Background="Transparent" ToolBarTray.IsLocked="True">
+				<Button x:Name="btnBack" Click="btnBack_Click" FontSize="14" TabIndex="1" ToolTip="Back to Login form">
+					<Image Source="/Images/back.png" Width="25"/>
+				</Button>
+			</ToolBar>
+			<ToolBar Background="Transparent" HorizontalAlignment="Right" ToolBarTray.IsLocked="True">
+				<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="14" TabIndex="3" ToolTip="Introduct Author's information">
+					<Image Source="/Images/about.png" Width="25"/>
+				</Button>
+			</ToolBar>
+		</Grid>
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<StackPanel Margin="5,5,10,0" x:Name="leftstack">
 				<Label Content="Select a database:" FontSize="14"/>
@@ -28,13 +28,13 @@
 			</StackPanel>
 			<StackPanel x:Name="rightstack">
 				<DockPanel Margin="30,5,10,0">
-					<StackPanel MaxWidth="400" MaxHeight="70" DockPanel.Dock="Top">
+					<StackPanel MaxWidth="450" MaxHeight="70" DockPanel.Dock="Top">
 						<Grid>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 								<Label Content="Namespace: " FontSize="14"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
+								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
 							</StackPanel>
 						</Grid>
 						<Grid Margin="0,10,0,0">
@@ -42,7 +42,7 @@
 								<Label Content="Class name/ Table:" FontSize="14"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxTable" Width="200" Padding="5,0,0,0" IsReadOnly="True" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="Table correspond to Class"/>
+								<TextBox x:Name="tbxTable" Width="250" Padding="5,0,0,0" IsReadOnly="True" IsReadOnlyCaretVisible="True" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="Table correspond to Class"/>
 							</StackPanel>
 						</Grid>
 					</StackPanel>
@@ -53,7 +53,8 @@
 					</StackPanel>
 					<DockPanel DockPanel.Dock="Top">
 						<Label Content="Content:" FontSize="14" MaxHeight="30" DockPanel.Dock="Top"/>
-						<avalonEdit:TextEditor x:Name="tbxContent" DockPanel.Dock="Top" IsReadOnly="True" FontSize="14" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" SyntaxHighlighting="C#" BorderThickness="1" BorderBrush="Black"/>
+						<TabControl FontSize="14" x:Name="tabContent">
+						</TabControl>
 					</DockPanel>
 				</DockPanel>
 			</StackPanel>

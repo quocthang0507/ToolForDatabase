@@ -1,5 +1,6 @@
 ﻿using Business;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,8 +46,8 @@ namespace ToolForDatabase
 			listTables.Width = width * 20 / 100;
 			// Text box
 			if (height > 250)
-				tbxContent.Height = height - 250;
-			tbxContent.Width = width * 70 / 100;
+				tabContent.Height = height - 250;
+			tabContent.Width = width * 70 / 100;
 		}
 
 		private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -55,66 +56,60 @@ namespace ToolForDatabase
 			this.Close();
 		}
 
-		private void btnExit_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
-			if (dialog == MessageBoxResult.Yes)
-			{
-				this.Closing -= Window_Closing; //bypass FormClosing event
-				Environment.Exit(1);
-			}
-		}
-
 		private void cbxDatabase_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (rendered)
 			{
 				LoadTablesToList();
+				tabContent.Items.Clear();
 			}
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
 		{
-			string data = tbxContent.Text;
-			if (data != "")
-			{
-				Clipboard.SetText(data);
-				MessageBox.Show("Successfully copied", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-			else
-			{
-				MessageBox.Show("Can't copy with a null value", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Error);
-			}
+			// string data = tbxContent.Text;
+			//if (data != "")
+			//{
+			//	Clipboard.SetText(data);
+			//	MessageBox.Show("Successfully copied", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
+			//}
+			//else
+			//{
+			//	MessageBox.Show("Can't copy with a null value", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Error);
+			//}
 		}
 
 		private void btnViewCode_Click(object sender, RoutedEventArgs e)
 		{
 			string @namespace = tbxNamespace.Text;
-			string table = tbxTable.Text;
-			if (@namespace == "" || table == "")
+			string tables = tbxTable.Text;
+			if (@namespace == "" || tables == "")
 			{
 				MessageBox.Show("Can't generate class because one or more TextBoxes are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
-			tbxContent.Clear();
-			tbxContent.Text = function.GenerateClass(@namespace, table);
+			var array = tables.Split(';').Where(i => i != "").ToList(); //Remove last item
+			foreach (var item in array)
+			{
+				CreateTabWithContent(item, function.GenerateClass(@namespace, item));
+			}
 		}
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
 		{
 			btnViewCode_Click(sender, e);
-			string data = tbxContent.Text;
-			if (data != "")
-			{
-				string path = GetSelectedPath();
-				if (path == "")
-					return;
-				string filename = tbxTable.Text + ".cs";
-				function.SaveTextToFile(path + "\\" + database, filename, data);
-				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-			else
-				MessageBox.Show("Can't export with a null value", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
+			// string data = tbxContent.Text;
+			//if (data != "")
+			//{
+			//	string path = GetSelectedPath();
+			//	if (path == "")
+			//		return;
+			//	string filename = tbxTable.Text + ".cs";
+			//	function.SaveTextToFile(path + "\\" + database, filename, data);
+			//	MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+			//}
+			//else
+			//	MessageBox.Show("Can't export with a null value", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		private void btnAbout_Click(object sender, RoutedEventArgs e)
@@ -125,12 +120,22 @@ namespace ToolForDatabase
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			form_login.Instance.Visibility = Visibility.Visible;
+			MessageBoxResult dialog = MessageBox.Show("Do you want to close application?", "Closing form", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (dialog == MessageBoxResult.Yes)
+			{
+				this.Closing -= Window_Closing; //bypass FormClosing event
+				Environment.Exit(1);
+			}
 		}
 
 		private void listTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-
+			var selected = listTables.SelectedItems;
+			tbxTable.Clear();
+			foreach (var item in selected)
+			{
+				tbxTable.Text += item.ToString() + ";";
+			}
 		}
 
 		#endregion
@@ -186,6 +191,30 @@ namespace ToolForDatabase
 		{
 			cbxDatabase.ItemsSource = function.GetDatabases();
 			cbxDatabase.SelectedIndex = 0;
+		}
+
+		void CreateTabWithContent(string name, string content)
+		{
+			foreach (TabItem item in tabContent.Items)
+			{
+				if (name == item.Header.ToString())
+					return;
+			}
+			TabItem subTab = new TabItem();
+			
+			ICSharpCode.AvalonEdit.TextEditor textEditor = new ICSharpCode.AvalonEdit.TextEditor();
+			textEditor.Name = name;
+			textEditor.Text = content;
+			textEditor.IsReadOnly = true;
+			textEditor.FontSize = 14;
+			textEditor.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+			textEditor.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+			textEditor.FontFamily = new System.Windows.Media.FontFamily("Consolas");
+			textEditor.SyntaxHighlighting= ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#");
+			subTab.Content = textEditor;
+			subTab.Header = name;
+			subTab.IsSelected = true;
+			tabContent.Items.Insert(0, subTab);
 		}
 
 		#endregion
