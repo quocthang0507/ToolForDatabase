@@ -26,24 +26,36 @@ namespace ToolForDatabase.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ConnectionString {
+        public string serverName {
             get {
-                return ((string)(this["ConnectionString"]));
+                return ((string)(this["serverName"]));
             }
             set {
-                this["ConnectionString"] = value;
+                this["serverName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Database {
+        public string login {
             get {
-                return ((string)(this["Database"]));
+                return ((string)(this["login"]));
             }
             set {
-                this["Database"] = value;
+                this["login"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string password {
+            get {
+                return ((string)(this["password"]));
+            }
+            set {
+                this["password"] = value;
             }
         }
     }

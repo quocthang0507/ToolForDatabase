@@ -48,7 +48,9 @@ namespace DataAccess
 			Connection.Close();
 			foreach (DataRow item in tables.Rows)
 			{
-				AddTable(item[2].ToString());
+				string table = item[2].ToString();
+				if (table != "sysdiagrams")
+					AddTable(table);
 			}
 		}
 

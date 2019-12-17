@@ -92,17 +92,6 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Lấy danh sách tất cả các cơ sở dữ liệu có trong server
-		/// </summary>
-		/// <returns>Danh sách tên cơ sở dữ liệu</returns>
-		public List<string> GetDatabases()
-		{
-			SQLDatabase database = new SQLDatabase(SQLConnect.ConnectionString);
-			database.GetDatabases();
-			return database.MyDatabases;
-		}
-
-		/// <summary>
 		/// Lưu thông tin đăng nhập vào file đã được mã hóa
 		/// </summary>
 		/// <param name="username">Tên đăng nhập</param>
@@ -138,13 +127,5 @@ namespace Business
 				return string.Empty;
 		}
 
-		/// <summary>
-		/// Lấy chuỗi kết nối hiện tại
-		/// </summary>
-		/// <returns></returns>
-		public string GetSQLConnectionString()
-		{
-			return SQLConnect.ConnectionString;
-		}
 	}
 }

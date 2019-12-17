@@ -48,7 +48,9 @@ namespace DataAccess
 			Connection.Close();
 			foreach (DataRow item in databases.Rows)
 			{
-				AddDatabase(item.Field<string>("database_name"));
+				string db = item.Field<string>("database_name");
+				if (db != "master" && db != "tempdb" && db != "model" && db != "msdb")
+					AddDatabase(db);
 			}
 		}
 

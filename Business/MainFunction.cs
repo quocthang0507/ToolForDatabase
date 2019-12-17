@@ -16,9 +16,22 @@ namespace Business
 	{
 		private SqlConnection connection;
 
-		public MainFunction(string connection)
+		public MainFunction(string serverName)
 		{
-			this.connection = new SqlConnection(connection);
+			SQLConnectionString temp = new SQLConnectionString(serverName);
+			this.connection = new SqlConnection(temp.ConnectionString);
+		}
+
+		public MainFunction(string serverName, string loginName, string password)
+		{
+			SQLConnectionString temp = new SQLConnectionString(serverName, loginName, password);
+			this.connection = new SqlConnection(temp.ConnectionString);
+		}
+
+		public MainFunction(string serverName, string database, string loginName, string password)
+		{
+			SQLConnectionString temp = new SQLConnectionString(serverName, database, loginName, password);
+			this.connection = new SqlConnection(temp.ConnectionString);
 		}
 
 		/// <summary>
@@ -37,7 +50,7 @@ namespace Business
 		/// </summary>
 		/// <param name="table">Tên bảng</param>
 		/// <returns>Danh sách tên và kiểu dữ liệu</returns>
-		public List<KeyValuePair<string,string>> GetColumns(string table)
+		public List<KeyValuePair<string, string>> GetColumns(string table)
 		{
 			SQLColumn column = new SQLColumn(connection.ConnectionString, table);
 			column.GetColumns();
@@ -62,7 +75,7 @@ namespace Business
 		/// <param name="path">Đường dẫn thư mục</param>
 		/// <param name="filename">Tên bảng sẽ thành tên file</param>
 		/// <param name="content">Nội dung lớp</param>
-		public void SaveToFile(string path, string filename, string content)
+		public void SaveTextToFile(string path, string filename, string content)
 		{
 			if (!Directory.Exists(path))
 				Directory.CreateDirectory(path);

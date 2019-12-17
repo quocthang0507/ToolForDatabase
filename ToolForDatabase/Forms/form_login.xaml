@@ -4,25 +4,25 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="Generating Class Tool" Height="555" Width="445" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Background="#f9f4f4  ">
+		Title="Generating Class Tool" Height="500" Width="410" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Background="#f9f4f4  ">
 	<StackPanel>
-		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="45" FontWeight="DemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
-		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="18" FontStyle="Italic" FontWeight="Light" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
+		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#4a4e4d" FontSize="45" FontWeight="SemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
+		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="17" FontStyle="Italic" FontWeight="Light" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
 		<ProgressBar Height="5" IsIndeterminate="True" x:Name="progressBar" Visibility="Hidden" BorderThickness="0" Foreground="#FFEA8129" Margin="0,5,0,5"/>
 		<Grid>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Label Content="Server name:" FontSize="15" Margin="30,0,10,0"/>
+				<Label Content="Server name:" FontSize="14" Margin="20,0,10,0"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-				<ComboBox x:Name="cbxServerName" Width="240px" Margin="10,0,30,0" IsEditable="True" FontSize="15" TabIndex="1" LostFocus="cbxServerName_LostFocus" SelectionChanged="cbxServerName_SelectionChanged" ToolTip="Select a server from the list"/>
+				<ComboBox x:Name="cbxServerName" Width="240px" Margin="10,0,20,0" IsEditable="True" FontSize="14" TabIndex="1" LostFocus="cbxServerName_LostFocus" SelectionChanged="cbxServerName_SelectionChanged" ToolTip="Select a server from the list"/>
 			</StackPanel>
 		</Grid>
 		<Grid Margin="0,10,0,0">
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Label Content="Authentication:" FontSize="15" Margin="30,0,10,0"/>
+				<Label Content="Authentication:" FontSize="14" Margin="20,0,10,0"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-				<ComboBox x:Name="cbxAuthentication" Width="240px" Margin="10,0,30,0" IsEditable="False" VerticalContentAlignment="Center" FontSize="15" TabIndex="2" SelectionChanged="cbxAuthentication_SelectionChanged" ToolTip="Select the authentication mode">
+				<ComboBox x:Name="cbxAuthentication" Width="240px" Margin="10,0,20,0" IsEditable="False" VerticalContentAlignment="Center" FontSize="14" TabIndex="2" SelectionChanged="cbxAuthentication_SelectionChanged" ToolTip="Select the authentication mode">
 					<ComboBoxItem IsSelected="True">Windows Authentication</ComboBoxItem>
 					<ComboBoxItem>SQL Server Authentication</ComboBoxItem>
 				</ComboBox>
@@ -31,41 +31,36 @@
 		<StackPanel x:Name="panelUA" IsEnabled="False">
 			<Grid Margin="0,10,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Login:" FontSize="15" Margin="30,0,10,0"/>
+					<Label Content="Login:" FontSize="14" Margin="30,0,10,0"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<TextBox x:Name="tbxLogin" Width="240px" Margin="10,0,30,0" TabIndex="3" FontSize="15" VerticalContentAlignment="Center" ToolTip="Fill in your login name"/>
+					<TextBox x:Name="tbxLogin" Width="240px" Margin="10,0,20,0" TabIndex="3" FontSize="14" VerticalContentAlignment="Center" ToolTip="Fill in your login name"/>
 				</StackPanel>
 			</Grid>
 			<Grid Margin="0,10,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Password:" FontSize="15" Margin="30,0,10,0"/>
+					<Label Content="Password:" FontSize="14" Margin="30,0,10,0"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<PasswordBox x:Name="tbxPassword" Width="240px" Margin="10,0,30,0" TabIndex="4" FontSize="15" VerticalContentAlignment="Center" ToolTip="Fill in your password"/>
+					<PasswordBox x:Name="tbxPassword" Width="240px" Margin="10,0,20,0" TabIndex="4" FontSize="14" VerticalContentAlignment="Center" ToolTip="Fill in your password"/>
 				</StackPanel>
 			</Grid>
-			<Grid>
-				<CheckBox x:Name="chkRemember" Content="Remember password" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0" TabIndex="5" ToolTip="Do you want remember this login information for next login?"/>
+			<Grid Margin="0,10,0,0">
+				<CheckBox x:Name="chkRemember" Content="Remember password" FontSize="14" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,20,0" TabIndex="5" ToolTip="Do you want remember this login information for next login?"/>
 			</Grid>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-			<Button x:Name="btnTest" Content="Test Connection" Margin="0,10,0,10" FontSize="15" Padding="10,5,10,5" Click="btn_Test_Click" IsDefault="True" TabIndex="6" ToolTip="Please test connection before viewing list of databases"/>
-			<Button x:Name="btnCancel" Visibility="Collapsed" Content="Cancel" Margin="10,10,0,10" FontSize="15" Padding="10,5,10,5" TabIndex="7" Click="btnCancel_Click" ToolTip="Cancel the testing connection thread"/>
+			<Button x:Name="btnTest" Content="Test Connection" Margin="0,10,0,10" FontSize="14" Padding="10,5,10,5" Click="btn_Test_Click" IsDefault="True" TabIndex="6" ToolTip="Please test connection before viewing list of databases"/>
+			<Button x:Name="btnCancel" Visibility="Collapsed" Content="Cancel" Margin="10,10,0,10" FontSize="14" Padding="10,5,10,5" TabIndex="7" Click="btnCancel_Click" ToolTip="Cancel the testing connection thread"/>
 			<Image x:Name="imgOK" Visibility="Collapsed" Source="/Images/ok.png" Margin="10,0,0,0" Width="35" ToolTip="Connect to SQL Server successfully"/>
 		</StackPanel>
-		<StackPanel x:Name="panelDatabase" IsEnabled="False">
-			<Grid>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Label Content="Database:" FontSize="15" Margin="35,0,10,0"/>
+		<StackPanel HorizontalAlignment="Center">
+			<Button x:Name="btnLogin" Click="btnLogin_Click" FontSize="14" TabIndex="8" ToolTip="Go on Main form" Padding="10,5,10,5">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="/Images/next.png" Width="20"/>
+					<TextBlock Text="Log in" FontSize="14" VerticalAlignment="Center" Margin="10,0,0,0"/>
 				</StackPanel>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<ComboBox x:Name="cbxDatabase" Width="240px" Margin="10,0,30,0" TabIndex="9" FontSize="15" VerticalContentAlignment="Center" ToolTip="Select the database from the list"/>
-				</StackPanel>
-			</Grid>
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button x:Name="btnLogin" Content="Login" Margin="0,20,0,10" FontSize="15" Padding="10,5,10,5" Click="btnLogin_Click" ToolTip="Go to Main form"/>
-			</StackPanel>
+			</Button>
 		</StackPanel>
 	</StackPanel>
 </Window>

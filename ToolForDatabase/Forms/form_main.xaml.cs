@@ -14,22 +14,25 @@ namespace ToolForDatabase
 	{
 		private MainFunction function;
 		private string database;
+		private string serverName;
+		private string loginName;
+		private string password;
 		private string selectedPath;
+		private bool rendered = false;
 
 		public form_main()
 		{
 			InitializeComponent();
-			GetConnectionString();
-			LoadDatabases();
+			GetInfoFromLoginForm();
+			LoadDatabasesToCombobox();
+			LoadTablesToList();
 		}
 
 		#region Events
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			var thread = new Thread(() => LoadTables());
-			thread.Start();
-			tbxContent.Clear();
+			rendered = true;
 		}
 
 		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -38,8 +41,8 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			// Tree view
-			treeTable.Height = height * 70 / 100;
-			treeTable.Width = width * 20 / 100;
+			listTables.Height = height * 70 / 100;
+			listTables.Width = width * 20 / 100;
 			// Text box
 			if (height > 250)
 				tbxContent.Height = height - 250;
@@ -62,13 +65,12 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void treeTable_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		private void cbxDatabase_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			string selected = treeTable.SelectedItem.ToString();
-			if (!selected.Contains("Header"))   //Bỏ qua tên server
-				tbxTable.Text = selected;
-			else
-				tbxTable.Text = null;
+			if (rendered)
+			{
+				LoadTablesToList();
+			}
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
@@ -108,7 +110,7 @@ namespace ToolForDatabase
 				if (path == "")
 					return;
 				string filename = tbxTable.Text + ".cs";
-				function.SaveToFile(path + "\\" + database, filename, data);
+				function.SaveTextToFile(path + "\\" + database, filename, data);
 				MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
 			}
 			else
@@ -126,6 +128,11 @@ namespace ToolForDatabase
 			form_login.Instance.Visibility = Visibility.Visible;
 		}
 
+		private void listTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+		}
+
 		#endregion
 
 		#region Methods
@@ -133,25 +140,29 @@ namespace ToolForDatabase
 		/// <summary>
 		/// Lấy chuỗi kết nối từ form Login thông qua setting của ứng dụng
 		/// </summary>
-		private void GetConnectionString()
+		private void GetInfoFromLoginForm()
 		{
-			function = new MainFunction(Properties.Settings.Default.ConnectionString);
-			database = Properties.Settings.Default.Database;
+			serverName = Properties.Settings.Default.serverName;
+			loginName = Properties.Settings.Default.login;
+			password = Properties.Settings.Default.password;
+			if (loginName == null)
+			{
+				function = new MainFunction(serverName);
+			}
+			else
+			{
+				function = new MainFunction(serverName, loginName, password);
+			}
 		}
 
 		/// <summary>
 		/// Load các bảng có trong cơ sở dữ liệu ra TreeView
 		/// </summary>
-		private void LoadTables()
+		private void LoadTablesToList()
 		{
-			Application.Current.Dispatcher.Invoke((Action)delegate
-			{
-				TreeViewItem root = new TreeViewItem();
-				root.Header = database;
-				root.ItemsSource = function.GetTables();
-				treeTable.Items.Add(root);
-				
-			});
+			database = cbxDatabase.SelectedItem.ToString();
+			function = new MainFunction(serverName, database, loginName, password);
+			listTables.ItemsSource = function.GetTables();
 		}
 
 		/// <summary>
@@ -171,11 +182,12 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void LoadDatabases()
+		private void LoadDatabasesToCombobox()
 		{
 			cbxDatabase.ItemsSource = function.GetDatabases();
 			cbxDatabase.SelectedIndex = 0;
 		}
+
 		#endregion
 	}
 }

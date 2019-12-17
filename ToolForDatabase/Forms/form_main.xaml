@@ -9,58 +9,51 @@
 		Title="Generating Class Tool" Height="600" Width="750" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner" Background="#f9f4f4">
 	<StackPanel>
 		<ToolBar Background="#f0e4e4">
-			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="15" TabIndex="1" ToolTip="Back to Login form">
+			<Button x:Name="btnBack" Click="btnBack_Click" FontSize="14" TabIndex="1" ToolTip="Back to Login form">
 				<Image Source="/Images/back.png" Width="25"/>
 			</Button>
-			<Button x:Name="btnExit" Click="btnExit_Click" FontSize="15" TabIndex="2" ToolTip="Exit this application">
+			<Button x:Name="btnExit" Click="btnExit_Click" FontSize="14" TabIndex="2" ToolTip="Exit this application">
 				<Image Source="/Images/exit.png" Width="25"/>
 			</Button>
-			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="15" TabIndex="3" ToolTip="Introduct Author's information">
+			<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="14" TabIndex="3" ToolTip="Introduct Author's information">
 				<Image Source="/Images/about.png" Width="25"/>
 			</Button>
 		</ToolBar>
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<StackPanel Margin="5,5,10,0" x:Name="leftstack">
-				<Label Content="Select a database:" FontSize="15"/>
-				<ComboBox x:Name="cbxDatabase" TabIndex="9" FontSize="15" VerticalContentAlignment="Center" ToolTip="Select the database from the list"/>
-				<Label Content="Select a table:" FontSize="15"/>
-				<TreeView x:Name="treeTable" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Padding="10,10,10,10" SelectedItemChanged="treeTable_SelectedItemChanged">
-					<TreeView.ItemContainerStyle>
-						<Style TargetType="{x:Type TreeViewItem}">
-							<Setter Property="IsExpanded" Value="True"/>
-							<Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
-						</Style>
-					</TreeView.ItemContainerStyle>
-				</TreeView>
+				<Label Content="Select a database:" FontSize="14"/>
+				<ComboBox x:Name="cbxDatabase" TabIndex="9" FontSize="14" VerticalContentAlignment="Center" ToolTip="Select the database from the list" SelectionChanged="cbxDatabase_SelectionChanged"/>
+				<Label Content="Select a table:" FontSize="14"/>
+				<ListBox x:Name="listTables" SelectionMode="Multiple" FontSize="14" Focusable="False" SelectionChanged="listTables_SelectionChanged"/>
 			</StackPanel>
 			<StackPanel x:Name="rightstack">
 				<DockPanel Margin="30,5,10,0">
 					<StackPanel MaxWidth="400" MaxHeight="70" DockPanel.Dock="Top">
 						<Grid>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-								<Label Content="Namespace: " FontSize="15"/>
+								<Label Content="Namespace: " FontSize="14"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
+								<TextBox x:Name="tbxNamespace" Width="200" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
 							</StackPanel>
 						</Grid>
 						<Grid Margin="0,10,0,0">
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-								<Label Content="Class name/ Table:" FontSize="15"/>
+								<Label Content="Class name/ Table:" FontSize="14"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxTable" Width="200" Padding="5,0,0,0" IsReadOnly="True" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="Table correspond to Class"/>
+								<TextBox x:Name="tbxTable" Width="200" Padding="5,0,0,0" IsReadOnly="True" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="Table correspond to Class"/>
 							</StackPanel>
 						</Grid>
 					</StackPanel>
 					<StackPanel MaxWidth="400" MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
-						<Button x:Name="btnViewCode" Content="View code" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="6" IsDefault="True" ToolTip="View C# code"/>
-						<Button x:Name="btnCopy" Content="Copy to Clipboard" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="7" ToolTip="Copy below C# code to Clipboard"/>
-						<Button x:Name="btnExport" Content="Export to file" Margin="10" FontSize="15" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="8" ToolTip="Export to C# file"/>
+						<Button x:Name="btnViewCode" Content="View code" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="6" IsDefault="True" ToolTip="View C# code"/>
+						<Button x:Name="btnCopy" Content="Copy to Clipboard" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="7" ToolTip="Copy below C# code to Clipboard"/>
+						<Button x:Name="btnExport" Content="Export to file" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="8" ToolTip="Export to C# file"/>
 					</StackPanel>
 					<DockPanel DockPanel.Dock="Top">
-						<Label Content="Content:" FontSize="15" MaxHeight="30" DockPanel.Dock="Top"/>
-						<avalonEdit:TextEditor x:Name="tbxContent" DockPanel.Dock="Top" IsReadOnly="True" FontSize="15" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" SyntaxHighlighting="C#" BorderThickness="1" BorderBrush="Black"/>
+						<Label Content="Content:" FontSize="14" MaxHeight="30" DockPanel.Dock="Top"/>
+						<avalonEdit:TextEditor x:Name="tbxContent" DockPanel.Dock="Top" IsReadOnly="True" FontSize="14" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" SyntaxHighlighting="C#" BorderThickness="1" BorderBrush="Black"/>
 					</DockPanel>
 				</DockPanel>
 			</StackPanel>

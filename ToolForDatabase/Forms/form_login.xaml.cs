@@ -23,6 +23,7 @@ namespace ToolForDatabase
 			InitializeComponent();
 			LoadServersToCombobox();
 			Instance = this;
+			LoadLoginInfo();
 		}
 
 		#region Events
@@ -35,7 +36,6 @@ namespace ToolForDatabase
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			rendered = true;
-			LoadLoginInfo();
 		}
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace ToolForDatabase
 
 		private void cbxServerName_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			panelDatabase.IsEnabled = false;
+			btnLogin.IsEnabled = false;
 		}
 
 		private void cbxAuthentication_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,12 +80,13 @@ namespace ToolForDatabase
 				if (connectable)
 				{
 					imgOK.Dispatcher.Invoke(() => imgOK.Visibility = Visibility.Visible);
-					LoadDatabasesToCombobox();
+					btnLogin.Dispatcher.Invoke(() => btnLogin.IsEnabled = true);
 				}
 				else
 				{
 					MessageBox.Show("Can't connect to server", "Test Connection", MessageBoxButton.OK, MessageBoxImage.Error);
 					imgOK.Dispatcher.Invoke(() => imgOK.Visibility = Visibility.Collapsed);
+					btnLogin.Dispatcher.Invoke(() => btnLogin.IsEnabled = false);
 				}
 				progressBar.Dispatcher.Invoke(() => progressBar.Visibility = Visibility.Hidden);
 				btnCancel.Dispatcher.Invoke(() => btnCancel.Visibility = Visibility.Collapsed);
@@ -98,7 +99,7 @@ namespace ToolForDatabase
 			thread.Abort();
 			progressBar.Visibility = Visibility.Hidden;
 			btnCancel.Visibility = Visibility.Collapsed;
-			panelDatabase.IsEnabled = false;
+			btnLogin.IsEnabled = false;
 		}
 
 		private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -106,8 +107,7 @@ namespace ToolForDatabase
 			if (TestConnection())
 			{
 				function.SaveServers(cbxServerName.Items.OfType<string>().ToList());
-				SaveLoginInfo();
-				SaveConnectionString(function.GetSQLConnectionString());
+				SaveLoginInfoToFile();
 				this.Visibility = Visibility.Hidden;
 				(new form_main()).Show();
 			}
@@ -144,16 +144,6 @@ namespace ToolForDatabase
 		}
 
 		/// <summary>
-		/// Lấy danh sách tên cơ sở dữ liệu hiển thị ra combobox
-		/// </summary>
-		private void LoadDatabasesToCombobox()
-		{
-			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.ItemsSource = function.GetDatabases());
-			cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.SelectedIndex = 0);
-			panelDatabase.Dispatcher.Invoke(() => panelDatabase.IsEnabled = true);
-		}
-
-		/// <summary>
 		/// Lấy thông tin đăng nhập đã lưu trữ
 		/// </summary>
 		private void LoadLoginInfo()
@@ -176,19 +166,16 @@ namespace ToolForDatabase
 		private bool TestConnection()
 		{
 			string server = cbxServerName.Dispatcher.Invoke(() => cbxServerName.Text.Trim());
-			string database = cbxDatabase.Dispatcher.Invoke(() => cbxDatabase.Text.Trim());
 			if (cbxAuthentication.Dispatcher.Invoke(() => cbxAuthentication.SelectedIndex == 0))
 			{
-				if (database != null)
-					return function.TestConnection(server, database);
+				SaveInfoForMainForm(server);
 				return function.TestConnection(server);
 			}
 			else
 			{
 				string username = tbxLogin.Dispatcher.Invoke(() => tbxLogin.Text.Trim());
 				string password = tbxPassword.Dispatcher.Invoke(() => tbxPassword.Password.Trim());
-				if (database != null)
-					return function.TestConnection(server, database, username, password);
+				SaveInfoForMainForm(server, username, password);
 				return function.TestConnection(server, username, password);
 			}
 		}
@@ -196,7 +183,7 @@ namespace ToolForDatabase
 		/// <summary>
 		/// Lưu trữ thông tin đăng nhập ra file
 		/// </summary>
-		private void SaveLoginInfo()
+		private void SaveLoginInfoToFile()
 		{
 			if (cbxAuthentication.SelectedIndex == 1)
 			{
@@ -207,18 +194,31 @@ namespace ToolForDatabase
 		}
 
 		/// <summary>
-		/// Lưu trữ chuỗi kết nối vào bộ nhớ chương trình
+		/// Lưu trữ tên server vào bộ nhớ chương trình
 		/// </summary>
 		/// <param name="connectionString"></param>
-		private void SaveConnectionString(string connectionString)
+		private void SaveInfoForMainForm(string serverName)
 		{
-			Properties.Settings.Default.ConnectionString = connectionString;
-			Properties.Settings.Default.Database = cbxDatabase.Text;
+			Properties.Settings.Default.serverName = serverName;
+			Properties.Settings.Default.Save();
+			Properties.Settings.Default.Upgrade();
+		}
+
+		/// <summary>
+		/// Lưu trữ tên server, thông tin đăng nhập vào bộ nhớ chương trình
+		/// </summary>
+		/// <param name="serverName"></param>
+		/// <param name="loginName"></param>
+		/// <param name="password"></param>
+		private void SaveInfoForMainForm(string serverName, string loginName, string password)
+		{
+			Properties.Settings.Default.serverName = serverName;
+			Properties.Settings.Default.login = loginName;
+			Properties.Settings.Default.password = password;
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Upgrade();
 		}
 
 		#endregion
-
 	}
 }
