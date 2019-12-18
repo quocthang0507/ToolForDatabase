@@ -12,7 +12,8 @@ namespace Business
 		private string Full = "{0}\nnamespace {1}\n{{\n\tpublic class {2}\n\t{{\n{3}\n{4}{5}\n\t}}\n}}";
 		private string Namespace = "DataAccess";
 		private string Table;
-		private List<KeyValuePair<string, string>> Columns;
+		private List<KeyValuePair<string, string>> Columns; //Danh sách toàn bộ các cột
+		private List<KeyValuePair<string, string>> selectedColumns; //Danh sách các cột chọn làm phương thức tạo lập
 		private string Field = "\t\tpublic {0} {1} {{ get; set; }}";
 		private string Constructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}\n";
 		private string Parameter = "{0} {1}";
@@ -36,11 +37,11 @@ namespace Business
 		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
 		/// <param name="table">Tên bảng</param>
 		/// <param name="columns">Tên thuộc tính</param>
-		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> columns)
+		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> selectedColumns)
 		{
 			Namespace = @namespace;
 			Table = table;
-			Columns = columns;
+			this.selectedColumns = selectedColumns;
 		}
 
 		/// <summary>
@@ -66,7 +67,7 @@ namespace Business
 				StringBuilder builder = new StringBuilder();
 				foreach (var attribute in Columns)
 				{
-					builder.AppendLine(string.Format(Field, DataType.Mapping(attribute.Value), attribute.Key));
+					builder.AppendLine(string.Format(Field, DataType.MapToOriginalType(attribute.Value), attribute.Key));
 				}
 				return builder.ToString();
 			}
@@ -77,13 +78,13 @@ namespace Business
 		/// </summary>
 		/// <param name="length">Số lượng tham số</param>
 		/// <returns></returns>
-		private string GenerateParameters(int length)
+		private string GenerateParameters()
 		{
 			string param = "";
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < selectedColumns.Count; i++)
 			{
-				param += string.Format(Parameter, DataType.Mapping(Columns[i].Value), Columns[i].Key);
-				if (i < length - 1)
+				param += string.Format(Parameter, DataType.MapToOriginalType(selectedColumns[i].Value), selectedColumns[i].Key);
+				if (i < selectedColumns.Count - 1)
 					param += ", ";
 			}
 			return param;
@@ -94,31 +95,29 @@ namespace Business
 		/// </summary>
 		/// <param name="length">Số lượng câu lệnh</param>
 		/// <returns></returns>
-		private string GenerateStatements(int length)
+		private string GenerateStatements()
 		{
 			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < selectedColumns.Count; i++)
 			{
-				builder.AppendLine(string.Format(Statement, Columns[i].Key));
+				builder.AppendLine(string.Format(Statement, selectedColumns[i].Key));
 			}
 			return builder.ToString();
 		}
 
 		/// <summary>
-		/// Tạo ra một loạt các phương thức khởi tạo của lớp
+		/// Tạo ra 2 phương thức khởi tạo lớp (phương thức tạo lập mặc định và phương thức tạo lập tùy chỉnh)
 		/// </summary>
 		public string GenerateConstructors
 		{
 			get
 			{
 				StringBuilder builder = new StringBuilder();
-				builder.AppendLine(string.Format(Constructor, Table, "", ""));
-				for (int i = 1; i <= Columns.Count; i++)
-				{
-					string param = GenerateParameters(i);
-					string statement = GenerateStatements(i);
-					builder.AppendLine(string.Format(Constructor, Table, param, statement));
-				}
+				builder.AppendLine(string.Format(Constructor, Table, "", "")); //Phương thức trống
+				//Phương thức tạo lập với những cột đã được chọn
+				string param = GenerateParameters();
+				string statement = GenerateStatements();
+				builder.AppendLine(string.Format(Constructor, Table, param, statement));
 				return builder.ToString();
 			}
 		}

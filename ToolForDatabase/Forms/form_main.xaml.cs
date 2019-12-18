@@ -20,6 +20,7 @@ namespace ToolForDatabase
 		private string password;
 		private string selectedPath;
 		private bool rendered = false;
+		private Thread thread;
 
 		public form_main()
 		{
@@ -91,7 +92,13 @@ namespace ToolForDatabase
 			var array = tables.Split(';').Where(i => i != "").ToList(); //Remove last item
 			foreach (var item in array)
 			{
-				CreateTabWithContent(item, function.GenerateClass(@namespace, item));
+				thread = new Thread(() =>
+				Application.Current.Dispatcher.Invoke((Action)delegate
+				{
+					CreateTabWithContent(item, function.GenerateClass(@namespace, item));
+				}
+				));
+				thread.Start();
 			}
 		}
 
@@ -136,6 +143,11 @@ namespace ToolForDatabase
 			{
 				tbxTable.Text += item.ToString() + ";";
 			}
+		}
+
+		private void tabContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
 		}
 
 		#endregion
@@ -187,21 +199,28 @@ namespace ToolForDatabase
 			}
 		}
 
+		/// <summary>
+		/// Hiển thị danh sách cơ sở dữ liệu lên combobox
+		/// </summary>
 		private void LoadDatabasesToCombobox()
 		{
 			cbxDatabase.ItemsSource = function.GetDatabases();
 			cbxDatabase.SelectedIndex = 0;
 		}
 
+		/// <summary>
+		/// Tạo một tab mới tương ứng với một bảng
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="content"></param>
 		void CreateTabWithContent(string name, string content)
 		{
-			foreach (TabItem item in tabContent.Items)
+			foreach (TabItem item in tabContent.Items)	//Kiểm tra đã tồn tại một tab cùng tên chưa
 			{
 				if (name == item.Header.ToString())
 					return;
 			}
 			TabItem subTab = new TabItem();
-			
 			ICSharpCode.AvalonEdit.TextEditor textEditor = new ICSharpCode.AvalonEdit.TextEditor();
 			textEditor.Name = name;
 			textEditor.Text = content;
@@ -210,7 +229,7 @@ namespace ToolForDatabase
 			textEditor.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 			textEditor.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
 			textEditor.FontFamily = new System.Windows.Media.FontFamily("Consolas");
-			textEditor.SyntaxHighlighting= ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#");
+			textEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#");
 			subTab.Content = textEditor;
 			subTab.Header = name;
 			subTab.IsSelected = true;
@@ -218,5 +237,6 @@ namespace ToolForDatabase
 		}
 
 		#endregion
+
 	}
 }

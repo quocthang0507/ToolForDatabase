@@ -1,4 +1,6 @@
-﻿namespace DataAccess
+﻿using System;
+
+namespace DataAccess
 {
 	/// <summary>
 	/// Lớp chuyển đổi kiểu dữ liệu SqlDbType sang .NET Type
@@ -11,7 +13,7 @@
 		/// </summary>
 		/// <param name="SqlDbType">SQL Server Database Engine type</param>
 		/// <returns>.NET Framework type</returns>
-		public static string Mapping(string SqlDbType)
+		public static string MapToOriginalType(string SqlDbType)
 		{
 			switch (SqlDbType)
 			{
@@ -64,5 +66,66 @@
 					return "";
 			}
 		}
+
+		/// <summary>
+		/// Chuyển đổi kiểu dữ liệu SqlDbType sang .NET Type
+		/// <para>Tham khảo: https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings </para>
+		/// </summary>
+		/// <param name="SqlDbType">SQL Server Database Engine type</param>
+		/// <returns>.NET Framework type</returns>
+		public static string MapToNormalType(string SqlDbType)
+		{
+			switch (SqlDbType)
+			{
+				case "bit":
+					return "bool";
+				case "tinyint":
+					return "byte";
+				case "binary":
+				case "varbinary(max)":
+				case "image":
+				case "rowversion":
+				case "timestamp":
+				case "varbinary":
+					return "byte[]";
+				case "date":
+				case "datetime":
+				case "datetime2":
+				case "smalldatetime":
+					return "DateTime";
+				case "datetimeoffset":
+					return "DateTimeOffset";
+				case "decimal":
+				case "money":
+				case "numeric":
+				case "smallmoney":
+					return "decimal";
+				case "float":
+					return "double";
+				case "uniqueidentifier":
+					return "Guid";
+				case "smallint":
+					return "int";
+				case "int":
+					return "int";
+				case "bigint":
+					return "long";
+				case "real":
+					return "float";
+				case "char":
+				case "nchar":
+				case "nvarchar":
+				case "text":
+				case "varchar":
+					return "string";
+				case "time":
+					return "TimeSpan";
+				case "xml":
+					return "Xml";
+				default:
+					return "";
+			}
+		}
+
 	}
 }

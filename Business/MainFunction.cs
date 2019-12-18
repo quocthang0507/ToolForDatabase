@@ -82,6 +82,10 @@ namespace Business
 			File.WriteAllText(path + "\\" + filename, content);
 		}
 
+		/// <summary>
+		/// Trả về danh sách các cơ sở dữ liệu
+		/// </summary>
+		/// <returns></returns>
 		public List<string> GetDatabases()
 		{
 			SQLDatabase database = new SQLDatabase(connection.ConnectionString);

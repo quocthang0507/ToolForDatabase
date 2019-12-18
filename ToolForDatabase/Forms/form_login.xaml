@@ -4,11 +4,31 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="Generating Class Tool" Height="500" Width="410" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Background="#f9f4f4  ">
+		Title="Generating Class Tool" Height="500" Width="410" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
+	<Window.Background>
+		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+			<GradientStop Color="#ebedee" Offset="0"/>
+			<GradientStop Color="#fdfbfb" Offset="1"/>
+		</LinearGradientBrush>
+	</Window.Background>
 	<StackPanel>
 		<Label Content="SQL Server" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#4a4e4d" FontSize="45" FontWeight="SemiBold" Padding="0,10,0,0" VerticalAlignment="Top"/>
 		<Label Content="By La Quốc Thắng" HorizontalContentAlignment="Right" FontSize="17" FontStyle="Italic" FontWeight="Light" Padding="0,0,30,0" VerticalContentAlignment="Center" Foreground="Gray"/>
-		<ProgressBar Height="5" IsIndeterminate="True" x:Name="progressBar" Visibility="Hidden" BorderThickness="0" Foreground="#FFEA8129" Margin="0,5,0,5"/>
+		<ProgressBar Height="7" IsIndeterminate="True" x:Name="progressBar" Visibility="Hidden" BorderThickness="0" Margin="0,5,0,5">
+			<ProgressBar.Foreground>
+				<LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+					<GradientStop Color="#ebedee" Offset="0.1"/>
+					<GradientStop Color="#d6dadc" Offset="0.2"/>
+					<GradientStop Color="#bac1c4" Offset="0.3"/>
+					<GradientStop Color="#9fa8ad" Offset="0.4"/>
+					<GradientStop Color="#5e696e" Offset="0.5"/>
+					<GradientStop Color="#9fa8ad" Offset="0.6"/>
+					<GradientStop Color="#bac1c4" Offset="0.7"/>
+					<GradientStop Color="#d6dadc" Offset="0.8"/>
+					<GradientStop Color="#ebedee" Offset="0.9"/>
+				</LinearGradientBrush>
+			</ProgressBar.Foreground>
+		</ProgressBar>
 		<Grid>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 				<Label Content="Server name:" FontSize="14" Margin="20,0,10,0"/>

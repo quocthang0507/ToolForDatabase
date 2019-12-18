@@ -181,7 +181,7 @@ namespace ToolForDatabase
 		}
 
 		/// <summary>
-		/// Lưu trữ thông tin đăng nhập ra file
+		/// Lưu trữ thông tin đăng nhập vào file
 		/// </summary>
 		private void SaveLoginInfoToFile()
 		{
