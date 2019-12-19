@@ -9,6 +9,7 @@ namespace TreeView
 {
 	/// <summary>
 	/// Model cho datasource treeview
+	/// <seealso cref="http://thebestcsharpprogrammerintheworld.azurewebsites.net/blogs/Treeview-with-checkbox-in-WPF-using-csharp.aspx"/>
 	/// </summary>
 	public class TreeViewModel : INotifyPropertyChanged
 	{

@@ -45,21 +45,21 @@ namespace Business
 			sqlTable.GetTables();
 			var tables = sqlTable.MyTables;
 			List<TreeViewModel> treeView = new List<TreeViewModel>();
-			TreeViewModel tv = new TreeViewModel(database);
-			treeView.Add(tv);
+			TreeViewModel root = new TreeViewModel(database);
+			treeView.Add(root);
 			foreach (var table in tables) // Table
 			{
 				SQLColumn sqlColumn = new SQLColumn(connection.ConnectionString, table);
 				sqlColumn.GetColumns();
 				var columns = sqlColumn.MyColumns;
 				TreeViewModel tvTable = new TreeViewModel(table);
-				tv.Children.Add(tvTable);
+				root.Children.Add(tvTable);
 				foreach (var column in columns) //Column
 				{
 					tvTable.Children.Add(new TreeViewModel(column.Key));
 				}
 			}
-			tv.Initialize();
+			root.Initialize();
 			return treeView;
 		}
 
@@ -81,9 +81,11 @@ namespace Business
 		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
 		/// <param name="table">Tên bảng sẽ thành tên lớp</param>
 		/// <returns></returns>
-		public string GenerateClass(string @namespace, string table)
+		public string GenerateClass(List<TreeViewModel> treeView, string @namespace, string table)
 		{
-			ConvertClass convert = new ConvertClass(@namespace, table, GetColumns(table));
+			var referencee = GetColumns(table);
+			var converted = ConvertSingleListToPairList(referencee, GetSelectedColumnsInTables(treeView, table));
+			ConvertClass convert = new ConvertClass(@namespace, table, referencee, converted);
 			return convert.ToString();
 		}
 
@@ -115,9 +117,15 @@ namespace Business
 		/// Trả về các bảng được chọn
 		/// </summary>
 		/// <returns></returns>
-		List<string> GetSelectedTables(List<TreeViewModel> treeView)
+		public List<string> GetSelectedTables(List<TreeViewModel> treeView)
 		{
 			List<string> list = new List<string>();
+			var root = treeView[0]; //Root (database)
+			foreach (var table in root.Children) //Children (tables in database)
+			{
+				if (table.IsChecked == true || table.IsChecked == null)
+					list.Add(table.Name);
+			}
 			return list;
 		}
 
@@ -127,10 +135,38 @@ namespace Business
 		/// <param name="treeView"></param>
 		/// <param name="table"></param>
 		/// <returns></returns>
-		List<string> GetSelectedColumnsInTables(List<TreeViewModel> treeView, string table)
+		public List<string> GetSelectedColumnsInTables(List<TreeViewModel> treeView, string table)
 		{
 			List<string> list = new List<string>();
+			var root = treeView[0]; //Root (database)
+			foreach (var item in root.Children)
+			{
+				if (item.Name == table)
+				{
+					foreach (var column in item.Children)
+					{
+						if (column.IsChecked == true || item.IsChecked == null)
+							list.Add(column.Name);
+					}
+				}
+			}
+			return list;
+		}
 
+		/// <summary>
+		/// Chuyển đổi danh sách các cột được chọn ở dạng string sang danh sách các cột dạng KeyValuePair
+		/// </summary>
+		/// <param name="referencee">Danh sách được tham chiếu</param>
+		/// <param name="reference">Danh sách cần tham chiếu</param>
+		/// <returns></returns>
+		public List<KeyValuePair<string, string>> ConvertSingleListToPairList(List<KeyValuePair<string, string>> referencee, List<string> reference)
+		{
+			List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+			foreach (var item in reference)
+			{
+				var result = referencee.Where(x => x.Key == item).FirstOrDefault();
+				list.Add(result);
+			}
 			return list;
 		}
 	}

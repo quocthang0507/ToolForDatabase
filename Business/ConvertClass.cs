@@ -34,13 +34,15 @@ namespace Business
 		/// <summary>
 		/// Khởi tạo lớp
 		/// </summary>
-		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
+		/// <param name="namespace"></param>
 		/// <param name="table">Tên bảng</param>
 		/// <param name="columns">Tên thuộc tính</param>
-		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> selectedColumns)
+		/// <param name="selectedColumns"></param>
+		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> columns, List<KeyValuePair<string, string>> selectedColumns)
 		{
 			Namespace = @namespace;
 			Table = table;
+			this.Columns = columns;
 			this.selectedColumns = selectedColumns;
 		}
 

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using TreeView;
 
 namespace ToolForDatabase
 {
@@ -21,7 +22,6 @@ namespace ToolForDatabase
 		private string password;
 		private string selectedPath;
 		private bool rendered = false;
-		private Thread thread;
 
 		public form_main()
 		{
@@ -84,19 +84,19 @@ namespace ToolForDatabase
 		private void btnViewCode_Click(object sender, RoutedEventArgs e)
 		{
 			string @namespace = tbxNamespace.Text;
-			string tables = tbxTable.Text;
-			if (@namespace == "" || tables == "")
+			var selectedTables = GetSelectedTables();
+			if (@namespace == "" || selectedTables.Count == 0)
 			{
-				MessageBox.Show("Can't generate class because one or more TextBoxes are missing", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Can't generate class because NameSpace is missing or No selected tables", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
-			var array = tables.Split(';').Where(i => i != "").ToList(); //Remove last item
-			foreach (var item in array)
+			var treeViewSource = treeTable.ItemsSource as List<TreeViewModel>;
+			foreach (var item in selectedTables)
 			{
-				thread = new Thread(() =>
+				Thread thread = new Thread(() =>
 				Application.Current.Dispatcher.Invoke((Action)delegate
 				{
-					CreateTabWithContent(item, function.GenerateClass(@namespace, item));
+					CreateTabWithContent(item, function.GenerateClass(treeViewSource, @namespace, item));
 				}
 				));
 				thread.Start();
@@ -168,9 +168,16 @@ namespace ToolForDatabase
 		/// </summary>
 		private void LoadDatabaseToTreeView()
 		{
-			database = cbxDatabase.SelectedItem.ToString();
-			function = new MainFunction(serverName, database, loginName, password);
-			treeTable.ItemsSource = function.GetDetailTable(database);
+			Thread thread = new Thread(() =>
+			Application.Current.Dispatcher.Invoke((Action)delegate
+			{
+
+				database = cbxDatabase.SelectedItem.ToString();
+				function = new MainFunction(serverName, database, loginName, password);
+				treeTable.ItemsSource = function.GetDetailTable(database);
+			}
+			));
+			thread.Start();
 		}
 
 		/// <summary>
@@ -204,7 +211,7 @@ namespace ToolForDatabase
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="content"></param>
-		void CreateTabWithContent(string name, string content)
+		private void CreateTabWithContent(string name, string content)
 		{
 			foreach (TabItem item in tabContent.Items)  //Kiểm tra đã tồn tại một tab cùng tên chưa
 			{
@@ -227,13 +234,12 @@ namespace ToolForDatabase
 			tabContent.Items.Insert(0, subTab);
 		}
 
-		List<string> GetSelectedTables()
+		private List<string> GetSelectedTables()
 		{
-			List<string> list = new List<string>();
-			return list;
+			return function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
 		}
 
-		List<string> GetSelectedColumnsInTables(string table)
+		private List<string> GetSelectedColumnsInTables(string table)
 		{
 			List<string> list = new List<string>();
 
