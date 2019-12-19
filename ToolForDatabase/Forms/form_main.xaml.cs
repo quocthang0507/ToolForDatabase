@@ -1,5 +1,6 @@
 ﻿using Business;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -27,7 +28,7 @@ namespace ToolForDatabase
 			InitializeComponent();
 			GetInfoFromLoginForm();
 			LoadDatabasesToCombobox();
-			LoadTablesToList();
+			LoadDatabaseToTreeView();
 		}
 
 		#region Events
@@ -61,7 +62,7 @@ namespace ToolForDatabase
 		{
 			if (rendered)
 			{
-				LoadTablesToList();
+				LoadDatabaseToTreeView();
 				tabContent.Items.Clear();
 			}
 		}
@@ -165,11 +166,11 @@ namespace ToolForDatabase
 		/// <summary>
 		/// Load các bảng có trong cơ sở dữ liệu ra TreeView
 		/// </summary>
-		private void LoadTablesToList()
+		private void LoadDatabaseToTreeView()
 		{
 			database = cbxDatabase.SelectedItem.ToString();
 			function = new MainFunction(serverName, database, loginName, password);
-			treeTable.ItemsSource = function.GetDetailTable(serverName);
+			treeTable.ItemsSource = function.GetDetailTable(database);
 		}
 
 		/// <summary>
@@ -224,6 +225,19 @@ namespace ToolForDatabase
 			subTab.Header = name;
 			subTab.IsSelected = true;
 			tabContent.Items.Insert(0, subTab);
+		}
+
+		List<string> GetSelectedTables()
+		{
+			List<string> list = new List<string>();
+			return list;
+		}
+
+		List<string> GetSelectedColumnsInTables(string table)
+		{
+			List<string> list = new List<string>();
+
+			return list;
 		}
 
 		#endregion

@@ -58,14 +58,6 @@
 								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
 							</StackPanel>
 						</Grid>
-						<Grid Margin="0,10,0,0">
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-								<Label Content="Selected tables:" FontSize="14"/>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxTable" Width="250" Padding="5,0,0,0" IsReadOnly="True" IsReadOnlyCaretVisible="True" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="Table correspond to Class"/>
-							</StackPanel>
-						</Grid>
 					</StackPanel>
 					<StackPanel MaxWidth="400" MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
 						<Button x:Name="btnViewCode" Content="View code" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="6" IsDefault="True" ToolTip="View C# code"/>

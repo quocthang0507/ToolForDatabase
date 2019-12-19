@@ -111,5 +111,27 @@ namespace Business
 			return database.MyDatabases;
 		}
 
+		/// <summary>
+		/// Trả về các bảng được chọn
+		/// </summary>
+		/// <returns></returns>
+		List<string> GetSelectedTables(List<TreeViewModel> treeView)
+		{
+			List<string> list = new List<string>();
+			return list;
+		}
+
+		/// <summary>
+		/// Trả về các cột được chọn trong bảng
+		/// </summary>
+		/// <param name="treeView"></param>
+		/// <param name="table"></param>
+		/// <returns></returns>
+		List<string> GetSelectedColumnsInTables(List<TreeViewModel> treeView, string table)
+		{
+			List<string> list = new List<string>();
+
+			return list;
+		}
 	}
 }
