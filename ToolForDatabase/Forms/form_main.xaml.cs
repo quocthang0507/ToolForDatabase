@@ -43,8 +43,8 @@ namespace ToolForDatabase
 			double height = newSize.Height;
 			double width = newSize.Width;
 			// Tree view
-			listTables.Height = height * 70 / 100;
-			listTables.Width = width * 20 / 100;
+			treeTable.Height = height * 70 / 100;
+			treeTable.Width = width * 20 / 100;
 			// Text box
 			if (height > 250)
 				tabContent.Height = height - 250;
@@ -135,16 +135,6 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void listTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var selected = listTables.SelectedItems;
-			tbxTable.Clear();
-			foreach (var item in selected)
-			{
-				tbxTable.Text += item.ToString() + ";";
-			}
-		}
-
 		private void tabContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 
@@ -179,7 +169,7 @@ namespace ToolForDatabase
 		{
 			database = cbxDatabase.SelectedItem.ToString();
 			function = new MainFunction(serverName, database, loginName, password);
-			listTables.ItemsSource = function.GetTables();
+			treeTable.ItemsSource = function.GetDetailTable(serverName);
 		}
 
 		/// <summary>
@@ -215,7 +205,7 @@ namespace ToolForDatabase
 		/// <param name="content"></param>
 		void CreateTabWithContent(string name, string content)
 		{
-			foreach (TabItem item in tabContent.Items)	//Kiểm tra đã tồn tại một tab cùng tên chưa
+			foreach (TabItem item in tabContent.Items)  //Kiểm tra đã tồn tại một tab cùng tên chưa
 			{
 				if (name == item.Header.ToString())
 					return;

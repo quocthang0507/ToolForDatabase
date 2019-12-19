@@ -114,10 +114,13 @@ namespace Business
 			{
 				StringBuilder builder = new StringBuilder();
 				builder.AppendLine(string.Format(Constructor, Table, "", "")); //Phương thức trống
-				//Phương thức tạo lập với những cột đã được chọn
-				string param = GenerateParameters();
-				string statement = GenerateStatements();
-				builder.AppendLine(string.Format(Constructor, Table, param, statement));
+																			   //Phương thức tạo lập với những cột đã được chọn
+				if (selectedColumns.Count > 0)
+				{
+					string param = GenerateParameters();
+					string statement = GenerateStatements();
+					builder.AppendLine(string.Format(Constructor, Table, param, statement));
+				}
 				return builder.ToString();
 			}
 		}

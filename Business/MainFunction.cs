@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreeView;
 
 namespace Business
 {
@@ -38,11 +39,28 @@ namespace Business
 		/// Lấy tên các bảng có trong cơ sở dữ liệu
 		/// </summary>
 		/// <returns>Danh sách các bảng</returns>
-		public List<string> GetTables()
+		public List<TreeViewModel> GetDetailTable(string database)
 		{
-			SQLTable table = new SQLTable(connection.ConnectionString);
-			table.GetTables();
-			return table.MyTables;
+			SQLTable sqlTable = new SQLTable(connection.ConnectionString);
+			sqlTable.GetTables();
+			var tables = sqlTable.MyTables;
+			List<TreeViewModel> treeView = new List<TreeViewModel>();
+			TreeViewModel tv = new TreeViewModel(database);
+			treeView.Add(tv);
+			foreach (var table in tables) // Table
+			{
+				SQLColumn sqlColumn = new SQLColumn(connection.ConnectionString, table);
+				sqlColumn.GetColumns();
+				var columns = sqlColumn.MyColumns;
+				TreeViewModel tvTable = new TreeViewModel(table);
+				tv.Children.Add(tvTable);
+				foreach (var column in columns) //Column
+				{
+					tvTable.Children.Add(new TreeViewModel(column.Key));
+				}
+			}
+			tv.Initialize();
+			return treeView;
 		}
 
 		/// <summary>
