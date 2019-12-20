@@ -57,6 +57,7 @@ namespace DataAccess
 				case "nvarchar":
 				case "text":
 				case "varchar":
+				case "ntext":
 					return "String";
 				case "time":
 					return "TimeSpan";
@@ -117,6 +118,7 @@ namespace DataAccess
 				case "nvarchar":
 				case "text":
 				case "varchar":
+				case "ntext":
 					return "string";
 				case "time":
 					return "TimeSpan";

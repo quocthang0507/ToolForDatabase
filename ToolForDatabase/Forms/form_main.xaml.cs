@@ -28,7 +28,7 @@ namespace ToolForDatabase
 			InitializeComponent();
 			GetInfoFromLoginForm();
 			LoadDatabasesToCombobox();
-			LoadDatabaseToTreeView();
+			LoadTablesToTreeView();
 		}
 
 		#region Events
@@ -62,7 +62,7 @@ namespace ToolForDatabase
 		{
 			if (rendered)
 			{
-				LoadDatabaseToTreeView();
+				LoadTablesToTreeView();
 				tabContent.Items.Clear();
 			}
 		}
@@ -166,17 +166,16 @@ namespace ToolForDatabase
 		/// <summary>
 		/// Load các bảng có trong cơ sở dữ liệu ra TreeView
 		/// </summary>
-		private void LoadDatabaseToTreeView()
+		private void LoadTablesToTreeView()
 		{
 			Thread thread = new Thread(() =>
-			Application.Current.Dispatcher.Invoke((Action)delegate
-			{
-
-				database = cbxDatabase.SelectedItem.ToString();
-				function = new MainFunction(serverName, database, loginName, password);
-				treeTable.ItemsSource = function.GetDetailTable(database);
-			}
-			));
+				Application.Current.Dispatcher.Invoke((Action)delegate
+				{
+					database = cbxDatabase.SelectedItem.ToString();
+					function = new MainFunction(serverName, database, loginName, password);
+					treeTable.ItemsSource = function.GetDetailTable(database);
+				})
+			);
 			thread.Start();
 		}
 
