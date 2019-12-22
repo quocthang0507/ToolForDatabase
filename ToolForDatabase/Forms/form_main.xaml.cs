@@ -20,7 +20,6 @@ namespace ToolForDatabase
 		private string serverName;
 		private string loginName;
 		private string password;
-		private string selectedPath;
 		private bool rendered = false;
 
 		public form_main()
@@ -40,21 +39,21 @@ namespace ToolForDatabase
 
 		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			Size newSize = e.NewSize;
-			double height = newSize.Height;
-			double width = newSize.Width;
+			Size window = e.NewSize;
+			double height = window.Height;
+			double width = window.Width;
 			// Tree view
-			treeTable.Height = height * 70 / 100;
-			treeTable.Width = width * 20 / 100;
+			treeTable.Height = height - 180;
+			treeTable.Width = width * 0.25;
 			// Text box
-			if (height > 250)
-				tabContent.Height = height - 250;
-			tabContent.Width = width * 70 / 100;
+			tabContent.Height = height - 240;
+			rightstack.Width = width * 0.68;
 		}
 
 		private void btnBack_Click(object sender, RoutedEventArgs e)
 		{
 			form_login.Instance.Visibility = Visibility.Visible;
+			this.Closing -= Window_Closing;
 			this.Close();
 		}
 
@@ -69,16 +68,21 @@ namespace ToolForDatabase
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
 		{
-			// string data = tbxContent.Text;
-			//if (data != "")
-			//{
-			//	Clipboard.SetText(data);
-			//	MessageBox.Show("Successfully copied", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
-			//}
-			//else
-			//{
-			//	MessageBox.Show("Can't copy with a null value", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Error);
-			//}
+			string data = "";
+			try
+			{
+				data = ((tabContent.SelectedItem as TabItem).Content as ICSharpCode.AvalonEdit.TextEditor).Text;
+				if (data == "" || data == null)
+					throw new Exception();
+			}
+			catch (Exception)
+			{
+				MessageBox.Show("Can't copy with a null value", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+			Clipboard.SetText(data);
+			MessageBox.Show("Successfully copied", "Copy to clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
+
 		}
 
 		private void btnViewCode_Click(object sender, RoutedEventArgs e)
@@ -106,19 +110,23 @@ namespace ToolForDatabase
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
 		{
-			btnViewCode_Click(sender, e);
-			// string data = tbxContent.Text;
-			//if (data != "")
-			//{
-			//	string path = GetSelectedPath();
-			//	if (path == "")
-			//		return;
-			//	string filename = tbxTable.Text + ".cs";
-			//	function.SaveTextToFile(path + "\\" + database, filename, data);
-			//	MessageBox.Show("Successfully saved", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
-			//}
-			//else
-			//	MessageBox.Show("Can't export with a null value", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
+			var list = GetAllContents();
+			if (list.Count == 0 || tbxPath.Text == "")
+			{
+				MessageBox.Show("There aren't existing tab or location is null", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+			foreach (var @class in list)
+			{
+				string filename = @class.Key + ".cs";
+				function.SaveTextToFile(tbxPath.Text + "\\" + database, filename, @class.Value);
+			}
+			MessageBox.Show("Save successfully", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+
+		private void btnBrowse_Click(object sender, RoutedEventArgs e)
+		{
+			GetSelectedPath();
 		}
 
 		private void btnAbout_Click(object sender, RoutedEventArgs e)
@@ -135,11 +143,6 @@ namespace ToolForDatabase
 				this.Closing -= Window_Closing; //bypass FormClosing event
 				Environment.Exit(1);
 			}
-		}
-
-		private void tabContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
 		}
 
 		#endregion
@@ -184,16 +187,14 @@ namespace ToolForDatabase
 		/// Lấy đường dẫn thư mục từ hộp thoại
 		/// </summary>
 		/// <returns></returns>
-		private string GetSelectedPath()
+		private void GetSelectedPath()
 		{
 			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
 			{
 				dialog.Description = "Select the specific directory that you want to save";
-				if (selectedPath != "")
-					dialog.SelectedPath = selectedPath;
 				dialog.ShowDialog();
-				selectedPath = dialog.SelectedPath;
-				return selectedPath;
+				if (dialog.SelectedPath != null)
+					tbxPath.Text = dialog.SelectedPath;
 			}
 		}
 
@@ -246,7 +247,18 @@ namespace ToolForDatabase
 			return list;
 		}
 
-		#endregion
+		private List<KeyValuePair<string,string>> GetAllContents()
+		{
+			List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+			foreach (TabItem tab in tabContent.Items)
+			{
+				var text = (tab.Content as ICSharpCode.AvalonEdit.TextEditor).Text;
+				var header = tab.Header.ToString();
+				list.Add(new KeyValuePair<string, string>(header, text));
+			}
+			return list;
+		}
 
+		#endregion
 	}
 }

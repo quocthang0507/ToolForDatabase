@@ -156,8 +156,8 @@ namespace Business
 		/// <summary>
 		/// Chuyển đổi danh sách các cột được chọn ở dạng string sang danh sách các cột dạng KeyValuePair
 		/// </summary>
-		/// <param name="referencee">Danh sách được tham chiếu</param>
-		/// <param name="reference">Danh sách cần tham chiếu</param>
+		/// <param name="referencee">Danh sách được tham chiếu: Danh sách đầy đủ</param>
+		/// <param name="reference">Danh sách cần tham chiếu: Danh sách được chọn</param>
 		/// <returns></returns>
 		public List<KeyValuePair<string, string>> ConvertSingleListToPairList(List<KeyValuePair<string, string>> referencee, List<string> reference)
 		{

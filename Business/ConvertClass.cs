@@ -69,7 +69,7 @@ namespace Business
 				StringBuilder builder = new StringBuilder();
 				foreach (var attribute in Columns)
 				{
-					builder.AppendLine(string.Format(Field, DataType.MapToOriginalType(attribute.Value), attribute.Key));
+					builder.AppendLine(string.Format(Field, DataType.MapToNormalType(attribute.Value), attribute.Key));
 				}
 				return builder.ToString();
 			}
@@ -85,7 +85,7 @@ namespace Business
 			string param = "";
 			for (int i = 0; i < selectedColumns.Count; i++)
 			{
-				param += string.Format(Parameter, DataType.MapToOriginalType(selectedColumns[i].Value), selectedColumns[i].Key);
+				param += string.Format(Parameter, DataType.MapToNormalType(selectedColumns[i].Value), selectedColumns[i].Key);
 				if (i < selectedColumns.Count - 1)
 					param += ", ";
 			}
