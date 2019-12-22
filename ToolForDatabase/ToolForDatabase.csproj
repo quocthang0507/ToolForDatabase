@@ -101,6 +101,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\form_addvalues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\form_createbase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\form_login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +123,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Forms\form_addvalues.xaml.cs">
+      <DependentUpon>form_addvalues.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\form_createbase.xaml.cs">
+      <DependentUpon>form_createbase.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\form_login.xaml.cs">
       <DependentUpon>form_login.xaml</DependentUpon>
@@ -190,6 +204,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\base.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

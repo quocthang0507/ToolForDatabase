@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddFunction.cs" />
     <Compile Include="ConvertClass.cs" />
+    <Compile Include="CreateFunction.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="LoginFunction.cs" />

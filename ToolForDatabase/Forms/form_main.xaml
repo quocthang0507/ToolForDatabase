@@ -33,6 +33,12 @@
 				<Button x:Name="btnBack" Click="btnBack_Click" FontSize="14" TabIndex="1" ToolTip="Back to Login form">
 					<Image Source="/Images/back.png" Width="25"/>
 				</Button>
+				<Button x:Name="btnAddValues" Click="btnAddValues_Click" FontSize="14" TabIndex="2" ToolTip="Go to Insert values to SQL Form">
+					<Image Source="/Images/Add.png" Width="25"/>
+				</Button>
+				<Button x:Name="btnCreateBaseFunctions" Click="btnCreateBaseFunctions_Click" FontSize="14" TabIndex="2" ToolTip="Go to Create Base Function Form">
+					<Image Source="/Images/Base.png" Width="25"/>
+				</Button>
 			</ToolBar>
 			<ToolBar Background="Transparent" HorizontalAlignment="Right" ToolBarTray.IsLocked="True">
 				<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="14" TabIndex="2" ToolTip="Introduct Author's information">

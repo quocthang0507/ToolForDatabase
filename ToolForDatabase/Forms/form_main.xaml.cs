@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using ToolForDatabase.Forms;
 using TreeView;
 
 namespace ToolForDatabase
@@ -55,6 +56,42 @@ namespace ToolForDatabase
 			form_login.Instance.Visibility = Visibility.Visible;
 			this.Closing -= Window_Closing;
 			this.Close();
+		}
+
+		private void btnAddValues_Click(object sender, RoutedEventArgs e)
+		{
+			bool isopened = false;
+			foreach (Window window in Application.Current.Windows)
+			{
+				if (window is AddingValuesForm)
+				{
+					isopened = true;
+					window.Activate();
+				}
+			}
+			if (!isopened)
+			{
+				AddingValuesForm addform = new AddingValuesForm();
+				addform.Show();
+			}
+		}
+
+		private void btnCreateBaseFunctions_Click(object sender, RoutedEventArgs e)
+		{
+			bool isopened = false;
+			foreach (Window window in Application.Current.Windows)
+			{
+				if (window is CreatingBaseForm)
+				{
+					isopened = true;
+					window.Activate();
+				}
+			}
+			if (!isopened)
+			{
+				CreatingBaseForm createform = new CreatingBaseForm();
+				createform.Show();
+			}
 		}
 
 		private void cbxDatabase_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,8 +168,20 @@ namespace ToolForDatabase
 
 		private void btnAbout_Click(object sender, RoutedEventArgs e)
 		{
-			AboutForm aboutForm = new AboutForm();
-			aboutForm.Show();
+			bool isopened = false;
+			foreach (Window window in Application.Current.Windows)
+			{
+				if (window is AboutForm)
+				{
+					isopened = true;
+					window.Activate();
+				}
+			}
+			if (!isopened)
+			{
+				AboutForm aboutForm = new AboutForm();
+				aboutForm.Show();
+			}
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -247,7 +296,7 @@ namespace ToolForDatabase
 			return list;
 		}
 
-		private List<KeyValuePair<string,string>> GetAllContents()
+		private List<KeyValuePair<string, string>> GetAllContents()
 		{
 			List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
 			foreach (TabItem tab in tabContent.Items)
@@ -260,5 +309,6 @@ namespace ToolForDatabase
 		}
 
 		#endregion
+
 	}
 }

@@ -1,3 +1,5 @@
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +15,13 @@ using System.Windows.Shapes;
 namespace ToolForDatabase.Forms
 {
 	/// <summary>
-	/// Interaction logic for About.xaml
+	/// Interaction logic for form_createbase.xaml
 	/// </summary>
-	public partial class AboutForm : Window
+	public partial class CreatingBaseForm : Window
 	{
-		public AboutForm()
+		public CreatingBaseForm()
 		{
 			InitializeComponent();
 		}
-
 	}
 }
