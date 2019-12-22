@@ -1,12 +1,141 @@
-﻿using System;
+﻿using DataAccess;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Business
 {
+	/// <summary>
+	/// Lớp cung cấp các thao tác cho form Adding Values
+	/// </summary>
 	public class AddFunction
 	{
+		private SqlConnection connection;
+		private string insertCommand = "INSERT INTO {0} VALUES {1}";
+
+		public AddFunction(string serverName)
+		{
+			SQLConnectionString temp = new SQLConnectionString(serverName);
+			this.connection = new SqlConnection(temp.ConnectionString);
+		}
+
+		public AddFunction(string serverName, string loginName, string password)
+		{
+			SQLConnectionString temp = new SQLConnectionString(serverName, loginName, password);
+			this.connection = new SqlConnection(temp.ConnectionString);
+		}
+
+		public AddFunction(string serverName, string database, string loginName, string password)
+		{
+			SQLConnectionString temp = new SQLConnectionString(serverName, database, loginName, password);
+			this.connection = new SqlConnection(temp.ConnectionString);
+		}
+
+		/// <summary>
+		/// Trả về danh sách các cơ sở dữ liệu
+		/// </summary>
+		/// <returns></returns>
+		public List<string> GetDatabases()
+		{
+			SQLDatabase database = new SQLDatabase(connection.ConnectionString);
+			database.GetDatabases();
+			return database.MyDatabases;
+		}
+
+		/// <summary>
+		/// Lấy tên các bảng có trong cơ sở dữ liệu
+		/// </summary>
+		/// <returns>Danh sách các bảng</returns>
+		public List<string> GetTables(string database)
+		{
+			SQLTable sqlTable = new SQLTable(connection.ConnectionString);
+			sqlTable.GetTables();
+			return sqlTable.MyTables;
+		}
+
+		/// <summary>
+		/// Lấy tên và kiểu dữ liệu của các thuộc tính trong bảng
+		/// </summary>
+		/// <param name="table">Tên bảng</param>
+		/// <returns>Danh sách tên và kiểu dữ liệu</returns>
+		public List<KeyValuePair<string, string>> GetColumns(string table)
+		{
+			SQLColumn sqlColumn = new SQLColumn(connection.ConnectionString, table);
+			sqlColumn.GetColumns();
+			return sqlColumn.MyColumns;
+		}
+
+		/// <summary>
+		/// Định nghĩa bảng dựa vào bảng trong SQL
+		/// </summary>
+		/// <param name="columns"></param>
+		/// <returns></returns>
+		public DataView DefineTable(List<KeyValuePair<string, string>> columns)
+		{
+			DataTable table = new DataTable();
+			foreach (var column in columns)
+			{
+				table.Columns.Add(new DataColumn(column.Key, DataType.MapToRealType(column.Value)));
+			}
+			return table.DefaultView;
+		}
+
+		public bool InsertValuesToTable(string table, DataView dataView)
+		{
+			connection.Open();
+			var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted);
+			var cmd = new SqlCommand();
+			cmd.Transaction = transaction;
+			try
+			{
+				string param = ListValuesToString(GetValuesFromDataView(dataView));
+				GetValuesFromDataView(dataView);
+				cmd.CommandText = string.Format(insertCommand, table, param);
+				cmd.ExecuteNonQuery();
+			}
+			catch (Exception)
+			{
+				transaction.Rollback(); //No values will have been inserted
+				connection.Close();
+				return false;
+			}
+			transaction.Commit(); //All values will have been inserted
+			connection.Close();
+			return true;
+		}
+
+		private List<string> GetValuesFromDataView(DataView dataView)
+		{
+			List<String> list = new List<string>();
+			DataTable dataTable = dataView.ToTable();
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string values = "(";
+				for (int i = 0; i < dataTable.Columns.Count; i++)
+				{
+					var cell = row[0];
+					values += "N'" + cell + "'";    //Unicode Text for all
+					if (i < dataTable.Columns.Count - 1)
+						values += ", ";
+					else
+						values += ")";
+				}
+				list.Add(values);
+			}
+			return list;
+		}
+
+		private string ListValuesToString(List<string> list)
+		{
+			string str = "";
+			for (int i = 0; i < list.Count; i++)
+			{
+				str += list[i];
+				if (i < list.Count - 1)
+					str += ", ";
+			}
+			return str;
+		}
 	}
 }

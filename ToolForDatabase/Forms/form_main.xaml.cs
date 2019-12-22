@@ -1,11 +1,9 @@
 ﻿using Business;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using ToolForDatabase.Forms;
 using TreeView;
 
@@ -192,6 +190,10 @@ namespace ToolForDatabase
 				this.Closing -= Window_Closing; //bypass FormClosing event
 				Environment.Exit(1);
 			}
+			else
+			{
+				e.Cancel = true;
+			}
 		}
 
 		#endregion
@@ -287,13 +289,6 @@ namespace ToolForDatabase
 		private List<string> GetSelectedTables()
 		{
 			return function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
-		}
-
-		private List<string> GetSelectedColumnsInTables(string table)
-		{
-			List<string> list = new List<string>();
-
-			return list;
 		}
 
 		private List<KeyValuePair<string, string>> GetAllContents()

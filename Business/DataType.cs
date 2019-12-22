@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI.WebControls;
 
 namespace DataAccess
 {
@@ -125,7 +126,68 @@ namespace DataAccess
 				case "xml":
 					return "Xml";
 				default:
-					return "";
+					return "object";
+			}
+		}
+
+		/// <summary>
+		/// Chuyển đổi kiểu dữ liệu SqlDbType sang .NET Type
+		/// <para>Tham khảo: https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings </para>
+		/// </summary>
+		/// <param name="SqlDbType">SQL Server Database Engine type</param>
+		/// <returns>.NET Framework type</returns>
+		public static Type MapToRealType(string SqlDbType)
+		{
+			switch (SqlDbType)
+			{
+				case "bit":
+					return typeof(bool);
+				case "tinyint":
+					return typeof(byte);
+				case "binary":
+				case "varbinary(max)":
+				case "image":
+				case "rowversion":
+				case "timestamp":
+				case "varbinary":
+					return typeof(byte[]);
+				case "date":
+				case "datetime":
+				case "datetime2":
+				case "smalldatetime":
+					return typeof(DateTime);
+				case "datetimeoffset":
+					return typeof(DateTimeOffset);
+				case "decimal":
+				case "money":
+				case "numeric":
+				case "smallmoney":
+					return typeof(decimal);
+				case "float":
+					return typeof(double);
+				case "uniqueidentifier":
+					return typeof(Guid);
+				case "smallint":
+					return typeof(int);
+				case "int":
+					return typeof(int);
+				case "bigint":
+					return typeof(long);
+				case "real":
+					return typeof(float);
+				case "char":
+				case "nchar":
+				case "nvarchar":
+				case "text":
+				case "varchar":
+				case "ntext":
+					return typeof(string);
+				case "time":
+					return typeof(TimeSpan);
+				case "xml":
+					return typeof(Xml);
+				default:
+					return typeof(object);
 			}
 		}
 

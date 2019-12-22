@@ -4,7 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-		mc:Ignorable="d"
+		mc:Ignorable="d" FontSize="14"
 		Title="Generating Class Tool" MinHeight="550" Height="550" MinWidth="700" Width="700" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
 	<Window.Background>
 		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -30,59 +30,59 @@
 	<StackPanel>
 		<Grid Background="#E6E6EA">
 			<ToolBar ToolBarTray.IsLocked="True" Background="Transparent" Height="30">
-				<Button x:Name="btnBack" Click="btnBack_Click" FontSize="14" TabIndex="1" ToolTip="Back to Login form">
+				<Button x:Name="btnBack" Click="btnBack_Click" TabIndex="1" ToolTip="Back to Login form">
 					<Image Source="/Images/back.png" Width="25"/>
 				</Button>
-				<Button x:Name="btnAddValues" Click="btnAddValues_Click" FontSize="14" TabIndex="2" ToolTip="Go to Insert values to SQL Form">
+				<Button x:Name="btnAddValues" Click="btnAddValues_Click" TabIndex="2" ToolTip="Go to Insert values to SQL Form">
 					<Image Source="/Images/Add.png" Width="25"/>
 				</Button>
-				<Button x:Name="btnCreateBaseFunctions" Click="btnCreateBaseFunctions_Click" FontSize="14" TabIndex="2" ToolTip="Go to Create Base Function Form">
+				<Button x:Name="btnCreateBaseFunctions" Click="btnCreateBaseFunctions_Click" TabIndex="2" ToolTip="Go to Create Base Function Form">
 					<Image Source="/Images/Base.png" Width="25"/>
 				</Button>
 			</ToolBar>
 			<ToolBar Background="Transparent" HorizontalAlignment="Right" ToolBarTray.IsLocked="True">
-				<Button x:Name="btnAbout" Click="btnAbout_Click" FontSize="14" TabIndex="2" ToolTip="Introduct Author's information">
+				<Button x:Name="btnAbout" Click="btnAbout_Click" TabIndex="2" ToolTip="Introduct Author's information">
 					<Image Source="/Images/about.png" Width="25"/>
 				</Button>
 			</ToolBar>
 		</Grid>
 		<StackPanel Orientation="Horizontal">
 			<StackPanel Margin="5,5,10,0" x:Name="leftstack">
-				<Label Content="Select a database:" FontSize="14" Height="30"/>
-				<ComboBox x:Name="cbxDatabase" TabIndex="3" FontSize="14" VerticalContentAlignment="Center" ToolTip="Select the database from the list" SelectionChanged="cbxDatabase_SelectionChanged" Height="30"/>
-				<Label Content="Select tables and columns:" FontSize="14" Height="30"/>
-				<TreeView x:Name="treeTable" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" ItemContainerStyle="{StaticResource TreeViewItemStyle}" ItemTemplate="{StaticResource CheckBoxItemTemplate}"/>
+				<Label Content="Select a database:" Height="30"/>
+				<ComboBox x:Name="cbxDatabase" TabIndex="3" VerticalContentAlignment="Center" ToolTip="Select the database from the list" SelectionChanged="cbxDatabase_SelectionChanged" Height="30"/>
+				<Label Content="Select tables and columns:" Height="30"/>
+				<TreeView x:Name="treeTable" HorizontalAlignment="Left" VerticalAlignment="Top" ItemContainerStyle="{StaticResource TreeViewItemStyle}" ItemTemplate="{StaticResource CheckBoxItemTemplate}"/>
 			</StackPanel>
 			<StackPanel x:Name="rightstack">
 				<DockPanel Margin="10,5,10,0">
 					<StackPanel MaxWidth="400" MaxHeight="70" DockPanel.Dock="Top">
 						<Grid Height="30">
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-								<Label Content="Namespace: " FontSize="14"/>
+								<Label Content="Namespace: "/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
+								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
 							</StackPanel>
 						</Grid>
 						<Grid Margin="0,10,0,10" Height="30">
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-								<Label Content="Directory location: " FontSize="14"/>
+								<Label Content="Directory location: "/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxPath" Width="220" Padding="5,0,0,0" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="You can change custom Namespace"/>
-								<Button x:Name="btnBrowse" FontSize="14" Content="..." Width="25" Margin="5,0,0,0" TabIndex="6" ToolTip="Browse for location" Click="btnBrowse_Click"/>
+								<TextBox x:Name="tbxPath" Width="220" Padding="5,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="You can change custom Namespace"/>
+								<Button x:Name="btnBrowse" Content="..." Width="25" Margin="5,0,0,0" TabIndex="6" ToolTip="Browse for location" Click="btnBrowse_Click"/>
 							</StackPanel>
 						</Grid>
 					</StackPanel>
 					<StackPanel MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="80,0,80,0" Height="50">
-						<Button x:Name="btnViewCode" Content="View" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="7" IsDefault="True" ToolTip="View C# code"/>
-						<Button x:Name="btnCopy" Content="Copy" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="8" ToolTip="Copy C# code in selected tab to Clipboard"/>
-						<Button x:Name="btnExport" Content="Export" Margin="10" FontSize="14" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="9" ToolTip="Export to C# file"/>
+						<Button x:Name="btnViewCode" Content="View" Margin="10" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="7" IsDefault="True" ToolTip="View C# code"/>
+						<Button x:Name="btnCopy" Content="Copy" Margin="10" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="8" ToolTip="Copy C# code in selected tab to Clipboard"/>
+						<Button x:Name="btnExport" Content="Export" Margin="10" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="9" ToolTip="Export to C# file"/>
 					</StackPanel>
 				</DockPanel>
 				<DockPanel DockPanel.Dock="Top">
-					<Label Content="Content:" FontSize="14" Height="30" DockPanel.Dock="Top"/>
-					<TabControl FontSize="14" x:Name="tabContent">
+					<Label Content="Content:" Height="30" DockPanel.Dock="Top"/>
+					<TabControl x:Name="tabContent">
 					</TabControl>
 				</DockPanel>
 			</StackPanel>
