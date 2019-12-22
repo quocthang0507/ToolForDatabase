@@ -18,7 +18,7 @@ namespace Business
 		private string Constructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}\n";
 		private string Parameter = "{0} {1}";
 		private string Statement = "\t\t\tthis.{0} = {0};";
-		private string ToStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0}.ToString();\n\t\t}}";
+		private string ToStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0};\n\t\t}}";
 
 		/// <summary>
 		/// Khởi tạo lớp
@@ -134,7 +134,14 @@ namespace Business
 		{
 			get
 			{
-				return string.Format(ToStr, Columns[0].Key);
+				string tostr = "";
+				foreach (var col in selectedColumns)
+				{
+					tostr += col.Key + ".ToString()";
+					if (selectedColumns.IndexOf(col) < selectedColumns.Count - 1)
+						tostr += " + \"\\t\" + ";
+				}
+				return string.Format(ToStr, tostr);
 			}
 		}
 

@@ -83,8 +83,8 @@ namespace Business
 		/// <returns></returns>
 		public string GenerateClass(List<TreeViewModel> treeView, string @namespace, string table)
 		{
-			var referencee = GetColumns(table);
-			var converted = ConvertSingleListToPairList(referencee, GetSelectedColumnsInTables(treeView, table));
+			var referencee = GetColumns(table); //Danh sách cột ban đầu 
+			var converted = ConvertSingleListToPairList(referencee, GetSelectedColumnsInTables(treeView, table)); //Danh sách cột được chọn
 			ConvertClass convert = new ConvertClass(@namespace, table, referencee, converted);
 			return convert.ToString();
 		}
@@ -145,7 +145,7 @@ namespace Business
 				{
 					foreach (var column in item.Children)
 					{
-						if (column.IsChecked == true || item.IsChecked == null)
+						if (column.IsChecked == true)
 							list.Add(column.Name);
 					}
 				}

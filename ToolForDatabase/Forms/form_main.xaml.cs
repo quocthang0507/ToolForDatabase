@@ -91,6 +91,7 @@ namespace ToolForDatabase
 				return;
 			}
 			var treeViewSource = treeTable.ItemsSource as List<TreeViewModel>;
+			tabContent.Items.Clear();
 			foreach (var item in selectedTables)
 			{
 				Thread thread = new Thread(() =>
