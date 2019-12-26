@@ -79,12 +79,24 @@ namespace Business
 		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
 		/// <param name="table">Tên bảng sẽ thành tên lớp</param>
 		/// <returns></returns>
-		public string GenerateClass(List<TreeViewModel> treeView, string @namespace, string table)
+		public string GenerateCommonClass(List<TreeViewModel> treeView, string @namespace, string table)
 		{
 			var referencee = GetColumns(table); //Danh sách cột ban đầu 
 			var converted = ConvertSingleListToPairList(referencee, GetSelectedColumnsInTables(treeView, table)); //Danh sách cột được chọn
-			ClassConverter convert = new ClassConverter(@namespace, table, referencee, converted);
-			return convert.ToString();
+			var converter = new ClassConverter(@namespace, table, referencee, converted);
+			return converter.ToString();
+		}
+
+		/// <summary>
+		/// Tạo ra lớp tương ứng với bảng
+		/// </summary>
+		/// <param name="namespace">Tên namespace (tùy chỉnh)</param>
+		/// <param name="table">Tên bảng sẽ thành tên lớp</param>
+		/// <returns></returns>
+		public string GenerateBaseFunctionClass(string @namespace, string table)
+		{
+			var converter = new ClassConverter(@namespace, table);
+			return converter.ToString();
 		}
 
 		/// <summary>
@@ -154,5 +166,7 @@ namespace Business
 			}
 			return list;
 		}
+
+
 	}
 }

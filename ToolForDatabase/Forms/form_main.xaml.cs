@@ -119,7 +119,7 @@ namespace ToolForDatabase
 				Thread thread = new Thread(() =>
 				Application.Current.Dispatcher.Invoke((Action)delegate
 				{
-					CreateTabWithContent(item, function.GenerateClass(treeViewSource, @namespace, item));
+					CreateTabWithContent(item, function.GenerateCommonClass(treeViewSource, @namespace, item));
 				}
 				));
 				thread.Start();
@@ -128,23 +128,18 @@ namespace ToolForDatabase
 
 		private void btnExport_Click(object sender, RoutedEventArgs e)
 		{
-			var list = GetAllContents();
-			if (list.Count == 0 || tbxPath.Text == "")
-			{
+			if (!ExportToCommonClass())
 				MessageBox.Show("There aren't existing tab or location is null", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
-				return;
-			}
-			foreach (var @class in list)
-			{
-				string filename = @class.Key + ".cs";
-				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, @class.Value);
-			}
-			MessageBox.Show("Save successfully", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+			else
+				MessageBox.Show("Save successfully", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 
 		private void btnExportWithBase_Click(object sender, RoutedEventArgs e)
 		{
-
+			if (ExportToCommonClass() && ExportToBaseFunction())
+				MessageBox.Show("Save successfully", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+			else
+				MessageBox.Show("There aren't existing tab or location is null", "Export to file", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -288,6 +283,45 @@ namespace ToolForDatabase
 				list.Add(new KeyValuePair<string, string>(header, text));
 			}
 			return list;
+		}
+
+		private bool ExportToCommonClass()
+		{
+			var list = GetAllContents();
+			if (list.Count == 0 || tbxPath.Text == "")
+			{
+				return false;
+			}
+			foreach (var @class in list)
+			{
+				string filename = @class.Key + ".cs";
+				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, @class.Value);
+			}
+			return true;
+		}
+
+		private bool ExportToBaseFunction()
+		{
+			ClassConverter converter;
+			var selectedTables = function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
+			if (tbxPath.Text == null || tbxNamespace.Text == null || selectedTables.Count == 0 ||tbxPrefix.Text==null)
+				return false;
+			Common.SaveToFile(tbxPath.Text + "\\" + database, "BaseFunction.cs", Properties.Resources.BaseFunctionClass);
+			foreach (var table in selectedTables)
+			{
+				converter = new ClassConverter(tbxNamespace.Text, table);
+				string filename = tbxPrefix.Text + table + ".cs";
+				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, GetManagementClass(tbxNamespace.Text, table));
+			}
+			return true;
+		}
+
+		private string GetManagementClass(string @namespace, string table)
+		{
+			var data = Properties.Resources.ManagementClass;
+			data = data.Replace("ClassName", table);
+			data = data.Replace("DataAccess", @namespace);
+			return data;
 		}
 
 		#endregion

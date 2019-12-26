@@ -9,24 +9,24 @@ namespace Business
 	/// <summary>
 	/// Lớp cung cấp các thao tác cho form Adding Values
 	/// </summary>
-	public class AddFunction
+	public class InsertFunction
 	{
 		private SqlConnection connection;
 		private string insertCommand = "INSERT INTO {0} VALUES {1}";
 
-		public AddFunction(string serverName)
+		public InsertFunction(string serverName)
 		{
 			SQLConnectionString temp = new SQLConnectionString(serverName);
 			this.connection = new SqlConnection(temp.ConnectionString);
 		}
 
-		public AddFunction(string serverName, string loginName, string password)
+		public InsertFunction(string serverName, string loginName, string password)
 		{
 			SQLConnectionString temp = new SQLConnectionString(serverName, loginName, password);
 			this.connection = new SqlConnection(temp.ConnectionString);
 		}
 
-		public AddFunction(string serverName, string database, string loginName, string password)
+		public InsertFunction(string serverName, string database, string loginName, string password)
 		{
 			SQLConnectionString temp = new SQLConnectionString(serverName, database, loginName, password);
 			this.connection = new SqlConnection(temp.ConnectionString);

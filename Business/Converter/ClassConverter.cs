@@ -1,5 +1,8 @@
-﻿using DataAccess;
+﻿using Business.Other;
+using DataAccess;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Business
@@ -20,15 +23,16 @@ namespace Business
 		private string statement = "\t\t\tthis.{0} = {0};";
 		private string toStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0};\n\t\t}}";
 
+
 		/// <summary>
 		/// Khởi tạo lớp
 		/// </summary>
 		/// <param name="table">Tên bảng</param>
 		/// <param name="columns">Tên thuộc tính</param>
-		public ClassConverter(string table, List<KeyValuePair<string, string>> columns)
+		public ClassConverter(string @namespace, string table)
 		{
+			this.@namespace = @namespace;
 			this.table = table;
-			this.columns = columns;
 		}
 
 		/// <summary>
@@ -153,5 +157,6 @@ namespace Business
 		{
 			return string.Format(full, GenerateUsings, @namespace, table, GenerateProperties, GenerateConstructors, GenerateToString);
 		}
+
 	}
 }

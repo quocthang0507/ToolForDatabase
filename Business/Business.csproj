@@ -47,9 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormFunctions\AddFunction.cs" />
+    <Compile Include="FormFunctions\InsertFunction.cs" />
     <Compile Include="Converter\ClassConverter.cs" />
-    <Compile Include="FormFunctions\CreateFunction.cs" />
     <Compile Include="Other\Common.cs" />
     <Compile Include="Other\Crypto.cs" />
     <Compile Include="Converter\DataType.cs" />

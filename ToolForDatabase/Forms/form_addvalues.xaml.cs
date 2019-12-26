@@ -12,7 +12,7 @@ namespace ToolForDatabase.Forms
 	/// </summary>
 	public partial class AddingValuesForm : Window
 	{
-		private AddFunction function;
+		private InsertFunction function;
 		private string serverName;
 		private string loginName;
 		private string password;
@@ -78,7 +78,7 @@ namespace ToolForDatabase.Forms
 				{
 					MessageBox.Show("Insert multiple rows to table unsuccessfully", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Error);
 				}
-				function = new AddFunction(serverName, database, loginName, password); //Fix connection string after doing it
+				function = new InsertFunction(serverName, database, loginName, password); //Fix connection string after doing it
 			}
 		}
 
@@ -100,11 +100,11 @@ namespace ToolForDatabase.Forms
 			password = Properties.Settings.Default.password;
 			if (loginName == null)
 			{
-				function = new AddFunction(serverName);
+				function = new InsertFunction(serverName);
 			}
 			else
 			{
-				function = new AddFunction(serverName, loginName, password);
+				function = new InsertFunction(serverName, loginName, password);
 			}
 		}
 
@@ -117,7 +117,7 @@ namespace ToolForDatabase.Forms
 				Application.Current.Dispatcher.Invoke((Action)delegate
 				{
 					database = cbxDatabase.SelectedItem.ToString();
-					function = new AddFunction(serverName, database, loginName, password);
+					function = new InsertFunction(serverName, database, loginName, password);
 					listTable.ItemsSource = function.GetTables(database);
 				})
 			);

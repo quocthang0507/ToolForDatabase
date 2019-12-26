@@ -22,7 +22,7 @@ namespace ToolForDatabase.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ToolForDatabase.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ToolForDatabase.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,68 @@ namespace ToolForDatabase.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System.Collections.Generic;
+        ///
+        ///namespace DataAccess
+        ///{
+        ///	public abstract class BaseFunction&lt;T&gt;
+        ///	{
+        ///		public abstract int Add(T item);
+        ///		public abstract bool Delete(T item);
+        ///		public abstract bool Update(T item);
+        ///		public abstract List&lt;T&gt; GetAll();
+        ///		public abstract List&lt;T&gt; Find(Condition condition);
+        ///		public abstract T Single(Condition condition);
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        public static string BaseFunctionClass {
+            get {
+                return ResourceManager.GetString("BaseFunctionClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///
+        ///namespace DataAccess
+        ///{
+        ///	public class QuanLyClassName : BaseFunction&lt;ClassName&gt;
+        ///	{
+        ///		public override int Add(ClassName item)
+        ///		{
+        ///			throw new NotImplementedException();
+        ///		}
+        ///
+        ///		public override bool Delete(ClassName item)
+        ///		{
+        ///			throw new NotImplementedException();
+        ///		}
+        ///
+        ///		public override List&lt;ClassName&gt; GetAll()
+        ///		{
+        ///			throw new NotImplementedException();
+        ///		}
+        ///
+        ///		public override List&lt;ClassName&gt; Find()
+        ///		{
+        ///			throw new NotImplementedExcepti [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ManagementClass {
+            get {
+                return ResourceManager.GetString("ManagementClass", resourceCulture);
             }
         }
     }
