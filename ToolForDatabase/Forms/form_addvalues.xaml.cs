@@ -64,15 +64,21 @@ namespace ToolForDatabase.Forms
 		{
 			var selectedTable = listTable.SelectedItem;
 			if (selectedTable == null)
-				return;
-			bool result = function.InsertValuesToTable(selectedTable.ToString(), dg_Columns.ItemsSource as DataView);
-			if (result)
 			{
-				MessageBox.Show("Insert multiple rows to table successfully", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Information);
+				MessageBox.Show("No selected table to insert values", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			else
 			{
-				MessageBox.Show("Insert multiple rows to table unsuccessfully", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Error);
+				bool result = function.InsertValuesToTable(selectedTable.ToString(), dg_Columns.ItemsSource as DataView);
+				if (result)
+				{
+					MessageBox.Show("Insert multiple rows to table successfully", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Information);
+				}
+				else
+				{
+					MessageBox.Show("Insert multiple rows to table unsuccessfully", "Insert To Table", MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+				function = new AddFunction(serverName, database, loginName, password); //Fix connection string after doing it
 			}
 		}
 
