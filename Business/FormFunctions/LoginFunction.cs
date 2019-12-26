@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using Business.Other;
+using DataAccess;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,16 +10,11 @@ namespace Business
 	/// </summary>
 	public class LoginFunction
 	{
-		private SQLServer Server = new SQLServer();
-		private SQLConnectionString SQLConnect;
+		private SQLServer server = new SQLServer();
+		private SQLConnectionString sqlConnection;
 		private readonly string pass = "lqt";
 		private readonly string serverFile = "server.dat";
 		private readonly string loginFile = "data.dat";
-
-		public LoginFunction()
-		{
-
-		}
 
 		/// <summary>
 		/// Lấy tên các server từ hệ thống và từ file (nếu có)
@@ -26,10 +22,10 @@ namespace Business
 		/// <returns>Danh sách các server</returns>
 		public List<string> GetServers()
 		{
-			Server.GetServers();
+			server.GetServers();
 			if (File.Exists(serverFile))
-				Server.ReadFromFile(serverFile);
-			return Server.MyServers;
+				server.ReadFromFile(serverFile);
+			return server.MyServers;
 		}
 
 		/// <summary>
@@ -39,8 +35,8 @@ namespace Business
 		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server)
 		{
-			SQLConnect = new SQLConnectionString(server);
-			return SQLConnect.TestConnection();
+			sqlConnection = new SQLConnectionString(server);
+			return sqlConnection.TestConnection();
 		}
 
 		/// <summary>
@@ -51,8 +47,8 @@ namespace Business
 		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server, string database)
 		{
-			SQLConnect = new SQLConnectionString(server, database);
-			return SQLConnect.TestConnection();
+			sqlConnection = new SQLConnectionString(server, database);
+			return sqlConnection.TestConnection();
 		}
 
 		/// <summary>
@@ -64,8 +60,8 @@ namespace Business
 		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server, string username, string password)
 		{
-			SQLConnect = new SQLConnectionString(server, username, password);
-			return SQLConnect.TestConnection();
+			sqlConnection = new SQLConnectionString(server, username, password);
+			return sqlConnection.TestConnection();
 		}
 
 		/// <summary>
@@ -78,8 +74,8 @@ namespace Business
 		/// <returns>Kết nối thành công</returns>
 		public bool TestConnection(string server, string database, string username, string password)
 		{
-			SQLConnect = new SQLConnectionString(server, database, username, password);
-			return SQLConnect.TestConnection();
+			sqlConnection = new SQLConnectionString(server, database, username, password);
+			return sqlConnection.TestConnection();
 		}
 
 		/// <summary>
@@ -88,7 +84,7 @@ namespace Business
 		/// <param name="others">Danh sách server khác</param>
 		public void SaveServers(List<string> others)
 		{
-			Server.WriteToFile(serverFile, others);
+			server.WriteToFile(serverFile, others);
 		}
 
 		/// <summary>
@@ -99,7 +95,7 @@ namespace Business
 		public void SaveLoginInfo(string username, string password)
 		{
 			string encrypted = Crypto.Encrypt(username + " " + password, pass);
-			File.WriteAllText(loginFile, encrypted);
+			Common.SaveToFile(loginFile, encrypted);
 		}
 
 		/// <summary>
@@ -108,24 +104,15 @@ namespace Business
 		/// <returns>Chuỗi thông tin đăng nhập</returns>
 		public string GetLoginInfo()
 		{
-			if (File.Exists(loginFile))
+			string data = Common.ReadFile(loginFile);
+			try
 			{
-				using (StreamReader reader = new StreamReader(loginFile))
-				{
-					string value = reader.ReadToEnd();
-					try
-					{
-						return Crypto.Decrypt(value, pass);
-					}
-					catch (System.Exception)
-					{
-						return string.Empty;
-					}
-				}
+				return Crypto.Decrypt(data, pass);
 			}
-			else
+			catch (System.Exception)
+			{
 				return string.Empty;
+			}
 		}
-
 	}
 }

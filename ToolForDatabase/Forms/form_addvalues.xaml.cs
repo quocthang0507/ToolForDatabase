@@ -86,6 +86,7 @@ namespace ToolForDatabase.Forms
 		#endregion
 
 		#region Methods
+
 		private void LoadDatabasesToCombobox()
 		{
 			cbxDatabase.ItemsSource = function.GetDatabases();
@@ -107,6 +108,9 @@ namespace ToolForDatabase.Forms
 			}
 		}
 
+		/// <summary>
+		/// Hiển thị danh sách bảng vào listView
+		/// </summary>
 		private void LoadTablesToList()
 		{
 			Thread thread = new Thread(() =>

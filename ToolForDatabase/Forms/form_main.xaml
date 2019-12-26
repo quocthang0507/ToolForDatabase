@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
 		mc:Ignorable="d" FontSize="14"
-		Title="Generating Class Tool" MinHeight="550" Height="550" MinWidth="700" Width="700" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
+		Title="Generating Class Tool" MinHeight="450" Height="450" MinWidth="800" Width="800" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized" WindowStartupLocation="CenterOwner">
 	<Window.Background>
 		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 			<GradientStop Color="#ebedee" Offset="0"/>
@@ -31,18 +31,25 @@
 		<Grid Background="#E6E6EA">
 			<ToolBar ToolBarTray.IsLocked="True" Background="Transparent" Height="30">
 				<Button x:Name="btnBack" Click="btnBack_Click" TabIndex="1" ToolTip="Back to Login form">
-					<Image Source="/Images/back.png" Width="25"/>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="/Images/back.png" Width="25"/>
+						<TextBlock Text="Back" VerticalAlignment="Center"/>
+					</StackPanel>
 				</Button>
+				<Separator />
 				<Button x:Name="btnAddValues" Click="btnAddValues_Click" TabIndex="2" ToolTip="Go to Insert values to SQL Form">
-					<Image Source="/Images/Add.png" Width="25"/>
-				</Button>
-				<Button x:Name="btnCreateBaseFunctions" Click="btnCreateBaseFunctions_Click" TabIndex="2" ToolTip="Go to Create Base Function Form">
-					<Image Source="/Images/Base.png" Width="25"/>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="/Images/Add.png" Width="25"/>
+						<TextBlock Text="Insert Values" VerticalAlignment="Center"/>
+					</StackPanel>
 				</Button>
 			</ToolBar>
 			<ToolBar Background="Transparent" HorizontalAlignment="Right" ToolBarTray.IsLocked="True">
 				<Button x:Name="btnAbout" Click="btnAbout_Click" TabIndex="2" ToolTip="Introduct Author's information">
-					<Image Source="/Images/about.png" Width="25"/>
+					<StackPanel Orientation="Horizontal">
+						<Image Source="/Images/about.png" Width="25"/>
+						<TextBlock Text="About" VerticalAlignment="Center"/>
+					</StackPanel>
 				</Button>
 			</ToolBar>
 		</Grid>
@@ -74,10 +81,31 @@
 							</StackPanel>
 						</Grid>
 					</StackPanel>
-					<StackPanel MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="80,0,80,0" Height="50">
-						<Button x:Name="btnViewCode" Content="View" Margin="10" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="7" IsDefault="True" ToolTip="View C# code"/>
-						<Button x:Name="btnCopy" Content="Copy" Margin="10" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="8" ToolTip="Copy C# code in selected tab to Clipboard"/>
-						<Button x:Name="btnExport" Content="Export" Margin="10" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="9" ToolTip="Export to C# file"/>
+					<StackPanel MaxHeight="50" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top" Height="50">
+						<Button x:Name="btnViewCode" Margin="10" Padding="10,5,10,5" Click="btnViewCode_Click" TabIndex="7" IsDefault="True" ToolTip="View C# code">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="/Images/view.png" Width="25"/>
+								<TextBlock Text="View" VerticalAlignment="Center"/>
+							</StackPanel>
+						</Button>
+						<Button x:Name="btnCopy" Margin="10" Padding="10,5,10,5" Click="btnCopy_Click" TabIndex="8" ToolTip="Copy C# code in selected tab to Clipboard">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="/Images/copy.png" Width="25"/>
+								<TextBlock Text="Copy" VerticalAlignment="Center"/>
+							</StackPanel>
+						</Button>
+						<Button x:Name="btnExport" Margin="10" Padding="10,5,10,5" Click="btnExport_Click" TabIndex="9" ToolTip="Export to C# file">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="/Images/export.png" Width="25"/>
+								<TextBlock Text="Export to files" VerticalAlignment="Center"/>
+							</StackPanel>
+						</Button>
+						<Button x:Name="btnExportWithBase" Margin="10" Padding="10,5,10,5" Click="btnExportWithBase_Click" TabIndex="10" ToolTip="Export to C# file">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="/Images/export2.png" Width="25"/>
+								<TextBlock Text="Export with BaseFunction" VerticalAlignment="Center"/>
+							</StackPanel>
+						</Button>
 					</StackPanel>
 				</DockPanel>
 				<DockPanel DockPanel.Dock="Top">

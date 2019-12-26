@@ -1,4 +1,5 @@
 ﻿using Business;
+using Business.Other;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -74,24 +75,6 @@ namespace ToolForDatabase
 			}
 		}
 
-		private void btnCreateBaseFunctions_Click(object sender, RoutedEventArgs e)
-		{
-			bool isopened = false;
-			foreach (Window window in Application.Current.Windows)
-			{
-				if (window is CreatingBaseForm)
-				{
-					isopened = true;
-					window.Activate();
-				}
-			}
-			if (!isopened)
-			{
-				CreatingBaseForm createform = new CreatingBaseForm();
-				createform.Show();
-			}
-		}
-
 		private void cbxDatabase_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (rendered)
@@ -123,7 +106,7 @@ namespace ToolForDatabase
 		private void btnViewCode_Click(object sender, RoutedEventArgs e)
 		{
 			string @namespace = tbxNamespace.Text;
-			var selectedTables = GetSelectedTables();
+			var selectedTables = function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
 			if (@namespace == "" || selectedTables.Count == 0)
 			{
 				MessageBox.Show("Can't generate class because NameSpace is missing or No selected tables", "Generate class", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -154,9 +137,14 @@ namespace ToolForDatabase
 			foreach (var @class in list)
 			{
 				string filename = @class.Key + ".cs";
-				function.SaveTextToFile(tbxPath.Text + "\\" + database, filename, @class.Value);
+				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, @class.Value);
 			}
 			MessageBox.Show("Save successfully", "Save to file", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+
+		private void btnExportWithBase_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 
 		private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -286,11 +274,10 @@ namespace ToolForDatabase
 			tabContent.Items.Insert(0, subTab);
 		}
 
-		private List<string> GetSelectedTables()
-		{
-			return function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
-		}
-
+		/// <summary>
+		/// Lấy nội dung của các tab, lưu vào danh sách Key Value Pair
+		/// </summary>
+		/// <returns></returns>
 		private List<KeyValuePair<string, string>> GetAllContents()
 		{
 			List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();

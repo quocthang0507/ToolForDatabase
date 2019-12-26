@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using Business.Other;
+using DataAccess;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
@@ -82,21 +83,8 @@ namespace Business
 		{
 			var referencee = GetColumns(table); //Danh sách cột ban đầu 
 			var converted = ConvertSingleListToPairList(referencee, GetSelectedColumnsInTables(treeView, table)); //Danh sách cột được chọn
-			ConvertClass convert = new ConvertClass(@namespace, table, referencee, converted);
+			ClassConverter convert = new ClassConverter(@namespace, table, referencee, converted);
 			return convert.ToString();
-		}
-
-		/// <summary>
-		/// Lưu nội dung lớp ra file vào một thư mục có tên của cơ sở dữ liệu
-		/// </summary>
-		/// <param name="path">Đường dẫn thư mục</param>
-		/// <param name="filename">Tên bảng sẽ thành tên file</param>
-		/// <param name="content">Nội dung lớp</param>
-		public void SaveTextToFile(string path, string filename, string content)
-		{
-			if (!Directory.Exists(path))
-				Directory.CreateDirectory(path);
-			File.WriteAllText(path + "\\" + filename, content);
 		}
 
 		/// <summary>

@@ -7,28 +7,28 @@ namespace Business
 	/// <summary>
 	/// Lớp cung cấp các phương thức tạo dựng lớp C#
 	/// </summary>
-	public class ConvertClass
+	public class ClassConverter
 	{
-		private string Full = "{0}\nnamespace {1}\n{{\n\tpublic class {2}\n\t{{\n{3}\n{4}{5}\n\t}}\n}}";
-		private string Namespace = "DataAccess";
-		private string Table;
-		private List<KeyValuePair<string, string>> Columns; //Danh sách toàn bộ các cột
+		private string full = "{0}\nnamespace {1}\n{{\n\tpublic class {2}\n\t{{\n{3}\n{4}{5}\n\t}}\n}}";
+		private string @namespace = "DataAccess";
+		private string table;
+		private List<KeyValuePair<string, string>> columns; //Danh sách toàn bộ các cột
 		private List<KeyValuePair<string, string>> selectedColumns; //Danh sách các cột chọn làm phương thức tạo lập
-		private string Field = "\t\tpublic {0} {1} {{ get; set; }}";
-		private string Constructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}\n";
-		private string Parameter = "{0} {1}";
-		private string Statement = "\t\t\tthis.{0} = {0};";
-		private string ToStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0};\n\t\t}}";
+		private string attribute = "\t\tpublic {0} {1} {{ get; set; }}";
+		private string contructor = "\t\tpublic {0}({1})\n\t\t{{\n{2}\t\t}}\n";
+		private string parameter = "{0} {1}";
+		private string statement = "\t\t\tthis.{0} = {0};";
+		private string toStr = "\t\tpublic override string ToString()\n\t\t{{\n\t\t\treturn {0};\n\t\t}}";
 
 		/// <summary>
 		/// Khởi tạo lớp
 		/// </summary>
 		/// <param name="table">Tên bảng</param>
 		/// <param name="columns">Tên thuộc tính</param>
-		public ConvertClass(string table, List<KeyValuePair<string, string>> columns)
+		public ClassConverter(string table, List<KeyValuePair<string, string>> columns)
 		{
-			Table = table;
-			Columns = columns;
+			this.table = table;
+			this.columns = columns;
 		}
 
 		/// <summary>
@@ -38,11 +38,11 @@ namespace Business
 		/// <param name="table">Tên bảng</param>
 		/// <param name="columns">Tên thuộc tính</param>
 		/// <param name="selectedColumns"></param>
-		public ConvertClass(string @namespace, string table, List<KeyValuePair<string, string>> columns, List<KeyValuePair<string, string>> selectedColumns)
+		public ClassConverter(string @namespace, string table, List<KeyValuePair<string, string>> columns, List<KeyValuePair<string, string>> selectedColumns)
 		{
-			Namespace = @namespace;
-			Table = table;
-			this.Columns = columns;
+			this.@namespace = @namespace;
+			this.table = table;
+			this.columns = columns;
 			this.selectedColumns = selectedColumns;
 		}
 
@@ -67,9 +67,9 @@ namespace Business
 			get
 			{
 				StringBuilder builder = new StringBuilder();
-				foreach (var attribute in Columns)
+				foreach (var attribute in columns)
 				{
-					builder.AppendLine(string.Format(Field, DataType.MapToNormalType(attribute.Value), attribute.Key));
+					builder.AppendLine(string.Format(this.attribute, DataType.MapToNormalType(attribute.Value), attribute.Key));
 				}
 				return builder.ToString();
 			}
@@ -85,7 +85,7 @@ namespace Business
 			string param = "";
 			for (int i = 0; i < selectedColumns.Count; i++)
 			{
-				param += string.Format(Parameter, DataType.MapToNormalType(selectedColumns[i].Value), selectedColumns[i].Key);
+				param += string.Format(parameter, DataType.MapToNormalType(selectedColumns[i].Value), selectedColumns[i].Key);
 				if (i < selectedColumns.Count - 1)
 					param += ", ";
 			}
@@ -102,7 +102,7 @@ namespace Business
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < selectedColumns.Count; i++)
 			{
-				builder.AppendLine(string.Format(Statement, selectedColumns[i].Key));
+				builder.AppendLine(string.Format(statement, selectedColumns[i].Key));
 			}
 			return builder.ToString();
 		}
@@ -115,13 +115,13 @@ namespace Business
 			get
 			{
 				StringBuilder builder = new StringBuilder();
-				builder.AppendLine(string.Format(Constructor, Table, "", "")); //Phương thức trống
+				builder.AppendLine(string.Format(contructor, table, "", "")); //Phương thức trống
 																			   //Phương thức tạo lập với những cột đã được chọn
 				if (selectedColumns.Count > 0)
 				{
 					string param = GenerateParameters();
 					string statement = GenerateStatements();
-					builder.AppendLine(string.Format(Constructor, Table, param, statement));
+					builder.AppendLine(string.Format(contructor, table, param, statement));
 				}
 				return builder.ToString();
 			}
@@ -141,7 +141,7 @@ namespace Business
 					if (selectedColumns.IndexOf(col) < selectedColumns.Count - 1)
 						tostr += " + \"\\t\" + ";
 				}
-				return string.Format(ToStr, tostr);
+				return string.Format(toStr, tostr);
 			}
 		}
 
@@ -151,7 +151,7 @@ namespace Business
 		/// <returns>Nội dung lớp</returns>
 		public override string ToString()
 		{
-			return string.Format(Full, GenerateUsings, Namespace, Table, GenerateProperties, GenerateConstructors, GenerateToString);
+			return string.Format(full, GenerateUsings, @namespace, table, GenerateProperties, GenerateConstructors, GenerateToString);
 		}
 	}
 }

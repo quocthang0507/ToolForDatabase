@@ -117,25 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Email" xml:space="preserve">
-    <value>1610207@dlu.edu.vn</value>
-  </data>
-  <data name="HoTen" xml:space="preserve">
-    <value>La Quốc Thắng</value>
-  </data>
-  <data name="Khoa" xml:space="preserve">
-    <value>Công nghệ Thông tin</value>
-  </data>
-  <data name="Lop" xml:space="preserve">
-    <value>CTK40</value>
-  </data>
-  <data name="MSSV" xml:space="preserve">
-    <value>1610207</value>
-  </data>
-  <data name="SDT" xml:space="preserve">
-    <value>0987610260</value>
-  </data>
-  <data name="Trường" xml:space="preserve">
-    <value>Đại học Đà Lạt</value>
-  </data>
 </root>

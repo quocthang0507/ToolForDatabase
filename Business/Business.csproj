@@ -47,15 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddFunction.cs" />
-    <Compile Include="ConvertClass.cs" />
-    <Compile Include="CreateFunction.cs" />
-    <Compile Include="Crypto.cs" />
-    <Compile Include="DataType.cs" />
-    <Compile Include="LoginFunction.cs" />
-    <Compile Include="MainFunction.cs" />
+    <Compile Include="FormFunctions\AddFunction.cs" />
+    <Compile Include="Converter\ClassConverter.cs" />
+    <Compile Include="FormFunctions\CreateFunction.cs" />
+    <Compile Include="Other\Common.cs" />
+    <Compile Include="Other\Crypto.cs" />
+    <Compile Include="Converter\DataType.cs" />
+    <Compile Include="FormFunctions\LoginFunction.cs" />
+    <Compile Include="FormFunctions\MainFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TreeViewModel.cs" />
+    <Compile Include="Other\TreeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

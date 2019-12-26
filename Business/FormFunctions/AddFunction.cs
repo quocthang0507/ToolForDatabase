@@ -67,7 +67,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Định nghĩa bảng dựa vào bảng trong SQL
+		/// Định nghĩa bảng DataView dựa vào bảng trong SQL
 		/// </summary>
 		/// <param name="columns"></param>
 		/// <returns></returns>
@@ -81,6 +81,12 @@ namespace Business
 			return table.DefaultView;
 		}
 
+		/// <summary>
+		/// Chèn nhiều dữ liệu vào bảng
+		/// </summary>
+		/// <param name="table"></param>
+		/// <param name="dataView"></param>
+		/// <returns></returns>
 		public bool InsertValuesToTable(string table, DataView dataView)
 		{
 			connection.Open();
@@ -105,6 +111,11 @@ namespace Business
 			return true;
 		}
 
+		/// <summary>
+		/// Lấy dữ liệu từ DataView
+		/// </summary>
+		/// <param name="dataView"></param>
+		/// <returns></returns>
 		private List<string> GetValuesFromDataView(DataView dataView)
 		{
 			List<String> list = new List<string>();
@@ -126,6 +137,11 @@ namespace Business
 			return list;
 		}
 
+		/// <summary>
+		/// Đổi danh sách sang chuỗi theo cú pháp T-SQL
+		/// </summary>
+		/// <param name="list"></param>
+		/// <returns></returns>
 		private string ListValuesToString(List<string> list)
 		{
 			string str = "";

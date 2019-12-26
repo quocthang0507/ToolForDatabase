@@ -105,10 +105,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\form_createbase.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Forms\form_login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,9 +122,6 @@
     </Compile>
     <Compile Include="Forms\form_addvalues.xaml.cs">
       <DependentUpon>form_addvalues.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\form_createbase.xaml.cs">
-      <DependentUpon>form_createbase.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\form_login.xaml.cs">
       <DependentUpon>form_login.xaml</DependentUpon>
@@ -209,7 +202,19 @@
     <Resource Include="Images\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\base.png" />
+    <Resource Include="Images\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\test.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\export2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
