@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace DataAccess
 {
-	public class QuanLyClassName : BaseFunction<ClassName>
+	/// <summary>
+	/// ClassName là tên chung của các lớp, sẽ bị thay đổi bởi chương trình, do đó đừng thay đổi tên này
+	/// </summary>
+	public class PrefixName : BaseFunction<ClassName>
 	{
 		public override int Add(ClassName item)
 		{

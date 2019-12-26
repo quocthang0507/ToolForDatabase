@@ -285,6 +285,10 @@ namespace ToolForDatabase
 			return list;
 		}
 
+		/// <summary>
+		/// Xuất các bảng được chọn thành các lớp
+		/// </summary>
+		/// <returns></returns>
 		private bool ExportToCommonClass()
 		{
 			var list = GetAllContents();
@@ -300,26 +304,37 @@ namespace ToolForDatabase
 			return true;
 		}
 
+		/// <summary>
+		/// Xuất các bảng được chọn thành các lớp BaseFunction
+		/// </summary>
+		/// <returns></returns>
 		private bool ExportToBaseFunction()
 		{
 			ClassConverter converter;
 			var selectedTables = function.GetSelectedTables(treeTable.ItemsSource as List<TreeViewModel>);
-			if (tbxPath.Text == null || tbxNamespace.Text == null || selectedTables.Count == 0 ||tbxPrefix.Text==null)
+			if (tbxPath.Text == null || tbxNamespace.Text == null || selectedTables.Count == 0 || tbxPrefix.Text == null)
 				return false;
 			Common.SaveToFile(tbxPath.Text + "\\" + database, "BaseFunction.cs", Properties.Resources.BaseFunctionClass);
 			foreach (var table in selectedTables)
 			{
 				converter = new ClassConverter(tbxNamespace.Text, table);
 				string filename = tbxPrefix.Text + table + ".cs";
-				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, GetManagementClass(tbxNamespace.Text, table));
+				Common.SaveToFile(tbxPath.Text + "\\" + database, filename, GetManagementClass(tbxNamespace.Text, tbxPrefix.Text, table));
 			}
 			return true;
 		}
 
-		private string GetManagementClass(string @namespace, string table)
+		/// <summary>
+		/// Lấy nội dung lớp quản lý từ Resource và thay tên bảng, tên namespace tương ứng
+		/// </summary>
+		/// <param name="namespace"></param>
+		/// <param name="table"></param>
+		/// <returns></returns>
+		private string GetManagementClass(string @namespace, string prefix, string table)
 		{
 			var data = Properties.Resources.ManagementClass;
 			data = data.Replace("ClassName", table);
+			data = data.Replace("PrefixName", prefix + table);
 			data = data.Replace("DataAccess", @namespace);
 			return data;
 		}

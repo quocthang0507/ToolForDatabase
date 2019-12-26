@@ -2,13 +2,40 @@
 
 namespace DataAccess
 {
+	/// <summary>
+	/// Lớp BaseFunction
+	/// Bạn có thể định nghĩa một phương thức chung tại đây
+	/// </summary>
 	public abstract class BaseFunction<T>
 	{
+		/// <summary>
+		/// Thêm một đối tượng
+		/// </summary>
 		public abstract int Add(T item);
+		
+		/// <summary>
+		/// Xóa một đối tượng
+		/// </summary>
 		public abstract bool Delete(T item);
+		
+		/// <summary>
+		/// Cập nhật một đối tượng
+		/// </summary>
 		public abstract bool Update(T item);
+		
+		/// <summary>
+		/// Lấy danh sách đối tượng
+		/// </summary>
 		public abstract List<T> GetAll();
-		public abstract List<T> Find(Condition condition);
-		public abstract T Single(Condition condition);
+		
+		/// <summary>
+		/// Tìm kiếm các đối tượng
+		/// </summary>
+		public abstract List<T> Find();
+		
+		/// <summary>
+		/// Tìm kiếm một đối tượng
+		/// </summary>
+		public abstract T Single();
 	}
 }
