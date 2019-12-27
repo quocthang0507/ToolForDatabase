@@ -96,19 +96,19 @@ namespace Business
 			try
 			{
 				string param = ListValuesToString(GetValuesFromDataView(dataView));
-				GetValuesFromDataView(dataView);
 				cmd.CommandText = string.Format(insertCommand, table, param);
+				cmd.Connection = connection;
 				cmd.ExecuteNonQuery();
+				transaction.Commit(); //All values will have been inserted
+				connection.Close();
+				return true;
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				transaction.Rollback(); //No values will have been inserted
 				connection.Close();
 				return false;
 			}
-			transaction.Commit(); //All values will have been inserted
-			connection.Close();
-			return true;
 		}
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace Business
 				string values = "(";
 				for (int i = 0; i < dataTable.Columns.Count; i++)
 				{
-					var cell = row[0];
+					var cell = row[i];
 					values += "N'" + cell + "'";    //Unicode Text for all
 					if (i < dataTable.Columns.Count - 1)
 						values += ", ";

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DataAccess
 {
 	/// <summary>
-	/// ClassName là tên chung của các lớp, sẽ bị thay đổi bởi chương trình, do đó đừng thay đổi tên này
+	/// BaseFunction of ClassName 
 	/// </summary>
 	public class PrefixName : BaseFunction<ClassName>
 	{

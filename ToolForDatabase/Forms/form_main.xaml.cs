@@ -46,7 +46,7 @@ namespace ToolForDatabase
 			treeTable.Height = height - 180;
 			treeTable.Width = width * 0.25;
 			// Text box
-			tabContent.Height = height - 240;
+			tabContent.Height = height - 282;
 			rightstack.Width = width * 0.68;
 		}
 
@@ -117,11 +117,11 @@ namespace ToolForDatabase
 			foreach (var item in selectedTables)
 			{
 				Thread thread = new Thread(() =>
-				Application.Current.Dispatcher.Invoke((Action)delegate
-				{
-					CreateTabWithContent(item, function.GenerateCommonClass(treeViewSource, @namespace, item));
-				}
-				));
+					Application.Current.Dispatcher.Invoke((Action)delegate
+					{
+						CreateTabWithContent(item, function.GenerateCommonClass(treeViewSource, @namespace, item));
+					}
+					));
 				thread.Start();
 			}
 		}

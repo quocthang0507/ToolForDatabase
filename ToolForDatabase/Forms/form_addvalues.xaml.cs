@@ -54,10 +54,17 @@ namespace ToolForDatabase.Forms
 		private void listTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var selectedTable = listTable.SelectedItem;
-			if (selectedTable == null)
-				return;
-			var columns = function.GetColumns(selectedTable.ToString());
-			dg_Columns.ItemsSource = function.DefineTable(columns);
+			if (selectedTable != null)
+			{
+				Thread thread = new Thread(() =>
+					Application.Current.Dispatcher.Invoke((Action)delegate
+					{
+						var columns = function.GetColumns(selectedTable.ToString());
+						dg_Columns.ItemsSource = function.DefineTable(columns);
+					})
+					);
+				thread.Start();
+			}
 		}
 
 		private void btnInsert_Click(object sender, RoutedEventArgs e)

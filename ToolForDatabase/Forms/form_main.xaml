@@ -37,7 +37,7 @@
 					</StackPanel>
 				</Button>
 				<Separator />
-				<Button x:Name="btnAddValues" Click="btnAddValues_Click" TabIndex="2" ToolTip="Go to Insert values to SQL Form">
+				<Button x:Name="btnAddValues" Click="btnAddValues_Click" TabIndex="2" ToolTip="Insert values to SQL">
 					<StackPanel Orientation="Horizontal">
 						<Image Source="/Images/Add.png" Width="25"/>
 						<TextBlock Text="Insert Values" VerticalAlignment="Center"/>
@@ -68,7 +68,7 @@
 								<Label Content="Namespace: "/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4" ToolTip="You can change custom Namespace"/>
+								<TextBox x:Name="tbxNamespace" Width="250" Text="DataAccess" Padding="5,0,0,0" MaxLength="100" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="4"/>
 							</StackPanel>
 						</Grid>
 						<Grid Margin="0,10,0,10" Height="30">
@@ -76,7 +76,7 @@
 								<Label Content="Directory location: "/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxPath" Width="220" Padding="5,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5" ToolTip="You can change custom Namespace"/>
+								<TextBox x:Name="tbxPath" Width="220" Padding="5,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="5"/>
 								<Button x:Name="btnBrowse" Content="..." Width="25" Margin="5,0,0,0" TabIndex="6" ToolTip="Browse for location" Click="btnBrowse_Click"/>
 							</StackPanel>
 						</Grid>
@@ -85,7 +85,7 @@
 								<Label Content="Prefix: "/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBox x:Name="tbxPrefix" Width="250" Text="QuanLy_" Padding="5,0,0,0" MaxLength="100" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="7" ToolTip="Prefix name class for BaseFunction"/>
+								<TextBox x:Name="tbxPrefix" Width="250" Text="QuanLy_" Padding="5,0,0,0" MaxLength="100" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TabIndex="7" />
 							</StackPanel>
 						</Grid>
 					</StackPanel>
