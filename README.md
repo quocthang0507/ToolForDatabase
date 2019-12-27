@@ -4,7 +4,17 @@ Công cụ tìm thông tin các quan hệ có trong hệ quản trị cơ sở d
 
 ## Cài đặt
 
-## Lưu ý
+## Một số hình ảnh
+
+![Login Screen](Login1.png?raw=true "Login Screen")
+
+![Login Screen](Login2.png?raw=true "Login Screen")
+
+![Main Form](MainForm.png?raw=true "Main Form")
+
+![Insert Values To SQL](Add.png?raw=true "Insert Values To SQL")
+
+![About Author](About.png?raw=true "About Author")
 
 ## Hướng dẫn sử dụng
 
