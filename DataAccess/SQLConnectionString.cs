@@ -12,9 +12,9 @@ namespace DataAccess
 		private string Username;
 		private string Password;
 		private int IndexFunction;
-		private readonly string cnn1 = @"Data Source={0};Initial Catalog=;Integrated Security=True;";
-		private readonly string cnn2 = @"Data Source={0};Initial Catalog={1};Integrated Security=True;";
-		private readonly string cnn3 = @"Data Source={0};Initial Catalog={1};User Id={2};Password={3};Integrated Security=True;";
+		private readonly string cnn1 = @"Server={0};Database=;Integrated Security=True;";
+		private readonly string cnn2 = @"Server={0};Database={1};Integrated Security=True;";
+		private readonly string cnn3 = @"Server={0};Database={1};User Id={2};Password={3};Integrated Security=True;";
 
 		/// <summary>
 		/// Khởi tạo chuỗi kết nối rỗng
