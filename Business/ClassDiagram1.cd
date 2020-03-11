@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Business.ClassConverter">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgggAEAAABEAgIAAAAQQAACCACAGAAAAAABAAA=</HashCode>
+      <FileName>Converter\ClassConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Business.InsertFunction">
+    <Position X="3.25" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAEAAAAAAAAAEQBACAAAAAAAABAAIAAAAgAAAA=</HashCode>
+      <FileName>FormFunctions\InsertFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Business.LoginFunction">
+    <Position X="6.25" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAACECIAAAAAAAAAAEAAAAAAABAAgAAI=</HashCode>
+      <FileName>FormFunctions\LoginFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Business.MainFunction">
+    <Position X="3.25" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAgAAAAAACAAAAEARAIAAAAAAAAAAAIAAAgAAAAA=</HashCode>
+      <FileName>FormFunctions\MainFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Business.Crypto">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAgAAgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Other\Crypto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataAccess.DataType">
+    <Position X="0.5" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAIAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Converter\DataType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Business.Other.Common">
+    <Position X="0.5" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Other\Common.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeView.TreeViewModel" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAYAAAAAEAAUwgAAAAgAAAAAAAAAAgAA=</HashCode>
+      <FileName>Other\TreeViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -11,7 +11,7 @@ namespace DataAccess
 		private string Database;
 		private string Username;
 		private string Password;
-		private readonly int IndexFunction;
+		private int IndexFunction;
 		private readonly string cnn1 = @"Data Source={0};Initial Catalog=;Integrated Security=True;";
 		private readonly string cnn2 = @"Data Source={0};Initial Catalog={1};Integrated Security=True;";
 		private readonly string cnn3 = @"Data Source={0};Initial Catalog={1};User Id={2};Password={3};Integrated Security=True;";

@@ -51,8 +51,10 @@
     <Compile Include="SQLConnectionString.cs" />
     <Compile Include="SQLDatabase.cs" />
     <Compile Include="SQLServer.cs" />
-    <Compile Include="SQLSP.cs" />
     <Compile Include="SQLTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
